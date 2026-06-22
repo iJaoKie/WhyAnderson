@@ -369,6 +369,89 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
   .mob-overlay,.mob-sheet{display:none!important}
   .mw-columns{grid-template-columns:repeat(3,1fr)}
 }
+
+/* ── Timestamp tooltip ── */
+.cmmt-time{position:relative;cursor:default;white-space:nowrap}
+.cmmt-time .ts-tip{
+  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--tx);color:#fff;border-radius:7px;padding:5px 10px;
+  white-space:nowrap;font-size:11px;z-index:9999;pointer-events:none;
+  opacity:0;transition:opacity .15s;font-family:'JetBrains Mono',monospace;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+.cmmt-time:hover .ts-tip{opacity:1}
+
+/* ── Task detail big popup ── */
+.task-popup-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.48);
+  display:flex;align-items:center;justify-content:center;
+  z-index:300;padding:20px;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  animation:tpFade .18s ease;
+}
+@keyframes tpFade{from{opacity:0}to{opacity:1}}
+.task-popup{
+  background:var(--sf);border-radius:var(--rxl);border:1px solid var(--bd);
+  box-shadow:0 32px 80px rgba(0,0,0,.18),0 8px 24px rgba(0,0,0,.1);
+  width:100%;max-width:880px;max-height:calc(100dvh - 40px);
+  display:flex;flex-direction:column;overflow:hidden;
+  animation:tpSlide .22s cubic-bezier(.4,0,.2,1);
+}
+@keyframes tpSlide{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+.tp-head{
+  padding:18px 22px 14px;border-bottom:1px solid var(--bd);
+  display:flex;align-items:flex-start;gap:12px;flex-shrink:0;background:var(--sf);
+}
+.tp-title{font-size:19px;font-weight:700;color:var(--tx);flex:1;line-height:1.35;word-break:break-word}
+.tp-head-actions{display:flex;gap:7px;align-items:center;flex-shrink:0;margin-top:2px}
+.tp-close{
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--bd);
+  background:var(--s2);display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--t2);cursor:pointer;flex-shrink:0;transition:all .15s;
+}
+.tp-close:hover{background:var(--s3);color:var(--tx)}
+.tp-body{display:flex;flex:1;overflow:hidden;min-height:0}
+/* Left: meta + description */
+.tp-left{flex:1;overflow-y:auto;padding:20px 24px;border-right:1px solid var(--bd);-webkit-overflow-scrolling:touch}
+.tp-meta-grid{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;align-items:center;
+  background:var(--s2);border-radius:var(--rl);padding:14px 16px;margin-bottom:16px}
+.tp-meta-key{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+.tp-meta-val{font-size:13px;color:var(--tx);font-weight:500}
+.tp-sec-label{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+/* Right: comments */
+.tp-right{width:310px;flex-shrink:0;display:flex;flex-direction:column;overflow:hidden}
+.tp-comments-scroll{flex:1;overflow-y:auto;padding:14px 16px;-webkit-overflow-scrolling:touch}
+.tp-nc-area{padding:10px 14px;border-top:1px solid var(--bd);background:var(--sf);flex-shrink:0}
+/* Mobile: stack vertically */
+@media(max-width:700px){
+  .task-popup-overlay{padding:0;align-items:flex-end}
+  .task-popup{max-width:100%;border-radius:var(--rxl) var(--rxl) 0 0;max-height:96dvh}
+  .tp-body{flex-direction:column}
+  .tp-left{border-right:none;border-bottom:1px solid var(--bd);max-height:48dvh;padding:14px 16px}
+  .tp-right{width:100%;min-height:280px}
+}
+
+/* ── Icon picker for task types ── */
+.icon-picker-btn{
+  width:46px;height:38px;border:1px solid var(--bd);border-radius:var(--r);
+  background:var(--bg);font-size:18px;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;transition:border-color .15s;
+  flex-shrink:0;
+}
+.icon-picker-btn:hover{border-color:var(--gr);background:var(--gr-l)}
+.icon-picker-drop{
+  position:fixed;z-index:9999;background:var(--sf);border:1px solid var(--bd);
+  border-radius:var(--rl);box-shadow:var(--sh-lg);padding:12px;
+  display:grid;grid-template-columns:repeat(8,34px);gap:4px;
+}
+.icon-opt{
+  width:34px;height:34px;border-radius:var(--r);font-size:17px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  border:1.5px solid transparent;transition:all .12s;
+}
+.icon-opt:hover{background:var(--s2);border-color:var(--bd)}
+.icon-opt.sel{background:var(--gr-l);border-color:var(--gr)}
+
 </style>
 </head>
 <body>
@@ -548,6 +631,13 @@ const mkTs=()=>new Date().toISOString();
 function esc(s){const d=document.createElement('div');d.textContent=String(s??'');return d.innerHTML;}
 function fmtBytes(b){if(!b)return'?';if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';return(b/1048576).toFixed(1)+'MB';}
 function fmtTime(iso){if(!iso)return'';const d=new Date(iso),n=new Date(),diff=n-d;if(diff<60000)return'just now';if(diff<3600000)return Math.floor(diff/60000)+'m ago';if(diff<86400000)return Math.floor(diff/3600000)+'h ago';if(diff<604800000)return Math.floor(diff/86400000)+'d ago';return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});}
+function fmtTimeHtml(iso){
+  // Relative time with a hover tooltip showing the full date+time
+  if(!iso)return'<span class="cmmt-time">—</span>';
+  const rel=fmtTime(iso);
+  const full=fmtFull(iso);
+  return`<span class="cmmt-time" title="${esc(full)}">${rel}<span class="ts-tip">${esc(full)}</span></span>`;
+}
 function fmtDate(iso){if(!iso)return'—';return new Date(iso).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});}
 function fmtFull(iso){if(!iso)return'';return new Date(iso).toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
 function tcol(hex){try{const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return(0.299*r+0.587*g+0.114*b)>140?'#1A1916':'#fff';}catch{return'#fff';}}
@@ -857,34 +947,142 @@ async function unarchiveTask(id){await sb.from('tasks').update({archived:false,a
 async function purgeArchive(){const ids=tasks.filter(t=>t.archived).map(t=>t.id);if(ids.length)await sb.from('tasks').delete().in('id',ids);showNotif('🗑','Archive cleared');await reloadAndRefresh();}
 
 // ══════════════════════════════════════════════
-// DETAIL
+// TASK POPUP — big centered modal (all tabs stay in place)
 // ══════════════════════════════════════════════
-function openDetail(id){selectedTaskId=id;document.getElementById('detail-panel').classList.remove('closed');renderDetail(id,'dp-title','dp-meta-sec','dp-desc-sec','comments-wrap','nc-av');renderBoard();}
-function closeDetail(){selectedTaskId=null;document.getElementById('detail-panel').classList.add('closed');renderBoard();}
-function openMobile(id){selectedTaskId=id;document.getElementById('mob-overlay').classList.remove('hidden');document.getElementById('mob-sheet').classList.add('open');renderDetail(id,'ms-title','ms-meta-sec','ms-desc-sec','ms-comments-wrap','ms-nc-av');renderBoard();}
-function closeMobileDetail(){selectedTaskId=null;document.getElementById('mob-overlay').classList.add('hidden');document.getElementById('mob-sheet').classList.remove('open');renderBoard();}
-function renderDetail(id,tiId,miId,diId,ciId,navId){
+// openDetail / openMobile both route here so every tab opens the popup
+// WITHOUT switching away from the current tab.
+function openDetail(id){openTaskPopup(id);}
+function closeDetail(){closeTaskPopup();}
+function openMobile(id){openTaskPopup(id);}
+function closeMobileDetail(){closeTaskPopup();}
+
+function openTaskPopup(id){
+  selectedTaskId=id;
+  const t=getTask(id);if(!t)return;
+  document.getElementById('task-popup-overlay').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  renderTaskPopup(id);
+  renderBoard(); // refresh card selection highlight
+  setTimeout(()=>document.getElementById('tp-nc-input')?.focus(),100);
+}
+function closeTaskPopup(){
+  selectedTaskId=null;
+  document.getElementById('task-popup-overlay').classList.add('hidden');
+  document.body.style.overflow='';
+  renderBoard();
+}
+function handlePopupBg(e){
+  if(e.target===document.getElementById('task-popup-overlay'))closeTaskPopup();
+}
+// Esc key closes popup
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&!document.getElementById('task-popup-overlay').classList.contains('hidden'))closeTaskPopup();
+});
+
+function renderTaskPopup(id){
   const t=getTask(id);if(!t)return;
   const u=getUser(t.assignee)||{name:t.assignee,initials:'?',color:'#aaa',text_color:'#fff'};
-  const st=getStatus(t.status);
-  document.getElementById(tiId).textContent=t.title;
-  document.getElementById(miId).innerHTML=`<div class="dp-label">Details</div>
-    <div class="dp-row"><span class="dp-key">Status</span><span class="spill" style="background:${st.color}22;color:${st.color}">${esc(st.name)}</span></div>
-    <div class="dp-row"><span class="dp-key">Assignee</span>${avHtml(t.assignee,'sm')} <span class="dp-val" style="margin-left:5px">${esc(u.name)}</span></div>
-    <div class="dp-row"><span class="dp-key">Type</span>${typeBadge(t.type)}</div>
-    <div class="dp-row"><span class="dp-key">Priority</span><span class="dp-val" style="text-transform:capitalize">${t.priority}</span></div>
-    <div class="dp-row"><span class="dp-key">Created</span><span class="ts">${fmtFull(t.created_at)}</span></div>
-    <div class="dp-row"><span class="dp-key">Due</span><span class="dp-val">${t.due_date?fmtDate(t.due_date):'—'}</span></div>
-    ${st.is_done&&t.completed_at?`<div class="dp-row"><span class="dp-key">Completed</span><span class="ts">${fmtFull(t.completed_at)}</span></div>`:''}
-    <div style="margin-top:9px;display:flex;gap:7px;flex-wrap:wrap">
-      ${can('editTask')?`<button class="btn-sm" onclick="openTaskModal(null,${t.id})">✏ Edit</button>`:''}
-      ${st.is_done&&can('archive')?`<button class="btn-sm" style="background:var(--am-l);color:var(--am-d);border-color:var(--am-l)" onclick="archiveTask(${t.id})">📦 Archive</button>`:''}
-      ${can('instantArchive')?`<button class="btn-sm" style="background:var(--pu-l);color:var(--pu-d);border-color:var(--pu-l)" onclick="instantArchive(${t.id})">⚡ Archive now</button>`:''}
-    </div>`;
-  renderDescSec(t,diId);renderCmmts(id,ciId);
-  const nav=document.getElementById(navId);
-  if(nav&&currentUser){nav.style.background=currentUser.color;nav.style.color=currentUser.text_color||tcol(currentUser.color);nav.textContent=currentUser.initials;}
+  const st=getStatus(t.status);const isDone=st?.is_done;
+  // Header
+  document.getElementById('tp-title').textContent=t.title;
+  document.getElementById('tp-head-actions').innerHTML=
+    (can('editTask')?`<button class="btn-sm" onclick="openTaskModal(null,${t.id})">✏ Edit</button>`:'') +
+    (isDone&&can('archive')?`<button class="btn-sm" style="background:var(--am-l);color:var(--am-d);border-color:var(--am-l)" onclick="archiveTask(${t.id})">📦 Archive</button>`:'') +
+    (can('instantArchive')?`<button class="btn-sm" style="background:var(--pu-l);color:var(--pu-d);border-color:var(--pu-l)" onclick="instantArchive(${t.id})">⚡ Now</button>`:'');
+  // Left pane — meta grid + description
+  const dueHtml=t.due_date?`<span class="card-due ${(()=>{const df=(new Date(t.due_date)-today0())/864e5;return df<0?'due-late':df<=3?'due-soon':'due-ok'})()}">${t.due_date?fmtDate(t.due_date):''}</span>`:'—';
+  document.getElementById('tp-left').innerHTML=`
+    <div class="tp-meta-grid">
+      <span class="tp-meta-key">Status</span>
+      <span><span class="spill" style="background:${st.color}22;color:${st.color}">${esc(st.name)}</span></span>
+      <span class="tp-meta-key">Assignee</span>
+      <span style="display:flex;align-items:center;gap:7px">${avHtml(t.assignee,'sm')}<span class="tp-meta-val">${esc(u.name)}</span></span>
+      <span class="tp-meta-key">Type</span>
+      <span>${typeBadge(t.type)}</span>
+      <span class="tp-meta-key">Priority</span>
+      <span class="tp-meta-val" style="text-transform:capitalize">${t.priority}${t.priority==='high'?` <span class="badge" style="background:var(--am-l);color:var(--am-d)">⚡ High</span>`:''}</span>
+      <span class="tp-meta-key">Due date</span>
+      <span class="tp-meta-val">${t.due_date&&!st?.hide_due?dueHtml:'—'}</span>
+      <span class="tp-meta-key">Created</span>
+      ${fmtTimeHtml(t.created_at)}
+      ${isDone&&t.completed_at?`<span class="tp-meta-key">Completed</span>${fmtTimeHtml(t.completed_at)}`:''}
+    </div>
+    <div class="tp-sec-label">Description</div>
+    ${renderDescHtml(t,'tp-left')}`;
+  // Right pane — comments
+  renderCmmts(id,'tp-comments');
+  // Avatar for comment box
+  const av=document.getElementById('tp-nc-av');
+  if(av&&currentUser){av.style.background=currentUser.color;av.style.color=currentUser.text_color||tcol(currentUser.color);av.textContent=currentUser.initials;}
 }
+
+function renderDescHtml(t, ctxId){
+  const ed=can('editTask');
+  if(t.description)return`<div class="desc-text" style="margin-bottom:8px">${esc(t.description)}</div>${ed?`<button class="btn-sm" onclick="editDescInline(${t.id},'${ctxId}')">Edit</button>`:''}`;
+  return ed?`<div class="desc-empty" onclick="editDescInline(${t.id},'${ctxId}')">Add a description…</div>`:`<div class="desc-empty" style="cursor:default">No description.</div>`;
+}
+function editDescInline(id,ctxId){
+  const t=getTask(id);if(!t)return;
+  const ctx=document.getElementById(ctxId);if(!ctx)return;
+  const descEl=ctx.querySelector('.desc-text')||ctx.querySelector('.desc-empty');
+  const editBtn=ctx.querySelector('.btn-sm');
+  if(descEl)descEl.outerHTML=`<textarea class="desc-edit" id="tp-dta-${id}" style="margin-bottom:8px">${esc(t.description||'')}</textarea><div style="display:flex;gap:6px"><button class="btn-p" style="font-size:12px;padding:5px 12px" onclick="saveDescInline(${id},'${ctxId}')">Save</button><button class="btn-s" style="font-size:12px;padding:5px 12px" onclick="renderTaskPopup(${id})">Cancel</button></div>`;
+  if(editBtn)editBtn.remove();
+  document.getElementById('tp-dta-'+id)?.focus();
+}
+async function saveDescInline(id,ctxId){
+  const val=document.getElementById('tp-dta-'+id)?.value.trim();
+  await sb.from('tasks').update({description:val,updated_at:mkTs()}).eq('id',id);
+  await reloadAndRefresh();
+  if(selectedTaskId===id)renderTaskPopup(id);
+}
+
+// Legacy renderDetail stub — kept for any remaining old-style calls
+function renderDetail(id,tiId,miId,diId,ciId,navId){openTaskPopup(id);}
+// renderDescSec delegated to renderDescHtml inside popup
+function editDesc(id,secId){editDescInline(id,'tp-left');}
+async function saveDesc(id,secId){await saveDescInline(id,'tp-left');}
+
+// ── ICON PICKER for task type modal ──────────────────────────────────────────
+const TYPE_ICONS=['✓','★','⚡','🐛','🔧','📋','🎯','💡','🚀','🔍','📦','⚙','🛠','📝','🎨','🔒','🌟','⚠','🔔','❗','🔗','💬','📊','🗂','✨','🏷','📌','🏗','🔄','⛔','✅','❌'];
+let iconPickerTarget=null;
+
+function openIconPicker(btnEl,currentIcon,onSelect){
+  // Close if already open for same button
+  const existing=document.getElementById('icon-picker-portal').firstChild;
+  if(existing){document.getElementById('icon-picker-portal').innerHTML='';iconPickerTarget=null;return;}
+  iconPickerTarget=onSelect;
+  const rect=btnEl.getBoundingClientRect();
+  const drop=document.createElement('div');drop.className='icon-picker-drop';
+  drop.style.top=(rect.bottom+4)+'px';
+  // Clamp left so it doesn't go off-screen
+  const left=Math.min(rect.left,window.innerWidth-300);
+  drop.style.left=left+'px';
+  drop.innerHTML=TYPE_ICONS.map(ic=>`<div class="icon-opt${ic===currentIcon?' sel':''}" onclick="pickIcon('${ic}')">${ic}</div>`).join('');
+  document.getElementById('icon-picker-portal').innerHTML='';
+  document.getElementById('icon-picker-portal').appendChild(drop);
+}
+function pickIcon(ic){
+  if(iconPickerTarget)iconPickerTarget(ic);
+  document.getElementById('icon-picker-portal').innerHTML='';
+  iconPickerTarget=null;
+}
+document.addEventListener('click',e=>{
+  const portal=document.getElementById('icon-picker-portal');
+  if(portal.firstChild&&!portal.firstChild.contains(e.target)&&!e.target.closest('.icon-picker-btn'))
+    portal.innerHTML='';
+},true);
+
+// ── LEGACY STUBS ─────────────────────────────────────────────────────────────
+// (These IDs are in the HTML but popup replaces them — stubs prevent null errors)
+function _noop(){}
+// No-op — detail panel no longer used
+const _detailPanel=document.getElementById('detail-panel');
+if(_detailPanel)_detailPanel.style.display='none';
+
+// ── ORIGINAL renderDetail body below (kept for reference, now replaced) ──
+// Actual original old code body comes next; need to skip to next section
+
 function renderDescSec(t,secId){
   const sec=document.getElementById(secId);if(!sec)return;const ed=can('editTask');
   sec.innerHTML=`<div class="dp-label">Description</div>`+
@@ -907,7 +1105,7 @@ function renderCmmts(taskId,wrapId){
   let html=`<div class="dp-label">Comments (${tc.filter(c=>!c.is_system).length})</div>`;
   if(!tc.length)html+=`<div class="section-empty">No comments yet.</div>`;
   tc.forEach(c=>{
-    if(c.is_system){html+=`<div class="cmmt-system"><div class="csys-line"></div><div class="csys-text">${c.text} · ${fmtTime(c.created_at)}</div><div class="csys-line"></div></div>`;return;}
+    if(c.is_system){html+=`<div class="cmmt-system"><div class="csys-line"></div><div class="csys-text">${c.text} · ${fmtTimeHtml(c.created_at)}</div><div class="csys-line"></div></div>`;return;}
     const u=getUser(c.author)||{name:c.author,initials:'?',color:'#aaa',text_color:'#fff'};
     const canDel=currentUser&&(currentUser.id===c.author||currentUser.role==='admin');
     const fh=(c.comment_files||[]).map(f=>`<a class="cmmt-file" href="${f.data_url}" download="${esc(f.name)}">📎 ${esc(f.name)} <span style="color:var(--t3)">(${fmtBytes(f.size)})</span></a>`).join('');
@@ -919,7 +1117,7 @@ function renderCmmts(taskId,wrapId){
       return`<div class="comment">
         <div class="av av-xs" style="background:${ru.color};color:${ru.text_color||tcol(ru.color)};flex-shrink:0">${esc(ru.initials)}</div>
         <div class="cmmt-body">
-          <div class="cmmt-hdr"><span class="cmmt-name">${esc(ru.name)}</span><span class="cmmt-time">${fmtTime(r.created_at)}</span></div>
+          <div class="cmmt-hdr"><span class="cmmt-name">${esc(ru.name)}</span>${fmtTimeHtml(r.created_at)}</div>
           <div class="cmmt-bubble">${esc(r.text)}${rfh?`<div style="margin-top:4px">${rfh}</div>`:''}</div>
           ${canDelR?`<div class="cmmt-acts"><button class="cmmt-act-del" onclick="deleteReply(${r.id},'${wrapId}',${taskId})">🗑 Delete</button></div>`:''}
         </div>
@@ -928,7 +1126,7 @@ function renderCmmts(taskId,wrapId){
     html+=`<div class="comment">
       <div class="av av-sm" style="background:${u.color};color:${u.text_color||tcol(u.color)};flex-shrink:0">${esc(u.initials)}</div>
       <div class="cmmt-body">
-        <div class="cmmt-hdr"><span class="cmmt-name">${esc(u.name)}</span><span class="cmmt-time">${fmtTime(c.created_at)}</span></div>
+        <div class="cmmt-hdr"><span class="cmmt-name">${esc(u.name)}</span>${fmtTimeHtml(c.created_at)}</div>
         <div class="cmmt-bubble">${esc(c.text)}${fh?`<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:5px">${fh}</div>`:''}</div>
         <div class="cmmt-acts">
           ${can('comment')?`<button class="cmmt-act" onclick="toggleReply('${wrapId}',${taskId},${c.id})">↩ Reply</button>`:''}
@@ -1060,7 +1258,7 @@ function renderList(){
     `<div class="lrow lhdr">${hdrs.map(h=>`<div class="lhdr-cell" onclick="sortList('${h.c}')">${h.l} <span style="color:${listSort.col===h.c?'var(--gr)':'var(--t3)'};margin-left:3px">${si(h.c)}</span></div>`).join('')}</div>`+
     (filtered.length?filtered.map(t=>{
       const st=getStatus(t.status);const u=getUser(t.assignee)||{initials:'?',color:'#aaa',text_color:'#fff',name:'?'};
-      return`<div class="lrow" onclick="switchTab('board');${isMob()?`openMobile(${t.id})`:`openDetail(${t.id})`}">
+      return`<div class="lrow" onclick="openTaskPopup(${t.id})">
         <span style="color:var(--tx);font-weight:500">${esc(t.title)}</span>
         ${typeBadge(t.type)}
         <span style="font-size:12px;color:var(--t2);text-transform:capitalize;font-weight:500">${t.priority}</span>
@@ -1121,7 +1319,7 @@ function renderMemberWork(wrap){
       const isLate=t.due_date&&new Date(t.due_date)<td;
       const isDueToday=dueToday.includes(t);
       const urgColor=isLate?'var(--rd)':isDueToday?'var(--am)':st.color;
-      return`<div class="mw-task" onclick="${isMob()?`openMobile(${t.id})`:`switchTab('board');openDetail(${t.id})`}">
+      return`<div class="mw-task" onclick="openTaskPopup(${t.id})">
         <div class="urgency-bar" style="background:${urgColor}"></div>
         <div class="mw-task-main">
           <div class="mw-task-title">${esc(t.title)}</div>
@@ -1158,11 +1356,11 @@ function renderMemberWork(wrap){
         <div class="mstat"><div class="mstat-val">${inprogCount}</div><div class="mstat-lbl">In progress</div></div>
       </div>
     </div>
-    ${overdue.length>0?`<div style="margin-bottom:14px;padding:12px 14px;background:var(--rd-l);border:1px solid #f0b8b8;border-radius:var(--rl)"><div style="font-size:12px;font-weight:700;color:var(--rd-d);margin-bottom:8px">🔴 Overdue — needs attention</div>${overdue.map(t=>`<div onclick="${isMob()?`openMobile(${t.id})`:`switchTab('board');openDetail(${t.id})`}" style="cursor:pointer;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:8px"><span style="flex:1;font-size:13px;font-weight:500;color:var(--tx)">${esc(t.title)}</span><span style="font-size:10px;color:var(--rd-d);font-weight:600">Since ${fmtDate(t.due_date)}</span></div>`).join('')}</div>`:''}
+    ${overdue.length>0?`<div style="margin-bottom:14px;padding:12px 14px;background:var(--rd-l);border:1px solid #f0b8b8;border-radius:var(--rl)"><div style="font-size:12px;font-weight:700;color:var(--rd-d);margin-bottom:8px">🔴 Overdue — needs attention</div>${overdue.map(t=>`<div onclick="openTaskPopup(${t.id})" style="cursor:pointer;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:8px"><span style="flex:1;font-size:13px;font-weight:500;color:var(--tx)">${esc(t.title)}</span><span style="font-size:10px;color:var(--rd-d);font-weight:600">Since ${fmtDate(t.due_date)}</span></div>`).join('')}</div>`:''}
     <div class="mw-columns" style="margin-bottom:14px">${colsHtml}</div>
     ${upcoming.length?`<div class="upcoming-card">
       <div class="upcoming-hdr"><span class="section-title">📅 Upcoming due dates</span><span class="section-badge">${upcoming.length}</span></div>
-      ${upcoming.slice(0,8).map(t=>{const st=getStatus(t.status);const df=(new Date(t.due_date)-td)/864e5;return`<div class="upcoming-row" onclick="${isMob()?`openMobile(${t.id})`:`switchTab('board');openDetail(${t.id})`}">
+      ${upcoming.slice(0,8).map(t=>{const st=getStatus(t.status);const df=(new Date(t.due_date)-td)/864e5;return`<div class="upcoming-row" onclick="openTaskPopup(${t.id})">
         <span class="upcoming-dot" style="background:${st.color}"></span>
         <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--tx)">${esc(t.title)}</div><div style="font-size:11px;color:var(--t3);margin-top:2px">${esc(st.name)} · ${typeBadge(t.type)}</div></div>
         <span style="font-size:11px;font-weight:600;color:${df<=3?'var(--am-d)':'var(--t3)'};white-space:nowrap">${df<=1?'Tomorrow':Math.round(df)+'d left'}</span>
@@ -1178,7 +1376,7 @@ function renderOwnerView(wrap){
       const my=activeTasks().filter(t=>t.assignee===u.id&&!statuses.find(s=>s.id===t.status&&s.is_done));
       const late=my.filter(t=>t.due_date&&new Date(t.due_date)<td);
       return`<div class="owner-card"><div class="owner-hdr">${avHtml(u.id,'lg')}<div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--tx)">${esc(u.name)}</div><div style="font-size:12px;color:var(--t3);margin-top:2px">${my.length} open · ${late.length} overdue</div></div><span class="role-badge role-${u.role}">${u.role}</span></div>
-        ${my.length?my.map(t=>{const st=getStatus(t.status);const isLate=t.due_date&&new Date(t.due_date)<td;return`<div class="owner-task" onclick="${isMob()?`openMobile(${t.id})`:`switchTab('board');openDetail(${t.id})`}">
+        ${my.length?my.map(t=>{const st=getStatus(t.status);const isLate=t.due_date&&new Date(t.due_date)<td;return`<div class="owner-task" onclick="openTaskPopup(${t.id})">
           <div style="font-size:13px;font-weight:500;color:var(--tx);margin-bottom:5px">${esc(t.title)}</div>
           <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center"><span class="spill" style="background:${st.color}22;color:${st.color}">${esc(st.name)}</span>${typeBadge(t.type)}${t.priority==='high'?`<span class="badge" style="background:var(--am-l);color:var(--am-d)">High</span>`:''}${t.due_date&&!st?.hide_due?`<span style="font-size:10px;color:${isLate?'var(--rd)':'var(--t3)'};font-weight:600">📅 ${fmtDate(t.due_date)}</span>`:''}</div>
         </div>`;}).join(''):`<div class="section-empty">No open tasks 🎉</div>`}
@@ -1266,7 +1464,7 @@ function renderSettings(){
   <div class="settings-section">
     <div class="settings-hdr"><div class="settings-hdr-title">Task types</div><div class="settings-hdr-sub">Custom types with color badges on cards</div></div>
     ${taskTypes.map((ty,i)=>`<div class="settings-row" style="cursor:default"><span class="badge" style="background:${ty.bg};color:${ty.color}">${esc(ty.icon)} ${esc(ty.name)}</span><div class="settings-row-info" style="margin-left:4px"><div class="settings-row-sub">${tasks.filter(t=>t.type===ty.id&&!t.archived).length} tasks</div></div><div class="smgr-actions"><button class="btn-sm" onclick="editTypeRow(${i})">Edit</button><button class="btn-d" style="padding:5px 10px;font-size:12px" onclick="deleteType('${ty.id}')">Del</button></div></div>`).join('')}
-    <div class="new-item-row"><input type="color" id="new-ty-color" value="#4530A0" class="color-pick" style="width:30px;height:30px;border-radius:50%;border:1px solid var(--bd);cursor:pointer;padding:0;overflow:hidden"><input id="new-ty-icon" placeholder="Icon" maxlength="2" style="width:46px;padding:8px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);outline:none;font-size:14px;text-align:center"><input id="new-ty-name" placeholder="Type name…" style="flex:1;min-width:80px;padding:8px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);outline:none;font-size:13px"><button class="btn-p" onclick="addType()">Add</button></div>
+    <div class="new-item-row"><input type="color" id="new-ty-color" value="#4530A0" class="color-pick" style="width:30px;height:30px;border-radius:50%;border:1px solid var(--bd);cursor:pointer;padding:0;overflow:hidden"><button type="button" class="icon-picker-btn" id="new-ty-icon-btn" onclick="openIconPicker(this,document.getElementById('new-ty-icon-val').value,v=>{document.getElementById('new-ty-icon-val').value=v;document.getElementById('new-ty-icon-btn').textContent=v;})" title="Choose icon">•</button><input type="hidden" id="new-ty-icon-val" value="•"><input id="new-ty-name" placeholder="Type name…" style="flex:1;min-width:80px;padding:8px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);outline:none;font-size:13px"><button class="btn-p" onclick="addType()">Add</button></div>
   </div>`;
 }
 function onStatusDragStart(e,idx){dragStatusIdx=idx;e.currentTarget.classList.add('dragging');}
@@ -1294,9 +1492,9 @@ function editStatusRow(i){
 async function saveStatusRow(i){const name=document.getElementById(`esr-n-${i}`)?.value.trim();const color=document.getElementById(`esr-c-${i}`)?.value;if(!name)return;await sb.from('statuses').update({name,color}).eq('id',statuses[i].id);await reloadAndRefresh();renderSettings();}
 async function addStatus(){const name=document.getElementById('new-st-name')?.value.trim();if(!name)return;const color=document.getElementById('new-st-color').value;const maxO=statuses.reduce((a,s)=>Math.max(a,s.sort_order),0);await sb.from('statuses').insert({id:'s'+Date.now(),name,color,is_done:false,hide_due:false,sort_order:maxO+1});document.getElementById('new-st-name').value='';await reloadAndRefresh();renderSettings();}
 async function deleteStatus(id){if(statuses.length<=1){showNotif('⚠️','Need at least one status.');return;}const fb=statuses.find(s=>s.id!==id);await sb.from('tasks').update({status:fb.id}).eq('status',id);await sb.from('statuses').delete().eq('id',id);await reloadAndRefresh();renderSettings();}
-function editTypeRow(i){const rows=document.querySelectorAll('.settings-section:last-child .settings-row');const row=rows[i];if(!row)return;const ty=taskTypes[i];const actDiv=row.querySelector('.smgr-actions');if(actDiv)actDiv.innerHTML=`<button class="btn-p" style="font-size:12px;padding:5px 11px" onclick="saveTypeRow(${i})">Save</button><button class="btn-sm" onclick="renderSettings()">Cancel</button>`;const first=row.firstElementChild;if(first)first.outerHTML=`<div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><input type="color" id="etr-c-${i}" value="${ty.color}" style="width:26px;height:26px;border-radius:50%;border:1px solid var(--bd);cursor:pointer;padding:0;overflow:hidden"><input id="etr-i-${i}" value="${esc(ty.icon||'')}" maxlength="2" style="width:40px;padding:7px 8px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);outline:none;font-size:14px;text-align:center"><input id="etr-n-${i}" value="${esc(ty.name)}" style="flex:1;min-width:80px;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);outline:none;font-size:13px"></div>`;}
+function editTypeRow(i){const rows=document.querySelectorAll('.settings-section:last-child .settings-row');const row=rows[i];if(!row)return;const ty=taskTypes[i];const actDiv=row.querySelector('.smgr-actions');if(actDiv)actDiv.innerHTML=`<button class="btn-p" style="font-size:12px;padding:5px 11px" onclick="saveTypeRow(${i})">Save</button><button class="btn-sm" onclick="renderSettings()">Cancel</button>`;const first=row.firstElementChild;if(first)first.outerHTML=`<div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><input type="color" id="etr-c-${i}" value="${ty.color}" style="width:26px;height:26px;border-radius:50%;border:1px solid var(--bd);cursor:pointer;padding:0;overflow:hidden"><button type="button" id="etr-i-btn-${i}" class="icon-picker-btn" onclick="openIconPicker(this,'${esc(ty.icon||'•')}',v=>{document.getElementById('etr-i-${i}').value=v;document.getElementById('etr-i-btn-${i}').textContent=v;})">${esc(ty.icon||'•')}</button><input type="hidden" id="etr-i-${i}" value="${esc(ty.icon||'•')}"<input id="etr-n-${i}" value="${esc(ty.name)}" style="flex:1;min-width:80px;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);outline:none;font-size:13px"></div>`;}
 async function saveTypeRow(i){const name=document.getElementById(`etr-n-${i}`)?.value.trim();const color=document.getElementById(`etr-c-${i}`)?.value;const icon=document.getElementById(`etr-i-${i}`)?.value.trim()||'•';if(!name)return;await sb.from('task_types').update({name,color,bg:color+'22',icon}).eq('id',taskTypes[i].id);await reloadAndRefresh();renderSettings();}
-async function addType(){const name=document.getElementById('new-ty-name')?.value.trim();if(!name)return;const color=document.getElementById('new-ty-color').value;const icon=document.getElementById('new-ty-icon')?.value.trim()||'•';const maxO=taskTypes.reduce((a,t)=>Math.max(a,t.sort_order),0);await sb.from('task_types').insert({id:'ty'+Date.now(),name,color,bg:color+'22',icon,sort_order:maxO+1});document.getElementById('new-ty-name').value='';await reloadAndRefresh();renderSettings();}
+async function addType(){const name=document.getElementById('new-ty-name')?.value.trim();if(!name)return;const color=document.getElementById('new-ty-color').value;const icon=document.getElementById('new-ty-icon-val')?.value.trim()||document.getElementById('new-ty-icon')?.value.trim()||'•';const maxO=taskTypes.reduce((a,t)=>Math.max(a,t.sort_order),0);await sb.from('task_types').insert({id:'ty'+Date.now(),name,color,bg:color+'22',icon,sort_order:maxO+1});document.getElementById('new-ty-name').value='';await reloadAndRefresh();renderSettings();}
 async function deleteType(id){if(taskTypes.length<=1){showNotif('⚠️','Need at least one type.');return;}const fb=taskTypes.find(t=>t.id!==id);await sb.from('tasks').update({type:fb.id}).eq('type',id);await sb.from('task_types').delete().eq('id',id);await reloadAndRefresh();renderSettings();}
 
 // ══════════════════════════════════════════════
@@ -1344,10 +1542,43 @@ document.addEventListener('click',e=>{['task-modal','user-modal'].forEach(id=>{c
 // ══════════════════════════════════════════════
 
 // EXPOSE GLOBALS
-Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,renderDescSec,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey});
+Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,renderDescSec,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,editDescInline,saveDescInline,renderTaskPopup,fmtTimeHtml});
 
 // INIT
 initLogin();
 </script>
+
+<!-- Task detail popup — big centered modal -->
+<div class="task-popup-overlay hidden" id="task-popup-overlay" onclick="handlePopupBg(event)">
+  <div class="task-popup" onclick="event.stopPropagation()">
+    <div class="tp-head">
+      <div class="tp-title" id="tp-title"></div>
+      <div class="tp-head-actions" id="tp-head-actions"></div>
+      <button class="tp-close" onclick="closeTaskPopup()" title="Close  Esc">✕</button>
+    </div>
+    <div class="tp-body">
+      <div class="tp-left" id="tp-left"></div>
+      <div class="tp-right">
+        <div class="tp-comments-scroll" id="tp-comments"></div>
+        <div class="tp-nc-area">
+          <div style="display:flex;gap:7px;align-items:flex-end;margin-bottom:7px">
+            <div id="tp-nc-av" class="av av-md"></div>
+            <textarea class="nc-input" id="tp-nc-input" placeholder="Comment… (Enter to send)" rows="1" style="min-height:38px"></textarea>
+          </div>
+          <div style="display:flex;align-items:center;gap:7px">
+            <label class="nc-attach" style="font-size:11px;padding:4px 8px">📎 Attach
+              <input type="file" id="tp-nc-file" style="display:none" onchange="onAttach(event,'tp-nc')">
+            </label>
+            <div class="hidden ts" id="tp-nc-preview" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 5px;font-size:11px"></div>
+            <button class="btn-p" onclick="postComment('tp-nc','tp-comments')" style="margin-left:auto;font-size:12px;padding:5px 12px">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Icon picker portal -->
+<div id="icon-picker-portal"></div>
+
 </body>
 </html>
