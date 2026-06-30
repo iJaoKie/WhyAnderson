@@ -614,9 +614,39 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
   </div>
 </div>
 <!-- Logout menu popup -->
-<div id="logout-menu" class="hidden" style="position:fixed;z-index:500;background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh-lg);min-width:180px;overflow:hidden">
+<div id="logout-menu" class="hidden" style="position:fixed;z-index:500;background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh-lg);min-width:210px;overflow:hidden">
   <div id="lm-user" style="padding:12px 14px;border-bottom:1px solid var(--bd);background:var(--s2)"></div>
+  <button style="width:100%;padding:11px 14px;text-align:left;font-size:13px;color:var(--tx);font-weight:500;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='var(--s2)'" onmouseleave="this.style.background=''" onclick="openChangePinModal()">🔑 Change my PIN</button>
+  <div style="height:1px;background:var(--bd)"></div>
   <button style="width:100%;padding:11px 14px;text-align:left;font-size:13px;color:var(--tx);font-weight:500;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='var(--s2)'" onmouseleave="this.style.background=''" onclick="logoutUser()">🚪 Sign out</button>
+</div>
+
+<!-- Change PIN modal — every logged-in user can update their own PIN -->
+<div class="overlay hidden" id="change-pin-modal">
+  <div class="modal" style="max-width:340px">
+    <h3>🔑 Change PIN</h3>
+    <div style="font-size:13px;color:var(--t2);margin-bottom:16px;line-height:1.5">Enter your current PIN to verify, then choose a new 4-digit PIN.</div>
+    <div class="field">
+      <label>Current PIN</label>
+      <input id="cp-current" type="password" inputmode="numeric" maxlength="4" placeholder="••••"
+        style="letter-spacing:8px;font-size:22px;text-align:center;width:100%;padding:10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);outline:none">
+    </div>
+    <div class="field">
+      <label>New PIN</label>
+      <input id="cp-new" type="password" inputmode="numeric" maxlength="4" placeholder="••••"
+        style="letter-spacing:8px;font-size:22px;text-align:center;width:100%;padding:10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);outline:none">
+    </div>
+    <div class="field">
+      <label>Confirm new PIN</label>
+      <input id="cp-confirm" type="password" inputmode="numeric" maxlength="4" placeholder="••••"
+        style="letter-spacing:8px;font-size:22px;text-align:center;width:100%;padding:10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);outline:none">
+    </div>
+    <div id="cp-err" style="font-size:12px;color:var(--rd);min-height:18px;margin-bottom:6px;font-weight:600"></div>
+    <div class="mactions">
+      <button class="btn-s" onclick="closeModal('change-pin-modal')">Cancel</button>
+      <button class="btn-p" onclick="saveChangedPin()">Update PIN</button>
+    </div>
+  </div>
 </div>
 
 <div class="notif-panel" id="notif-panel"></div>
@@ -856,37 +886,41 @@ function clearSession(){localStorage.removeItem(SESSION_KEY);}
 // ══════════════════════════════════════════════
 async function initLogin(){
   const statusEl=document.getElementById('db-status');
-  statusEl.className='db-status db-loading';statusEl.textContent='⏳ Connecting…';
+  const subEl=document.getElementById('login-sub');
+  const bodyEl=document.getElementById('login-body');
+  statusEl.className='db-status db-loading';
+  statusEl.textContent='⏳ Connecting…';
 
-  // Quick connectivity check first
-  const {error:pingErr}=await sb.from('users').select('id').limit(1);
-  if(pingErr){
-    console.error('❌ DB connection failed:',pingErr);
-    statusEl.className='db-status db-err';statusEl.textContent='❌ DB error';
-    document.getElementById('login-sub').textContent='Connection failed — check details below';
-    document.getElementById('login-body').innerHTML=`
-      <div style="padding:14px 16px;background:var(--rd-l);border:1px solid #f0b8b8;border-radius:var(--rl);font-size:12px;color:var(--rd-d);line-height:1.6">
-        <b>Error:</b> ${esc(pingErr.message||JSON.stringify(pingErr))}<br><br>
-        Common causes:<br>
-        • Wrong <code>SUPABASE_URL</code> or <code>SUPABASE_ANON_KEY</code> in the file<br>
-        • Tables not created yet — run the SQL seed script in Supabase<br>
-        • RLS policies blocking anon access<br><br>
-        <b>Quick fix:</b> open browser DevTools → Console for full error detail.
-      </div>`;
+  // Single loadAll call with a 10-second timeout guard
+  const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Connection timed out after 10s — check your SUPABASE_URL and ANON_KEY')),10000));
+  let ok=false;
+  try{
+    ok=await Promise.race([loadAll(),timeoutPromise]);
+  }catch(e){
+    console.error('❌ initLogin error:',e);
+    statusEl.className='db-status db-err';statusEl.textContent='❌ Error';
+    subEl.textContent='Could not connect';
+    bodyEl.innerHTML=`<div style="padding:14px 16px;background:var(--rd-l);border:1px solid #f0b8b8;border-radius:var(--rl);font-size:12px;color:var(--rd-d);line-height:1.7">
+      <b>Error:</b> ${esc(String(e?.message||e))}<br><br>
+      Common causes:<br>
+      • Wrong <code>SUPABASE_URL</code> or <code>SUPABASE_ANON_KEY</code> in the file<br>
+      • RLS policy blocking anon access — run <code>fix-existing-db.sql</code><br>
+      • Tables don't exist — run the schema SQL in Supabase dashboard<br><br>
+      Open browser <b>DevTools → Console</b> for the full error.
+    </div>`;
     return;
   }
 
-  const ok=await loadAll();
   if(!ok){
     statusEl.className='db-status db-err';statusEl.textContent='❌ Load error';
-    document.getElementById('login-sub').textContent='Data load failed — check console';
-    document.getElementById('login-body').innerHTML=`<div style="padding:14px;font-size:12px;color:var(--rd);text-align:center">Some tables are missing or inaccessible.<br>Open DevTools → Console for details.</div>`;
+    subEl.textContent='Data load failed — check console';
+    bodyEl.innerHTML=`<div style="padding:14px;font-size:12px;color:var(--rd);text-align:center">Some tables are missing.<br>Open DevTools → Console for details.</div>`;
     return;
   }
 
   statusEl.className='db-status db-ok';statusEl.textContent='✅ Connected';
 
-  // Try restoring session
+  // Restore session if valid
   const savedUid=loadSession();
   if(savedUid){const u=getUser(savedUid);if(u){await doLogin(u,false);return;}}
   showUserSelect();
@@ -1146,65 +1180,145 @@ function renderTaskPopup(id){
   const t=getTask(id);if(!t)return;
   const u=getUser(t.assignee)||{name:t.assignee,initials:'?',color:'#aaa',text_color:'#fff'};
   const st=getStatus(t.status);const isDone=st?.is_done;
-  // Header
   document.getElementById('tp-title').textContent=t.title;
+  // One Edit button — switches left pane to inline form, no second popup
   document.getElementById('tp-head-actions').innerHTML=
-    (can('editTask')?`<button class="btn-sm" onclick="openTaskModal(null,${t.id})">✏ Edit</button>`:'') +
+    (can('editTask')?`<button class="btn-sm" id="tp-edit-btn" onclick="openTaskPopupEdit(${t.id})">✏ Edit</button>`:'') +
     (isDone&&can('archive')?`<button class="btn-sm" style="background:var(--am-l);color:var(--am-d);border-color:var(--am-l)" onclick="archiveTask(${t.id})">📦 Archive</button>`:'') +
     (can('instantArchive')?`<button class="btn-sm" style="background:var(--pu-l);color:var(--pu-d);border-color:var(--pu-l)" onclick="instantArchive(${t.id})">⚡ Now</button>`:'');
-  // Left pane — meta grid + description
-  const dueHtml=t.due_date?`<span class="card-due ${(()=>{const df=(new Date(t.due_date)-today0())/864e5;return df<0?'due-late':df<=3?'due-soon':'due-ok'})()}">${t.due_date?fmtDate(t.due_date):''}</span>`:'—';
-  document.getElementById('tp-left').innerHTML=`
+  // Left pane — view mode, reset edit flag
+  const dueHtml=t.due_date?`<span class="card-due ${(()=>{const df=(new Date(t.due_date)-today0())/864e5;return df<0?'due-late':df<=3?'due-soon':'due-ok'})()}">${fmtDate(t.due_date)}</span>`:'—';
+  const left=document.getElementById('tp-left');
+  left.dataset.editMode='0';
+  left.innerHTML=`
     <div class="tp-meta-grid">
       <span class="tp-meta-key">Status</span>
       <span><span class="spill" style="background:${st.color}22;color:${st.color}">${esc(st.name)}</span></span>
       <span class="tp-meta-key">Assignee</span>
       <span style="display:flex;align-items:center;gap:7px">${avHtml(t.assignee,'sm')}<span class="tp-meta-val">${esc(u.name)}</span></span>
-      <span class="tp-meta-key">Type</span>
-      <span>${typeBadge(t.type)}</span>
+      <span class="tp-meta-key">Type</span><span>${typeBadge(t.type)}</span>
       <span class="tp-meta-key">Priority</span>
       <span class="tp-meta-val" style="text-transform:capitalize">${t.priority}${t.priority==='high'?` <span class="badge" style="background:var(--am-l);color:var(--am-d)">⚡ High</span>`:''}</span>
       <span class="tp-meta-key">Due date</span>
       <span class="tp-meta-val">${t.due_date&&!st?.hide_due?dueHtml:'—'}</span>
-      <span class="tp-meta-key">Created</span>
-      ${fmtTimeHtml(t.created_at)}
+      <span class="tp-meta-key">Created</span>${fmtTimeHtml(t.created_at)}
       ${isDone&&t.completed_at?`<span class="tp-meta-key">Completed</span>${fmtTimeHtml(t.completed_at)}`:''}
     </div>
     <div class="tp-sec-label">Description</div>
-    ${renderDescHtml(t,'tp-left')}`;
-  // Right pane — comments
+    ${t.description
+      ?`<div class="desc-text">${esc(t.description)}</div>`
+      :`<div class="desc-empty" style="cursor:${can('editTask')?'pointer':'default'}" ${can('editTask')?`onclick="openTaskPopupEdit(${t.id})"`:''}>${can('editTask')?'Add a description…':'No description.'}</div>`
+    }`;
   renderCmmts(id,'tp-comments');
-  // Avatar for comment box
   const av=document.getElementById('tp-nc-av');
   if(av&&currentUser){av.style.background=currentUser.color;av.style.color=currentUser.text_color||tcol(currentUser.color);av.textContent=currentUser.initials;}
 }
 
-function renderDescHtml(t, ctxId){
-  const ed=can('editTask');
-  if(t.description)return`<div class="desc-text" style="margin-bottom:8px">${esc(t.description)}</div>${ed?`<button class="btn-sm" onclick="editDescInline(${t.id},'${ctxId}')">Edit</button>`:''}`;
-  return ed?`<div class="desc-empty" onclick="editDescInline(${t.id},'${ctxId}')">Add a description…</div>`:`<div class="desc-empty" style="cursor:default">No description.</div>`;
-}
-function editDescInline(id,ctxId){
+// ── Inline edit inside popup — no second modal ─────────────────────────────
+function openTaskPopupEdit(id){
   const t=getTask(id);if(!t)return;
-  const ctx=document.getElementById(ctxId);if(!ctx)return;
-  const descEl=ctx.querySelector('.desc-text')||ctx.querySelector('.desc-empty');
-  const editBtn=ctx.querySelector('.btn-sm');
-  if(descEl)descEl.outerHTML=`<textarea class="desc-edit" id="tp-dta-${id}" style="margin-bottom:8px">${esc(t.description||'')}</textarea><div style="display:flex;gap:6px"><button class="btn-p" style="font-size:12px;padding:5px 12px" onclick="saveDescInline(${id},'${ctxId}')">Save</button><button class="btn-s" style="font-size:12px;padding:5px 12px" onclick="renderTaskPopup(${id})">Cancel</button></div>`;
-  if(editBtn)editBtn.remove();
-  document.getElementById('tp-dta-'+id)?.focus();
+  const left=document.getElementById('tp-left');if(!left)return;
+  // Toggle: if already in edit mode, cancel back to view
+  if(left.dataset.editMode==='1'){renderTaskPopup(id);return;}
+  left.dataset.editMode='1';
+  // Flip header Edit button to "← Cancel"
+  const editBtn=document.getElementById('tp-edit-btn');
+  if(editBtn){editBtn.textContent='← Cancel';editBtn.onclick=()=>renderTaskPopup(id);}
+  // Full inline edit form
+  left.innerHTML=`
+    <div style="font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px">Editing task</div>
+    <div style="margin-bottom:11px">
+      <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Title *</label>
+      <input id="tpe-title" value="${esc(t.title)}" style="width:100%;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:14px;font-weight:500;outline:none;font-family:inherit"
+        onfocus="this.style.borderColor='var(--gr)';this.style.boxShadow='0 0 0 2.5px var(--gr-l)'"
+        onblur="this.style.borderColor='var(--bd)';this.style.boxShadow=''">
+    </div>
+    <div style="margin-bottom:11px">
+      <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Description</label>
+      <textarea id="tpe-desc" style="width:100%;min-height:80px;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;line-height:1.55;resize:vertical;outline:none;font-family:inherit"
+        onfocus="this.style.borderColor='var(--gr)';this.style.boxShadow='0 0 0 2.5px var(--gr-l)'"
+        onblur="this.style.borderColor='var(--bd)';this.style.boxShadow=''">${esc(t.description||'')}</textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Type</label>
+        <select id="tpe-type" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
+          ${taskTypes.map(ty=>`<option value="${esc(ty.id)}"${t.type===ty.id?' selected':''}>${esc(ty.icon)} ${esc(ty.name)}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Priority</label>
+        <select id="tpe-priority" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
+          <option value="high"${t.priority==='high'?' selected':''}>⚡ High</option>
+          <option value="medium"${t.priority==='medium'?' selected':''}>Medium</option>
+          <option value="low"${t.priority==='low'?' selected':''}>Low</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Assignee</label>
+        <select id="tpe-assignee" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
+          ${users.map(u2=>`<option value="${esc(u2.id)}"${t.assignee===u2.id?' selected':''}>${esc(u2.name)}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Status</label>
+        <select id="tpe-status" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
+          ${statuses.map(s=>`<option value="${esc(s.id)}"${t.status===s.id?' selected':''}>${esc(s.name)}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Due date</label>
+      <input type="date" id="tpe-due" value="${t.due_date||''}" style="padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-p" onclick="saveTaskPopupEdit(${t.id})" style="flex:1">💾 Save changes</button>
+      <button class="btn-s" onclick="renderTaskPopup(${t.id})">Cancel</button>
+    </div>`;
+  setTimeout(()=>document.getElementById('tpe-title')?.select(),40);
 }
-async function saveDescInline(id,ctxId){
-  const val=document.getElementById('tp-dta-'+id)?.value.trim();
-  await sb.from('tasks').update({description:val,updated_at:mkTs()}).eq('id',id);
+
+async function saveTaskPopupEdit(id){
+  const title=document.getElementById('tpe-title')?.value.trim();
+  if(!title){showNotif('⚠️','Title is required.');return;}
+  const newStatus=document.getElementById('tpe-status')?.value;
+  const t=getTask(id);if(!t)return;
+  const newSt=getStatus(newStatus);
+  const upd={
+    title,
+    description:document.getElementById('tpe-desc')?.value.trim()||null,
+    type:document.getElementById('tpe-type')?.value,
+    priority:document.getElementById('tpe-priority')?.value,
+    assignee:document.getElementById('tpe-assignee')?.value,
+    status:newStatus,
+    due_date:document.getElementById('tpe-due')?.value||null,
+    updated_at:mkTs()
+  };
+  if(t.status!==newStatus){
+    const old=getStatus(t.status);
+    await sb.from('comments').insert({task_id:id,author:currentUser.id,
+      text:`Status: <b>${esc(old.name)}</b> → <b>${esc(newSt.name)}</b>`,is_system:true});
+    if(newSt?.is_done&&!t.completed_at)upd.completed_at=mkTs();
+  }
+  await sb.from('tasks').update(upd).eq('id',id);
+  showNotif('✅','Task updated!');
   await reloadAndRefresh();
   if(selectedTaskId===id)renderTaskPopup(id);
 }
 
+function renderDescHtml(t,ctxId){
+  const ed=can('editTask');
+  if(t.description)return`<div class="desc-text">${esc(t.description)}</div>`;
+  return ed?`<div class="desc-empty" onclick="openTaskPopupEdit(${t.id})">Add a description…</div>`:`<div class="desc-empty" style="cursor:default">No description.</div>`;
+}
+
 // Legacy renderDetail stub — kept for any remaining old-style calls
 function renderDetail(id,tiId,miId,diId,ciId,navId){openTaskPopup(id);}
-// renderDescSec delegated to renderDescHtml inside popup
-function editDesc(id,secId){editDescInline(id,'tp-left');}
-// saveDesc delegated to saveDescInline
+// renderDescSec / editDesc / saveDesc — old call sites now route to the inline popup editor
+function editDesc(id,secId){openTaskPopupEdit(id);}
+async function saveDesc(id,secId){await saveTaskPopupEdit(id);}
 
 // ── ICON PICKER for task type modal ──────────────────────────────────────────
 const TYPE_ICONS=['✓','★','⚡','🐛','🔧','📋','🎯','💡','🚀','🔍','📦','⚙','🛠','📝','🎨','🔒','🌟','⚠','🔔','❗','🔗','💬','📊','🗂','✨','🏷','📌','🏗','🔄','⛔','✅','❌'];
@@ -1338,21 +1452,6 @@ function _noop(){}
 const _detailPanel=document.getElementById('detail-panel');
 if(_detailPanel)_detailPanel.style.display='none';
 
-// ── ORIGINAL renderDetail body below (kept for reference, now replaced) ──
-// Actual original old code body comes next; need to skip to next section
-
-function renderDescSec(t,secId){
-  const sec=document.getElementById(secId);if(!sec)return;const ed=can('editTask');
-  sec.innerHTML=`<div class="dp-label">Description</div>`+
-    (t.description?`<div class="desc-text">${esc(t.description)}</div>`:`<div class="desc-empty"${ed?` onclick="editDesc(${t.id},'${secId}')"`:''}>${ed?'Add a description…':'No description.'}</div>`)+
-    (t.description&&ed?`<div style="margin-top:6px"><button class="btn-sm" onclick="editDesc(${t.id},'${secId}')">Edit</button></div>`:'');
-}
-function editDesc(id,secId){const t=getTask(id);if(!t)return;const sec=document.getElementById(secId);sec.innerHTML=`<div class="dp-label">Description</div><textarea class="desc-edit" id="dta-${secId}">${esc(t.description||'')}</textarea><div class="edit-row"><button class="btn-p" style="font-size:12px;padding:5px 12px" onclick="saveDesc(${id},'${secId}')">Save</button><button class="btn-s" style="font-size:12px;padding:5px 12px" onclick="renderDescSec(getTask(${id}),'${secId}')">Cancel</button></div>`;document.getElementById('dta-'+secId)?.focus();}
-async function saveDesc(id,secId){
-  const val=document.getElementById('dta-'+secId)?.value.trim();
-  await sb.from('tasks').update({description:val,updated_at:mkTs()}).eq('id',id);
-  await reloadAndRefresh();renderDescSec(getTask(id),secId);
-}
 
 // ══════════════════════════════════════════════
 // COMMENTS — owner can delete their own
@@ -1799,8 +1898,44 @@ document.addEventListener('click',e=>{['task-modal','user-modal'].forEach(id=>{c
 // ALTER TABLE users ADD COLUMN IF NOT EXISTS pin text DEFAULT '1234';
 // ══════════════════════════════════════════════
 
+// ══════════════════════════════════════════════
+// CHANGE PIN — every logged-in user can update their own PIN
+// ══════════════════════════════════════════════
+function openChangePinModal(){
+  document.getElementById('logout-menu').classList.add('hidden');
+  ['cp-current','cp-new','cp-confirm'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const errEl=document.getElementById('cp-err');if(errEl)errEl.textContent='';
+  openModal('change-pin-modal');
+  setTimeout(()=>document.getElementById('cp-current')?.focus(),80);
+}
+async function saveChangedPin(){
+  const current=document.getElementById('cp-current')?.value.trim();
+  const newPin=document.getElementById('cp-new')?.value.trim();
+  const confirmVal=document.getElementById('cp-confirm')?.value.trim();
+  const errEl=document.getElementById('cp-err');
+  const setErr=msg=>{if(errEl)errEl.textContent=msg;};
+
+  if(!current||!newPin||!confirmVal){setErr('Please fill in all three fields.');return;}
+  if(!/^\d{4}$/.test(newPin)){setErr('New PIN must be exactly 4 digits.');return;}
+  if(newPin!==confirmVal){setErr('New PIN and confirmation do not match.');return;}
+
+  try{
+    const{data,error}=await sb.from('users').select('pin').eq('id',currentUser.id).single();
+    if(error)throw error;
+    const storedPin=data?.pin||'1234';
+    if(current!==storedPin){setErr('Current PIN is incorrect.');return;}
+    await sb.from('users').update({pin:newPin}).eq('id',currentUser.id);
+    currentUser={...currentUser,pin:newPin};
+    closeModal('change-pin-modal');
+    showNotif('✅','PIN updated successfully!');
+  }catch(e){
+    console.error('PIN change error:',e);
+    setErr('Error updating PIN. Please try again.');
+  }
+}
+
 // EXPOSE GLOBALS
-Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,renderDescSec,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,editDescInline,saveDescInline,renderTaskPopup,fmtTimeHtml,openTaskPopup,saveTask});
+Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,renderTaskPopup,fmtTimeHtml,openTaskPopupEdit,saveTaskPopupEdit,openChangePinModal,saveChangedPin});
 
 // INIT — defer until DOM is fully ready so all element IDs exist
 if(document.readyState==='loading'){
