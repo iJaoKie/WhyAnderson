@@ -828,6 +828,62 @@ html[data-theme="dark"] .project-workitem-note{background:#132B22;color:var(--gr
 html[data-theme="dark"] .pm-dash-hero{background:linear-gradient(135deg,#061A12,#14734A 72%,#1FBE74)}
 html[data-theme="dark"] .project-popup-workitem-summary{background:var(--s2)}
 
+
+
+/* Patch v8: cleaner project create modal, drag-sort teams, work item spacing, My Work owner progress */
+#task-modal .modal.project-create-mode{max-width:760px;width:min(760px,calc(100vw - 28px));}
+#task-modal .modal.project-create-mode #project-fields{display:none!important;}
+#task-modal .modal.project-create-mode #f-desc{min-height:150px;font-size:14px;line-height:1.6;}
+#task-modal .modal.project-create-mode .field{margin-bottom:14px;}
+#task-modal .modal.project-create-mode h3{font-size:21px;}
+.project-team-manager.sortable{gap:9px;}
+.project-team-row.team-draggable{grid-template-columns:28px 1fr auto;cursor:default;}
+.project-team-row.team-draggable.dragging{opacity:.45;transform:scale(.995);}
+.project-team-row.team-draggable.drag-over{outline:2px dashed var(--gr);background:var(--gr-l);}
+.project-team-handle{width:24px;height:24px;border-radius:7px;background:var(--s2);border:1px solid var(--bd);display:inline-flex;align-items:center;justify-content:center;color:var(--t2);cursor:grab;user-select:none;font-size:14px;}
+.project-team-handle:active{cursor:grabbing;}
+.project-team-add-row{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:end;margin-top:12px;border-top:1px solid var(--bd);padding-top:12px;}
+.project-team-add-row input{width:100%;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none;}
+.project-workitem-create-card .project-panel-body{padding:16px;}
+.project-workitem-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start;}
+.project-workitem-form .full{grid-column:1/-1;}
+.project-workitem-form .double{grid-column:span 2;}
+.project-workitem-form textarea{min-height:142px!important;line-height:1.65!important;font-size:13px!important;}
+.project-workitem-form .project-add-actions{grid-column:1/-1;display:flex;align-items:center;gap:10px;justify-content:flex-end;border-top:1px solid var(--bd);padding-top:14px;margin-top:4px;}
+.project-workitem-form .project-helper-text{max-width:520px;margin-right:auto;}
+.mw-latest-sub{font-size:12px;color:rgba(255,255,255,.72);line-height:1.5;margin-bottom:12px;position:relative;z-index:1;}
+.mw-workitem-chip{font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;background:var(--pu-l);color:var(--pu-d);}
+html[data-theme="dark"] .mw-workitem-chip{background:#282243;color:#E0D9FF;}
+@media(max-width:820px){.project-workitem-form{grid-template-columns:1fr}.project-workitem-form .double{grid-column:1/-1}.project-team-add-row{grid-template-columns:1fr}.project-workitem-form .project-add-actions{align-items:stretch;flex-direction:column}.project-workitem-form .project-helper-text{margin-right:0}}
+
+/* Dedicated Project creation modal — separate from normal task modal */
+#project-modal .project-create-modal{
+  max-width:860px;
+  width:min(860px,calc(100vw - 28px));
+  padding:28px;
+}
+#project-modal .project-modal-title{
+  font-size:22px;
+  font-weight:800;
+  color:var(--tx);
+  margin-bottom:6px;
+}
+#project-modal .project-modal-sub{
+  font-size:13px;
+  color:var(--t3);
+  line-height:1.55;
+  margin-bottom:18px;
+}
+#project-modal .project-create-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+#project-modal .project-create-grid .full{grid-column:1/-1}
+#project-modal #p-desc{min-height:180px;font-size:14px;line-height:1.65}
+#project-modal .project-lock-note{margin-top:8px}
+@media(max-width:700px){#project-modal .project-create-grid{grid-template-columns:1fr}#project-modal .project-create-modal{padding:22px 18px}}
+
 </style>
 <script>
 (function(){
@@ -971,6 +1027,23 @@ html[data-theme="dark"] .project-popup-workitem-summary{background:var(--s2)}
       </div>
     </div>
     <div class="mactions"><button class="btn-s" onclick="closeModal('task-modal')">Cancel</button><button class="btn-p" onclick="saveTask()">Save</button></div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="project-modal">
+  <div class="modal project-create-modal">
+    <div class="project-modal-title">🏗 Create Project</div>
+    <div class="project-modal-sub">Create a locked Project record. Project work items are managed separately inside the Project Manager, not mixed with normal TaskFlow tasks.</div>
+    <div class="project-create-grid">
+      <div class="field full"><label>Project name *</label><input id="p-title" placeholder="e.g. CR-2026-001 Separate Lens Cost"></div>
+      <div class="field full"><label>Description / objective</label><textarea id="p-desc" placeholder="Summarize scope, business impact, target release, risk, and expected outcome..."></textarea></div>
+      <div class="field"><label>Owner</label><select id="p-owner"></select></div>
+      <div class="field"><label>Status</label><select id="p-status"></select></div>
+      <div class="field"><label>Priority</label><select id="p-priority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select></div>
+      <div class="field"><label>Due date</label><input type="date" id="p-due"></div>
+    </div>
+    <div class="project-lock-note">🔒 Project is a special locked type. You cannot convert normal tasks into Projects or Projects into normal tasks.</div>
+    <div class="mactions"><button class="btn-s" onclick="closeModal('project-modal')">Cancel</button><button class="btn-p" onclick="saveProjectRecord()">Create Project</button></div>
   </div>
 </div>
 <div class="overlay hidden" id="user-modal">
@@ -2443,7 +2516,7 @@ async function saveTask(){
 // ══════════════════════════════════════════════
 function openModal(id){document.getElementById(id).classList.remove('hidden');}
 function closeModal(id){document.getElementById(id).classList.add('hidden');}
-document.addEventListener('click',e=>{['task-modal','user-modal'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.classList.contains('hidden')&&e.target===el)closeModal(id);});},true);
+document.addEventListener('click',e=>{['task-modal','user-modal','project-modal'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.classList.contains('hidden')&&e.target===el)closeModal(id);});},true);
 ['nc-input','ms-nc-input'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();const m=id.startsWith('ms');postComment(m?'ms-nc':'nc',m?'ms-comments-wrap':'comments-wrap');}});});
 
 // ══════════════════════════════════════════════
@@ -2973,7 +3046,158 @@ function renderDash(){
   const dash=document.querySelector('#pane-dash .dash-wrap');
   if(dash){dash.innerHTML=`<div class="pm-dash-wrap"><div class="pm-dash-hero"><div><div class="pm-dash-title">PM Control Tower</div><div class="pm-dash-sub">Combined view of normal tasks, project portfolio health, and project work-item follow-ups.</div></div><button class="project-white-btn" onclick="switchTab('project')">Open Project Manager</button></div><div class="pm-dash-grid"><div class="pm-dash-card"><div class="pm-dash-kpi">${projects.length}</div><div class="pm-dash-label">Active projects</div><div class="pm-dash-note">${riskProjects.length} project(s) at risk</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${portfolioPct}%</div><div class="pm-dash-label">Portfolio progress</div><div class="pm-dash-note">Weighted from ${allItems.length} project work items</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openTasks.length}</div><div class="pm-dash-label">Open normal tasks</div><div class="pm-dash-note">${overdueTasks.length} overdue</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openItems}</div><div class="pm-dash-label">Open work items</div><div class="pm-dash-note">${overdueItems.length} overdue · ${pendingItems.length} pending/stuck</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Follow-up queue</div><span class="section-badge">Top ${follow.length}</span></div><div class="pm-dash-panel-body">${followRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project portfolio</div><span class="section-badge">Lowest progress first</span></div><div class="pm-dash-panel-body">${projectRows}</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project flow load</div><span class="section-badge">Work items by step</span></div><div class="pm-dash-panel-body">${flowRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Normal task status</div><span class="section-badge">TaskFlow tasks only</span></div><div class="pm-dash-panel-body">${statusBars}</div></div></div></div>`;return;}
 }
-Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,renderTaskPopup,fmtTimeHtml,openTaskPopupEdit,saveTaskPopupEdit,openChangePinModal,saveChangedPin,renderProjects,openProjectModal,toggleProjectFields,togglePopupProjectFields,openProjectChildTaskModal,deleteTaskFromProject,unlinkTaskFromProject,updateProjectTaskQuick,addProjectTeam,renameProjectTeam,deleteProjectTeam,moveTaskStep,selectProject,saveProjectQuick,addProjectTeamInline,updateProjectTeamInline,addProjectTaskInline,saveProjectTaskInline,savePopupWorkItem,syncProjectTaskWeight,onProjectFlowDragStart,onProjectFlowDragEnd,onProjectFlowDragOver,onProjectFlowDragLeave,onProjectFlowDrop,projectPopupWorkItemRow,savePopupWorkItem});
+
+/* Patch v8 behavior overrides */
+let draggedProjectTeamId=null;
+
+function toggleProjectFields(){
+  const typeId=document.getElementById('f-type')?.value;
+  const isProj=isProjectTypeId(typeId);
+  const box=document.getElementById('project-fields');
+  if(box)box.classList.add('hidden');
+  const modal=document.querySelector('#task-modal .modal');
+  if(modal)modal.classList.toggle('project-create-mode',isProj&&!editingTaskId);
+  const title=document.getElementById('modal-title');
+  if(title&&isProj&&!editingTaskId)title.textContent='Create project';
+}
+
+async function openProjectModal(){
+  if(!can('createTask'))return;
+  const p=await ensureProjectType();
+  if(!p){showNotif('⚠️','Cannot prepare Project type. Please check task_types permission.');return;}
+  const title=document.getElementById('p-title');
+  const desc=document.getElementById('p-desc');
+  const owner=document.getElementById('p-owner');
+  const status=document.getElementById('p-status');
+  const pri=document.getElementById('p-priority');
+  const due=document.getElementById('p-due');
+  if(title)title.value='';
+  if(desc)desc.value='';
+  if(owner)owner.innerHTML=users.map(u=>`<option value="${esc(u.id)}"${currentUser&&currentUser.id===u.id?' selected':''}>${esc(u.name)}</option>`).join('');
+  const defaultStatus=statuses.find(s=>!s.is_done)?.id||statuses[0]?.id||'';
+  if(status)status.innerHTML=statuses.map(st=>`<option value="${esc(st.id)}"${st.id===defaultStatus?' selected':''}>${esc(st.name)}</option>`).join('');
+  if(pri)pri.value='medium';
+  if(due)due.value='';
+  openModal('project-modal');
+}
+
+async function saveProjectRecord(){
+  const title=document.getElementById('p-title')?.value.trim();
+  if(!title){showNotif('⚠️','Project name is required.');return;}
+  const p=await ensureProjectType();
+  if(!p){showNotif('⚠️','Project type is not ready.');return;}
+  const statusId=document.getElementById('p-status')?.value||statuses[0]?.id;
+  const st=getStatus(statusId);
+  const payload={
+    title,
+    description:document.getElementById('p-desc')?.value.trim()||'',
+    type:p.id,
+    priority:document.getElementById('p-priority')?.value||'medium',
+    assignee:document.getElementById('p-owner')?.value||currentUser?.id,
+    status:statusId,
+    due_date:document.getElementById('p-due')?.value||null,
+    archived:false,
+    completed_at:st?.is_done?mkTs():null
+  };
+  const {data,error}=await sb.from('tasks').insert(payload).select().single();
+  if(error){console.error('Create project failed:',error);showNotif('⚠️',`Create project failed: ${esc(error.message||error)}`);return;}
+  closeModal('project-modal');
+  showNotif('🏗',`Project "${esc(title)}" created.`);
+  await reloadAndRefresh();
+  selectedProjectId=data?.id||selectedProjectId;
+  switchTab('project');
+  renderProjects();
+}
+
+function renderProjectTeamManager(project){
+  const teams=projectTeamsFor(project.id);
+  return `<div class="project-panel"><div class="project-panel-head"><div class="project-panel-title">👥 Teams in project</div><span class="section-badge">Drag to arrange</span></div><div class="project-panel-body"><div class="project-team-manager sortable" id="project-team-list-${project.id}">${teams.length?teams.map(tm=>`<div class="project-team-row team-draggable" data-team-id="${escAttr(tm.id)}" draggable="true" ondragstart="onProjectTeamDragStart(event,'${escAttr(tm.id)}')" ondragover="onProjectTeamDragOver(event,this)" ondragleave="onProjectTeamDragLeave(this)" ondrop="onProjectTeamDrop(event,${project.id},'${escAttr(tm.id)}')" ondragend="onProjectTeamDragEnd(event)"><span class="project-team-handle" title="Drag to arrange team order">⋮⋮</span><input id="pm-team-name-${tm.id}" value="${esc(tm.name)}"><div style="display:flex;gap:5px"><button class="project-small-btn" onclick="updateProjectTeamInline(${tm.id})">Save</button><button class="project-mini-danger" onclick="deleteProjectTeam(${tm.id})">Delete</button></div></div>`).join(''):'<div class="project-lock-note">No teams yet. Add DEV, QA, Infra, Business, Vendor, etc.</div>'}</div><div class="project-team-add-row"><input id="pm-new-team-${project.id}" placeholder="New team name, e.g. DEV" onkeydown="if(event.key===\'Enter\')addProjectTeamInline(${project.id})"><button class="btn-p" onclick="addProjectTeamInline(${project.id})">Add team</button></div><div class="project-helper-text">Team order is now managed by drag and drop. The same order appears in work item team dropdowns.</div></div></div>`;
+}
+
+async function addProjectTeamInline(projectId){
+  const name=document.getElementById(`pm-new-team-${projectId}`)?.value.trim();
+  if(!name){showNotif('⚠️','Team name is required.');return;}
+  const maxSort=projectTeamsFor(projectId).reduce((a,t)=>Math.max(a,Number(t.sort_order)||0),0);
+  try{
+    const {error}=await sb.from('project_teams').insert({project_id:projectId,name,sort_order:maxSort+10});
+    if(error)throw error;
+    showNotif('👥','Team added.');
+    await reloadAndRefresh();selectedProjectId=projectId;renderProjects();
+  }catch(e){console.error('Add team failed:',e);showNotif('⚠️',`Add team failed: ${esc(e.message||e)}`);}
+}
+
+async function updateProjectTeamInline(id){
+  const tm=projectTeams.find(x=>String(x.id)===String(id));if(!tm)return;
+  const name=document.getElementById(`pm-team-name-${id}`)?.value.trim();
+  if(!name){showNotif('⚠️','Team name is required.');return;}
+  const {error}=await sb.from('project_teams').update({name}).eq('id',id);
+  if(error){showNotif('⚠️',`Team save failed: ${esc(error.message)}`);return;}
+  showNotif('💾','Team updated.');await reloadAndRefresh();selectedProjectId=tm.project_id;renderProjects();
+}
+
+function onProjectTeamDragStart(ev,id){draggedProjectTeamId=String(id);ev.dataTransfer.effectAllowed='move';try{ev.dataTransfer.setData('text/plain',String(id));}catch(_){ }ev.target.closest('.project-team-row')?.classList.add('dragging');}
+function onProjectTeamDragOver(ev,el){ev.preventDefault();ev.stopPropagation();ev.dataTransfer.dropEffect='move';el.classList.add('drag-over');}
+function onProjectTeamDragLeave(el){el.classList.remove('drag-over');}
+function onProjectTeamDragEnd(ev){ev.target.closest('.project-team-row')?.classList.remove('dragging');document.querySelectorAll('.project-team-row.drag-over').forEach(x=>x.classList.remove('drag-over'));draggedProjectTeamId=null;}
+async function onProjectTeamDrop(ev,projectId,beforeTeamId){
+  ev.preventDefault();ev.stopPropagation();document.querySelectorAll('.project-team-row.drag-over').forEach(x=>x.classList.remove('drag-over'));
+  const movingId=draggedProjectTeamId||ev.dataTransfer.getData('text/plain');draggedProjectTeamId=null;
+  if(!movingId||String(movingId)===String(beforeTeamId))return;
+  let list=projectTeamsFor(projectId).filter(t=>String(t.id)!==String(movingId));
+  const moving=projectTeams.find(t=>String(t.id)===String(movingId));if(!moving)return;
+  const idx=Math.max(0,list.findIndex(t=>String(t.id)===String(beforeTeamId)));
+  list.splice(idx,0,moving);
+  const results=await Promise.all(list.map((tm,i)=>sb.from('project_teams').update({sort_order:(i+1)*10}).eq('id',tm.id)));
+  const err=results.find(r=>r.error)?.error;if(err){showNotif('⚠️',`Team move failed: ${esc(err.message)}`);return;}
+  await reloadAndRefresh();selectedProjectId=projectId;renderProjects();showNotif('↕️','Team order updated.');
+}
+
+function renderProjectTaskCreator(project){
+  return `<div class="project-panel project-full project-workitem-create-card"><div class="project-panel-head"><div class="project-panel-title">➕ Add project work item</div><span class="section-badge">Separate from normal tasks</span></div><div class="project-panel-body"><div class="project-workitem-note">Project work items stay inside this project only and are used for weighted progress.</div><div class="project-workitem-form"><div class="project-field full"><label>Work item title *</label><input id="pm-task-title-${project.id}" placeholder="e.g. DEV - Update report logic / QA - Execute SIT / Business - Confirm UAT"></div><div class="project-field"><label>Team</label><select id="pm-task-team-${project.id}">${teamOptions(project.id,'')}</select></div><div class="project-field"><label>Assignee</label><select id="pm-task-assignee-${project.id}">${userOptions(currentUser?.id)}</select></div><div class="project-field"><label>Status</label><select id="pm-task-status-${project.id}">${statusOptions(statuses.find(s=>!s.is_done)?.id||statuses[0]?.id)}</select></div><div class="project-field"><label>Priority</label><select id="pm-task-priority-${project.id}" onchange="syncProjectTaskWeight(${project.id})"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div><div class="project-field"><label>Flow step</label><select id="pm-task-step-${project.id}">${projectStepOptions('Backlog')}</select></div><div class="project-field"><label>Weight</label><select id="pm-task-weight-${project.id}"><option value="1">1 - Small</option><option value="2" selected>2 - Normal</option><option value="3">3 - Important</option><option value="5">5 - Critical</option></select></div><div class="project-field"><label>Due date</label><input id="pm-task-due-${project.id}" type="date"></div><div class="project-field full"><label>Description / expected output</label><textarea id="pm-task-desc-${project.id}" placeholder="Add context, dependency, expected output, blocker, or follow-up note..."></textarea></div><div class="project-add-actions"><span class="project-helper-text">After adding, arrange the work item by dragging it in the Flow arranger.</span><button class="btn-p" onclick="addProjectTaskInline(${project.id})">Add work item</button></div></div></div></div>`;
+}
+
+function latestActionMs(x){return new Date(x.updated_at||x.created_at||0).getTime()||0;}
+function renderMemberWork(wrap){
+  const u=currentUser;const td=today0();const doneSt=statuses.find(s=>s.is_done);
+  const myTasks=activeTasks().filter(t=>t.assignee===u.id&&!isProjectTask(t));
+  const myProjects=projectVisibleList().filter(p=>p.assignee===u.id);
+  const myItems=(projectWorkItems||[]).filter(w=>w.assignee===u.id&&!w.archived);
+  const openTasks=myTasks.filter(t=>!doneSt||t.status!==doneSt.id);
+  const openItems=myItems.filter(w=>!getStatus(w.status)?.is_done);
+  const openProjects=myProjects.filter(p=>projectProgress(p)<100);
+  const overdue=openTasks.filter(t=>t.due_date&&new Date(t.due_date)<td);
+  const dueToday=openTasks.filter(t=>{if(!t.due_date)return false;const d=new Date(t.due_date);d.setHours(0,0,0,0);return d.getTime()===td.getTime();});
+  const overdueItems=openItems.filter(w=>w.due_date&&new Date(w.due_date)<td);
+  const totalOpen=openTasks.length+openItems.length+openProjects.length;
+  const inprogCount=openTasks.filter(t=>/progress/i.test(getStatus(t.status)?.name||t.status)).length+openItems.filter(w=>/progress/i.test(getStatus(w.status)?.name||w.status)).length;
+  const pctUnit=v=>Math.max(0,Math.min(100,Number(v)||0))/100;
+  const normalDone=Math.max(0,myTasks.length-openTasks.length);
+  // Convert every partial-progress source to a 0..1 unit before averaging.
+  // Previous logic added project/work-item percentages as whole units, causing values like 3333%.
+  const itemDoneUnits=myItems.reduce((a,w)=>a+pctUnit(taskCompletionPct(w)),0);
+  const projectDoneUnits=myProjects.reduce((a,p)=>a+pctUnit(projectProgress(p)),0);
+  const workUnits=myTasks.length+myItems.length+myProjects.length;
+  const doneUnits=Math.min(workUnits,normalDone+itemDoneUnits+projectDoneUnits);
+  const completionPct=workUnits?Math.max(0,Math.min(100,Math.round(doneUnits/workUnits*100))):0;
+  const doneUnitsLabel=Number.isInteger(doneUnits)?String(doneUnits):(Math.round(doneUnits*10)/10).toFixed(1).replace(/\.0$/,'');
+  const activeSts=statuses.filter(s=>!s.is_done);
+  const colsHtml=activeSts.map(st=>{const colTasks=openTasks.filter(t=>t.status===st.id);const taskItems=colTasks.map(t=>{const isLate=t.due_date&&new Date(t.due_date)<td;const urgColor=isLate?'var(--rd)':(dueToday.includes(t)?'var(--am)':st.color);return`<div class="mw-task" onclick="openTaskPopup(${t.id})"><div class="urgency-bar" style="background:${urgColor}"></div><div class="mw-task-main"><div class="mw-task-title">${esc(t.title)}</div><div class="mw-task-meta">${typeBadge(t.type)}${t.priority==='high'?`<span class="badge" style="background:var(--am-l);color:var(--am-d)">High</span>`:''}${ccCount(t.id)>0?`<span style="font-size:10px;color:var(--t3)">💬 ${ccCount(t.id)}</span>`:''}</div></div><div class="mw-task-side">${t.due_date&&!getStatus(t.status)?.hide_due?`<span style="font-size:10px;font-weight:600;color:${isLate?'var(--rd)':dueToday.includes(t)?'var(--am)':'var(--t3)'};white-space:nowrap">📅 ${fmtDate(t.due_date)}</span>`:''}</div></div>`;}).join('')||`<div class="empty-col">Nothing here 🎉</div>`;return`<div class="mw-col"><div class="mw-col-hdr"><span class="mw-col-hdr-dot" style="background:${st.color}"></span><span class="mw-col-hdr-name">${esc(st.name)}</span><span class="mw-col-hdr-cnt">${colTasks.length}</span></div>${taskItems}</div>`;}).join('');
+  const allOpenAction=[...openTasks.map(t=>({...t,_kind:'task',_action:latestActionMs(t)})),...openItems.map(w=>({...w,_kind:'workitem',_action:latestActionMs(w)})),...openProjects.map(p=>({...p,_kind:'project',_action:latestActionMs(p)}))].sort((a,b)=>b._action-a._action);
+  const latest=allOpenAction[0];
+  const focusHtml=latest?`<div class="mw-focus-card"><div class="mw-focus-kicker">Latest action</div><div class="mw-focus-title">${latest._kind==='project'?'🏗 ':latest._kind==='workitem'?'🔹 ':''}${esc(latest.title)}</div><div class="mw-latest-sub">Most recently updated assigned work. Use this to continue from the latest activity instead of only urgency ranking.</div><div class="mw-focus-meta"><span class="mw-focus-pill">${latest._kind==='task'?'TaskFlow task':latest._kind==='project'?'Project':'Project work item'}</span><span class="mw-focus-pill">${esc(getStatus(latest.status)?.name||'No status')}</span>${latest._kind==='workitem'?`<span class="mw-focus-pill">👥 ${esc(projectTeamName(latest.project_team_id))}</span>`:''}${latest.due_date?`<span class="mw-focus-pill">📅 ${fmtDate(latest.due_date)}</span>`:''}</div><button class="mw-focus-btn" onclick="${latest._kind==='task'||latest._kind==='project'?`openTaskPopup(${latest.id})`:`switchTab('project');selectProject(${latest.project_id})`}">${latest._kind==='workitem'?'Open project manager':'Open'} →</button></div>`:`<div class="mw-clear-card"><div class="mw-clear-title">You’re clear for today</div><div class="mw-clear-sub">No assigned active work. Nice work.</div></div>`;
+  const priorityRows=[{id:'high',label:'High',icon:'🔥',color:'var(--rd)'},{id:'medium',label:'Medium',icon:'⚡',color:'var(--am)'},{id:'low',label:'Low',icon:'🌱',color:'var(--gr)'}].map(p=>({...p,count:openTasks.filter(t=>(t.priority||'medium')===p.id).length+openItems.filter(w=>(w.priority||'medium')===p.id).length}));
+  const maxPri=Math.max(1,...priorityRows.map(p=>p.count));
+  const priorityHtml=priorityRows.map(p=>`<div class="mw-priority-row"><div class="mw-priority-name">${p.icon} ${p.label}</div><div class="mw-priority-track"><div class="mw-priority-fill" style="width:${Math.round(p.count/maxPri*100)}%;background:${p.color}"></div></div><div class="mw-priority-count">${p.count}</div></div>`).join('');
+  const typeRows=taskTypes.map(tp=>({tp,count:openTasks.filter(t=>t.type===tp.id).length})).filter(x=>x.count>0);if(openItems.length)typeRows.push({tp:{name:'Project work items',icon:'🔹',color:'var(--pu)'},count:openItems.length});if(openProjects.length)typeRows.push({tp:{name:'Owned projects',icon:'🏗',color:'var(--gr)'},count:openProjects.length});
+  const maxTypeCount=Math.max(1,...typeRows.map(x=>x.count));
+  const typeVizHtml=typeRows.length?typeRows.map(({tp,count})=>`<div class="mw-type-row"><div class="mw-type-name" title="${esc(tp.name)}">${esc(tp.icon)} ${esc(tp.name)}</div><div class="mw-type-track"><div class="mw-type-fill" style="width:${Math.round(count/maxTypeCount*100)}%;background:${tp.color}"></div></div><div class="mw-type-count">${count}</div></div>`).join(''):`<div class="section-empty" style="padding:8px 0">No open assigned work.</div>`;
+  const statusPillsHtml=activeSts.map(st=>{const cnt=openTasks.filter(t=>t.status===st.id).length+openItems.filter(w=>w.status===st.id).length;return`<span class="mw-status-pill"><span style="width:8px;height:8px;border-radius:50%;background:${st.color};display:inline-block"></span>${esc(st.name)} ${cnt}</span>`;}).join('');
+  const upcoming=openTasks.filter(t=>{if(!t.due_date||overdue.includes(t)||dueToday.includes(t))return false;const d=new Date(t.due_date);d.setHours(0,0,0,0);return(d-td)/864e5<=14;}).sort((a,b)=>new Date(a.due_date)-new Date(b.due_date));
+  wrap.innerHTML=`<div class="mywork-wrap"><div class="mywork-hero"><div class="mywork-av">${esc(u.initials)}</div><div style="flex:1"><div class="mywork-name">Hey, ${esc(u.name.split(' ')[0])} 👋</div><div class="mywork-sub">${totalOpen} open assigned work · ${(overdue.length+overdueItems.length)>0?`<b style="color:#FFB3B3">${overdue.length+overdueItems.length} overdue</b>`:'all on track ✓'}</div><button class="mw-focus-btn" style="margin-top:10px;background:rgba(255,255,255,.92);color:#1A1916" onclick="exportTasksCsv()">⬇ Export my tasks</button></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${overdue.length+overdueItems.length}</div><div class="mstat-lbl">Overdue</div></div><div class="mstat"><div class="mstat-val">${dueToday.length}</div><div class="mstat-lbl">Due today</div></div><div class="mstat"><div class="mstat-val">${inprogCount}</div><div class="mstat-lbl">In progress</div></div></div></div>${totalOpen===0?`<div class="mw-clear-card" style="margin-bottom:14px"><div class="mw-clear-title">🎉 You’re clear for today</div><div class="mw-clear-sub">No assigned active work. Enjoy the quiet dashboard.</div></div>`:''}<div class="mw-command-grid">${focusHtml}<div class="mw-viz-card"><div class="mw-viz-title">⚡ Priority radar</div>${priorityHtml}<div class="mw-mini-grid"><div class="mw-mini"><div class="mw-mini-val">${openTasks.length}</div><div class="mw-mini-lbl">Tasks</div></div><div class="mw-mini"><div class="mw-mini-val">${openItems.length}</div><div class="mw-mini-lbl">Work items</div></div><div class="mw-mini"><div class="mw-mini-val">${openProjects.length}</div><div class="mw-mini-lbl">Projects</div></div></div></div></div><div class="mw-viz-grid"><div class="mw-viz-card"><div class="mw-viz-title">✨ Assigned work mix</div>${typeVizHtml}</div><div class="mw-viz-card"><div class="mw-viz-title">📊 Progress snapshot</div><div class="mw-ring-wrap"><div class="mw-ring" style="background:conic-gradient(var(--gr) ${completionPct}%,var(--s2) 0)"><div class="mw-ring-val">${completionPct}%</div></div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--tx);margin-bottom:7px">${doneUnitsLabel} completed equivalent · ${totalOpen} open assigned work</div><div class="mw-ring-copy">Averages normal tasks, assigned project work items, and owned project progress. Each item contributes at most 100%.</div><div class="mw-status-pills" style="margin-top:9px">${statusPillsHtml}</div></div></div></div></div><div class="mw-columns" style="margin-bottom:14px">${colsHtml}</div>${upcoming.length?`<div class="upcoming-card"><div class="upcoming-hdr"><span class="section-title">📅 Upcoming due dates</span><span class="section-badge">${upcoming.length}</span></div>${upcoming.slice(0,8).map(t=>{const st=getStatus(t.status);const df=(new Date(t.due_date)-td)/864e5;return`<div class="upcoming-row" onclick="openTaskPopup(${t.id})"><span class="upcoming-dot" style="background:${st.color}"></span><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--tx)">${esc(t.title)}</div><div style="font-size:11px;color:var(--t3);margin-top:2px">${esc(st.name)} · ${typeBadge(t.type)}</div></div><span style="font-size:11px;font-weight:600;color:${df<=3?'var(--am-d)':'var(--t3)'};white-space:nowrap">${df<=1?'Tomorrow':Math.round(df)+'d left'}</span></div>`;}).join('')}</div>`:''}</div>`;
+}
+
+
+Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,renderTaskPopup,fmtTimeHtml,openTaskPopupEdit,saveTaskPopupEdit,openChangePinModal,saveChangedPin,renderProjects,openProjectModal,saveProjectRecord,toggleProjectFields,togglePopupProjectFields,openProjectChildTaskModal,deleteTaskFromProject,unlinkTaskFromProject,updateProjectTaskQuick,addProjectTeam,renameProjectTeam,deleteProjectTeam,moveTaskStep,selectProject,saveProjectQuick,addProjectTeamInline,updateProjectTeamInline,addProjectTaskInline,saveProjectTaskInline,savePopupWorkItem,syncProjectTaskWeight,onProjectFlowDragStart,onProjectFlowDragEnd,onProjectFlowDragOver,onProjectFlowDragLeave,onProjectFlowDrop,projectPopupWorkItemRow,savePopupWorkItem});
 
 // INIT — defer until DOM is fully ready so all element IDs exist
 if(document.readyState==='loading'){
