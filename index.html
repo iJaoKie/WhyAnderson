@@ -568,6 +568,266 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
 .icon-opt:hover{background:var(--s2);border-color:var(--bd)}
 .icon-opt.sel{background:var(--gr-l);border-color:var(--gr)}
 
+
+/* Project Control Tower */
+.project-wrap{padding:14px;max-width:1180px;margin:0 auto}
+.project-hero{background:linear-gradient(135deg,var(--pu-d),var(--pu));border-radius:var(--rl);padding:20px 22px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:var(--sh-md)}
+.project-title{font-size:20px;font-weight:800;letter-spacing:-.3px}.project-sub{font-size:13px;color:rgba(255,255,255,.75);margin-top:3px;line-height:1.5}
+.project-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.project-btn{padding:9px 13px;border-radius:999px;background:#fff;color:var(--tx);font-size:12px;font-weight:800;box-shadow:var(--sh);border:none}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:16px}.project-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:15px;box-shadow:var(--sh);cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s;overflow:hidden;position:relative}
+.project-card:hover{transform:translateY(-2px);box-shadow:var(--sh-md);border-color:var(--bd2)}.project-card-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.project-icon{width:36px;height:36px;border-radius:12px;background:var(--pu-l);color:var(--pu-d);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.project-name{font-size:14px;font-weight:800;color:var(--tx);line-height:1.35;margin-bottom:5px}.project-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.project-pill{font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;background:var(--s2);color:var(--t2);white-space:nowrap}
+.project-progress{margin:12px 0 10px}.project-progress-head{display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:800;color:var(--t2);margin-bottom:6px}.project-track{height:10px;background:var(--s2);border-radius:999px;overflow:hidden}.project-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pu),var(--gr));transition:width .35s ease}
+.project-next{font-size:12px;color:var(--t2);line-height:1.55;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:9px 10px;margin-top:10px}.project-empty{background:var(--sf);border:1px dashed var(--bd2);border-radius:var(--rl);padding:32px 18px;text-align:center;color:var(--t3);box-shadow:var(--sh)}
+.project-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:16px}.project-status-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:13px;box-shadow:var(--sh)}.project-status-head{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.project-mini-row{padding:8px 0;border-bottom:1px solid var(--bd);cursor:pointer}.project-mini-row:last-child{border-bottom:none}.project-mini-title{font-size:12px;font-weight:700;color:var(--tx);line-height:1.35}.project-mini-sub{font-size:10px;color:var(--t3);margin-top:3px}
+.project-form{background:var(--s2);border:1px solid var(--bd);border-radius:var(--rl);padding:12px;margin-top:4px}.project-form-grid{display:grid;grid-template-columns:1fr 120px;gap:10px}.project-detail-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--rl);padding:13px 14px;margin-bottom:16px}
+@media(max-width:700px){.project-actions{margin-left:0}.project-form-grid{grid-template-columns:1fr}.project-hero{align-items:flex-start}.project-grid{grid-template-columns:1fr}}
+
+
+/* Project Flow / PM module additions */
+.project-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.project-kpi{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:13px 14px;box-shadow:var(--sh)}
+.project-kpi-val{font-size:24px;font-weight:900;color:var(--tx);line-height:1}.project-kpi-lbl{font-size:10px;color:var(--t3);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-top:5px}
+.project-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.project-tab-btn{padding:7px 11px;border-radius:999px;border:1px solid var(--bd);background:var(--sf);color:var(--t2);font-size:12px;font-weight:800}.project-tab-btn.active{background:var(--pu-l);color:var(--pu-d);border-color:var(--pu-l)}
+.project-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:16px}.project-step{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}.project-step-head{padding:11px 13px;background:var(--s2);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px}.project-step-title{font-size:11px;font-weight:900;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;flex:1}.project-step-body{padding:8px;display:flex;flex-direction:column;gap:8px}.project-flow-task{border:1px solid var(--bd);background:var(--bg);border-radius:var(--r);padding:9px 10px;cursor:pointer}.project-flow-task:hover{border-color:var(--bd2);background:var(--s2)}.project-flow-title{font-size:12px;font-weight:800;color:var(--tx);line-height:1.35}.project-flow-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.project-risk{font-size:10px;font-weight:900;border-radius:999px;padding:3px 7px}.risk-stuck{background:var(--rd-l);color:var(--rd-d)}.risk-pending{background:var(--am-l);color:var(--am-d)}.risk-ok{background:var(--gr-l);color:var(--gr-d)}
+.project-panel{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden}.project-panel-head{padding:11px 14px;background:var(--s2);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px}.project-panel-title{font-size:11px;font-weight:900;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;flex:1}.project-panel-body{padding:12px 14px}.project-team-list{display:flex;gap:7px;flex-wrap:wrap}.project-team-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);background:var(--bg);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:800;color:var(--t2)}.project-team-chip button{color:var(--rd);font-size:11px}.project-inline-form{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.project-inline-form input,.project-inline-form select{padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:12px;outline:none}.project-task-table{width:100%;border-collapse:collapse;font-size:12px}.project-task-table th{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;text-align:left;padding:8px;border-bottom:1px solid var(--bd)}.project-task-table td{padding:9px 8px;border-bottom:1px solid var(--bd);vertical-align:middle}.project-task-table tr:hover td{background:var(--s2)}.project-task-select{padding:5px 7px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);font-size:11px}.project-lock-note{font-size:11px;color:var(--t3);line-height:1.5;margin-top:4px}.project-detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}.project-small-btn{padding:6px 9px;border:1px solid var(--bd);background:var(--sf);border-radius:999px;font-size:11px;font-weight:800;color:var(--t2)}.project-small-btn:hover{background:var(--s2);color:var(--tx)}
+@media(max-width:720px){.project-task-table{min-width:720px}.project-table-scroll{overflow:auto}.project-flow{grid-template-columns:1fr}}
+
+
+/* Project type is intentionally different from normal task types */
+.project-type-badge{background:linear-gradient(135deg,var(--pu),var(--gr));color:#fff;border:1px solid rgba(255,255,255,.22);box-shadow:0 0 0 1px rgba(69,48,160,.12),0 6px 16px rgba(69,48,160,.18);font-weight:800}
+.project-board-card{border-color:var(--pu);background:linear-gradient(180deg,var(--sf),var(--pu-l));position:relative;overflow:hidden}
+.project-board-card::before{content:'PROJECT';position:absolute;right:-24px;top:10px;transform:rotate(35deg);font-size:9px;font-weight:900;letter-spacing:.12em;color:#fff;background:var(--pu);padding:3px 28px;box-shadow:var(--sh)}
+.task-popup-project .tp-head{background:linear-gradient(135deg,var(--pu-l),var(--sf));border-bottom-color:var(--pu)}
+.task-popup-project .tp-title::before{content:'🏗 ';}
+.project-popup-left .project-detail-card{border:1px solid var(--pu);background:linear-gradient(135deg,var(--pu-l),var(--sf));box-shadow:var(--sh)}
+.project-lock-note{margin-top:6px;font-size:11px;font-weight:700;color:var(--pu-d);background:var(--pu-l);border:1px solid var(--pu);border-radius:var(--r);padding:7px 9px;line-height:1.4}
+html[data-theme="dark"] .project-board-card{background:linear-gradient(180deg,var(--sf),#241F36)}
+html[data-theme="dark"] .task-popup-project .tp-head{background:linear-gradient(135deg,#282243,var(--sf))}
+
+
+/* Project Work Items are intentionally separate from normal app tasks */
+.project-workitem-label{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--pu-d);background:var(--pu-l);border:1px solid var(--pu);border-radius:999px;padding:3px 7px;white-space:nowrap}
+.project-manage-task{border-left:4px solid var(--pu)}
+.project-flow-title::before,.project-manage-title::before,.project-popup-review-task-title::before{content:'▣ ';color:var(--pu);font-weight:900}
+html[data-theme="dark"] .project-workitem-label{background:#282243;color:#E0D9FF;border-color:#A996FF}
+
+/* Single-page Project Manager */
+.project-single-layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:14px;align-items:start}
+.project-sidebar{position:sticky;top:10px;display:flex;flex-direction:column;gap:10px;max-height:calc(100dvh - 88px);overflow:auto;padding-right:2px}
+.project-side-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:12px;box-shadow:var(--sh);cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+.project-side-card:hover{border-color:var(--bd2);box-shadow:var(--sh-md);transform:translateY(-1px)}
+.project-side-card.active{border-color:var(--pu);box-shadow:0 0 0 2px var(--pu-l),var(--sh-md);background:linear-gradient(180deg,var(--sf),var(--pu-l))}
+.project-side-title{font-size:13px;font-weight:900;color:var(--tx);line-height:1.35;margin-bottom:7px;display:flex;gap:6px;align-items:flex-start}
+.project-side-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.project-manager{display:flex;flex-direction:column;gap:14px;min-width:0}
+.project-manager-hero{background:linear-gradient(135deg,var(--pu-d),var(--pu));color:#fff;border-radius:var(--rl);padding:18px 20px;box-shadow:var(--sh-md);display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start;overflow:hidden;position:relative}
+.project-manager-hero::after{content:'';position:absolute;right:-48px;top:-58px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.08)}
+.project-manager-title{font-size:22px;font-weight:900;letter-spacing:-.4px;line-height:1.25;position:relative;z-index:1}
+.project-manager-sub{font-size:12px;color:rgba(255,255,255,.76);line-height:1.55;margin-top:6px;position:relative;z-index:1}
+.project-manager-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;position:relative;z-index:1}
+.project-white-btn{padding:8px 12px;border-radius:999px;background:#fff;color:var(--tx);font-size:12px;font-weight:900;box-shadow:var(--sh)}
+.project-outline-white-btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;font-weight:900}
+.project-manager-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.project-full{grid-column:1/-1}
+.project-edit-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:10px;align-items:end}
+.project-field label{display:block;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:5px}
+.project-field input,.project-field select,.project-field textarea{width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:12px;outline:none}
+.project-field textarea{min-height:62px;resize:vertical;line-height:1.45}
+.project-team-manager{display:flex;flex-direction:column;gap:8px}
+.project-team-row{display:grid;grid-template-columns:1fr 64px auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:8px}
+.project-team-row input{padding:7px 9px;border:1px solid var(--bd);border-radius:6px;background:var(--sf);color:var(--tx);font-size:12px;outline:none}
+.project-add-task{display:grid;grid-template-columns:1.4fr .8fr .8fr .8fr .8fr;gap:8px;align-items:end}
+.project-add-task .wide{grid-column:span 2}
+.project-flow-manager{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.project-step-manager{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}
+.project-step-manager-head{padding:11px 13px;background:var(--s2);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px}
+.project-step-manager-title{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);flex:1}
+.project-step-drop{min-height:90px;padding:9px;display:flex;flex-direction:column;gap:9px}
+.project-manage-task{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:8px}
+.project-manage-task.stuck{border-color:var(--rd);box-shadow:0 0 0 2px var(--rd-l)}
+.project-manage-task.pending{border-color:var(--am)}
+.project-manage-title{font-size:13px;font-weight:900;color:var(--tx);line-height:1.35}
+.project-manage-meta{display:flex;gap:5px;flex-wrap:wrap}
+.project-manage-edit{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.project-manage-edit select,.project-manage-edit input{min-width:0;padding:6px 7px;border:1px solid var(--bd);border-radius:6px;background:var(--sf);color:var(--tx);font-size:11px;outline:none}
+.project-manage-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.project-mini-danger{padding:6px 9px;border-radius:999px;border:1px solid var(--rd-l);background:var(--rd-l);color:var(--rd-d);font-size:11px;font-weight:900}
+.project-selected-empty{background:var(--sf);border:1px dashed var(--bd2);border-radius:var(--rl);box-shadow:var(--sh);padding:40px 18px;text-align:center;color:var(--t3)}
+@media(max-width:980px){.project-single-layout{grid-template-columns:1fr}.project-sidebar{position:static;max-height:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));padding-right:0}.project-manager-grid{grid-template-columns:1fr}.project-edit-grid,.project-add-task{grid-template-columns:1fr}.project-add-task .wide{grid-column:auto}.project-manager-hero{grid-template-columns:1fr}.project-manager-actions{justify-content:flex-start}}
+html[data-theme="dark"] .project-side-card.active{background:linear-gradient(180deg,var(--sf),#241F36)}
+
+
+/* Patch: easier Project Manager forms, drag/drop flow, and dark-mode contrast */
+html[data-theme="dark"] .btn-p,
+html[data-theme="dark"] .project-btn,
+html[data-theme="dark"] .project-white-btn,
+html[data-theme="dark"] .mw-focus-btn{
+  background:#3DD18C!important;
+  color:#06140E!important;
+  border-color:#3DD18C!important;
+  text-shadow:none!important;
+}
+html[data-theme="dark"] .btn-p:hover,
+html[data-theme="dark"] .project-btn:hover,
+html[data-theme="dark"] .project-white-btn:hover,
+html[data-theme="dark"] .mw-focus-btn:hover{background:#62E5A6!important;color:#06140E!important}
+html[data-theme="dark"] .btn-sm,
+html[data-theme="dark"] .btn-s,
+html[data-theme="dark"] .project-small-btn,
+html[data-theme="dark"] .project-outline-white-btn{
+  background:#242A2E!important;
+  color:#F4F1EA!important;
+  border-color:#4B555D!important;
+}
+html[data-theme="dark"] .btn-sm:hover,
+html[data-theme="dark"] .btn-s:hover,
+html[data-theme="dark"] .project-small-btn:hover,
+html[data-theme="dark"] .project-outline-white-btn:hover{background:#303840!important;color:#fff!important}
+html[data-theme="dark"] .project-mini-danger{background:#3B1B1B!important;color:#FFD2D2!important;border-color:#6D2B2B!important}
+
+.project-add-task.project-add-task-easy{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:end}
+.project-add-task.project-add-task-easy .wide{grid-column:1/-1}
+.project-add-task.project-add-task-easy textarea{min-height:112px;font-size:13px;line-height:1.55;resize:vertical}
+.project-add-task.project-add-task-easy .project-add-actions{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;align-items:center;border-top:1px solid var(--bd);padding-top:10px;margin-top:2px}
+.project-helper-text{font-size:11px;color:var(--t3);line-height:1.45;margin-top:6px}
+.project-step-drop{outline:2px dashed transparent;transition:background .15s,outline-color .15s}
+.project-step-drop.drag-over{background:var(--gr-l);outline-color:var(--gr)}
+.project-manage-task.dragging{opacity:.45;transform:scale(.99)}
+.project-flow-handle{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--s2);border:1px solid var(--bd);color:var(--t2);font-size:14px;cursor:grab;flex-shrink:0;user-select:none}
+.project-flow-handle:active{cursor:grabbing}
+.project-manage-title-row{display:flex;align-items:flex-start;gap:8px}
+.project-manage-title-row .project-manage-title{flex:1;min-width:0}
+.project-manage-edit.project-manage-edit-easy{grid-template-columns:1fr 1fr;gap:7px}
+.project-manage-edit.project-manage-edit-easy .wide-edit{grid-column:1/-1}
+.project-popup-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.project-popup-kpi{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:10px;text-align:center}
+.project-popup-kpi-val{font-size:20px;font-weight:900;color:var(--tx);line-height:1}
+.project-popup-kpi-lbl{font-size:9px;font-weight:900;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.project-popup-flow-summary{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.project-popup-step-row{display:grid;grid-template-columns:120px 1fr 42px;gap:8px;align-items:center;font-size:12px}
+.project-popup-step-name{font-weight:800;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.project-popup-step-track{height:9px;background:var(--s2);border-radius:999px;overflow:hidden;border:1px solid var(--bd)}
+.project-popup-step-fill{height:100%;border-radius:999px;background:var(--gr)}
+.project-popup-step-count{text-align:right;font-weight:900;color:var(--t2)}
+@media(max-width:760px){.project-add-task.project-add-task-easy{grid-template-columns:1fr}.project-popup-summary{grid-template-columns:repeat(2,1fr)}.project-popup-step-row{grid-template-columns:1fr}.project-popup-step-count{text-align:left}.project-manage-edit.project-manage-edit-easy{grid-template-columns:1fr}}
+
+
+/* Patch v4: project popup follow-up list */
+.project-popup-task-review{margin-top:14px;border-top:1px solid var(--bd);padding-top:12px}
+.project-popup-task-review-title{font-size:11px;font-weight:900;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.project-popup-review-step{border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);margin-bottom:9px;overflow:hidden}
+.project-popup-review-step-head{display:flex;align-items:center;gap:8px;background:var(--s2);border-bottom:1px solid var(--bd);padding:8px 10px;font-size:12px;font-weight:900;color:var(--tx)}
+.project-popup-review-task{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 10px;border-bottom:1px solid var(--bd);cursor:pointer}
+.project-popup-review-task:last-child{border-bottom:none}
+.project-popup-review-task:hover{background:var(--s2)}
+.project-popup-review-task-title{font-size:13px;font-weight:800;color:var(--tx);line-height:1.35}
+.project-popup-review-task-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.project-popup-review-task-side{text-align:right;display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.project-popup-review-empty{padding:12px;border:1px dashed var(--bd2);border-radius:var(--r);color:var(--t3);font-size:13px;text-align:center}
+@media(max-width:720px){.project-popup-review-task{grid-template-columns:1fr}.project-popup-review-task-side{text-align:left;align-items:flex-start}}
+
+
+/* Patch v3: Project popup full-width summary and better project action buttons */
+.task-popup-project{
+  width:min(1180px,96vw)!important;
+  max-width:1180px!important;
+  max-height:calc(100dvh - 28px)!important;
+}
+.task-popup-project .tp-body{
+  flex-direction:column!important;
+  overflow-y:auto!important;
+}
+.task-popup-project .tp-left{
+  width:100%!important;
+  border-right:none!important;
+  border-bottom:1px solid var(--bd)!important;
+  overflow:visible!important;
+  padding:20px 24px!important;
+}
+.task-popup-project .tp-right{
+  width:100%!important;
+  min-height:260px!important;
+  border-top:0!important;
+  background:var(--sf);
+}
+.task-popup-project .tp-comments-scroll{
+  max-height:320px;
+}
+.task-popup-project .tp-nc-area{
+  position:sticky;
+  bottom:0;
+}
+.project-popup-summary-wide{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:14px;
+  align-items:stretch;
+}
+.project-popup-progress-hero{
+  background:linear-gradient(135deg,var(--pu-l),var(--sf));
+  border:1px solid var(--bd);
+  border-radius:var(--rl);
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:10px;
+}
+.project-popup-progress-big{font-size:42px;font-weight:950;color:var(--tx);line-height:1}
+.project-popup-progress-label{font-size:10px;font-weight:900;color:var(--t3);text-transform:uppercase;letter-spacing:.08em}
+.project-popup-kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.project-popup-kpi-card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:11px 12px}
+.project-popup-kpi-card .v{font-size:22px;font-weight:900;color:var(--tx);line-height:1}
+.project-popup-kpi-card .l{font-size:10px;color:var(--t3);font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin-top:5px}
+.project-popup-step-row{grid-template-columns:150px 1fr 38px!important}
+.project-popup-step-track{height:11px;background:var(--s2);border-radius:999px;overflow:hidden}
+.project-popup-step-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pu),var(--gr))}
+.project-popup-step-name{font-size:12px;font-weight:800;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.project-popup-step-count{font-size:11px;font-weight:900;color:var(--t3);text-align:right}
+html[data-theme="dark"] .project-popup-progress-hero{background:linear-gradient(135deg,#282243,#181B1D)}
+html[data-theme="dark"] .project-popup-kpi-card{background:#111314;border-color:#30363B}
+@media(max-width:760px){.project-popup-summary-wide{grid-template-columns:1fr}.project-popup-kpi-grid{grid-template-columns:repeat(2,1fr)}.task-popup-project .tp-left{padding:14px 16px!important}}
+
+
+.project-workitem-note{font-size:12px;line-height:1.55;color:var(--t2);background:var(--gr-l);border:1px solid var(--bd);border-radius:var(--r);padding:9px 11px;margin-bottom:12px}
+html[data-theme="dark"] .project-workitem-note{background:#132B22;color:var(--gr-d);border-color:#275640}
+.project-manage-edit textarea.wide-edit{grid-column:1/-1;min-height:74px;resize:vertical;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:12px;line-height:1.45;font-family:inherit}
+.project-manage-edit input.wide-edit{min-width:180px;padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:12px;font-family:inherit}
+
+
+
+/* Project popup work item accordion + PM dashboard v7 */
+.project-popup-workitem-details{border:1px solid var(--bd);border-radius:var(--rl);background:var(--sf);margin:9px 0;overflow:hidden;box-shadow:var(--sh)}
+.project-popup-workitem-details[open]{box-shadow:var(--sh-md);border-color:var(--bd2)}
+.project-popup-workitem-summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--bg)}
+.project-popup-workitem-summary::-webkit-details-marker{display:none}
+.project-popup-workitem-caret{font-size:14px;color:var(--t3);line-height:20px;transition:transform .18s;flex-shrink:0}
+.project-popup-workitem-details[open] .project-popup-workitem-caret{transform:rotate(90deg);color:var(--gr)}
+.project-popup-workitem-main{flex:1;min-width:0}
+.project-popup-workitem-title{font-size:13px;font-weight:800;color:var(--tx);line-height:1.35;word-break:break-word}
+.project-popup-workitem-desc-preview{font-size:12px;color:var(--t3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.project-popup-workitem-side{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.project-popup-workitem-edit{padding:13px 14px;border-top:1px solid var(--bd);display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;background:var(--sf)}
+.project-popup-workitem-edit .project-field{margin:0}
+.project-popup-workitem-edit .wide{grid-column:1/-1}
+.project-popup-workitem-edit textarea{min-height:96px;resize:vertical}
+.project-popup-workitem-actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:8px;align-items:center}
+.project-popup-review-step{margin-bottom:12px}
+.project-popup-review-step-head{position:sticky;top:0;background:var(--sf);z-index:1;border-radius:var(--r)}
+.pm-dash-wrap{display:grid;gap:14px}
+.pm-dash-hero{background:linear-gradient(135deg,var(--gr-d),var(--gr));border-radius:var(--rl);padding:18px;color:#fff;box-shadow:var(--sh-md);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+.pm-dash-title{font-size:19px;font-weight:900;letter-spacing:-.3px}.pm-dash-sub{font-size:12px;color:rgba(255,255,255,.72);margin-top:4px;line-height:1.5}
+.pm-dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.pm-dash-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:14px;box-shadow:var(--sh)}
+.pm-dash-kpi{font-size:28px;font-weight:900;color:var(--tx);line-height:1}.pm-dash-label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-top:6px}.pm-dash-note{font-size:11px;color:var(--t3);margin-top:5px;line-height:1.45}
+.pm-dash-main{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.pm-dash-panel{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}.pm-dash-panel-head{padding:12px 14px;border-bottom:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;gap:8px}.pm-dash-panel-title{font-size:12px;font-weight:900;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;flex:1}.pm-dash-panel-body{padding:13px 14px}
+.pm-follow-row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bd);cursor:pointer}.pm-follow-row:last-child{border-bottom:none}.pm-follow-main{flex:1;min-width:0}.pm-follow-title{font-size:13px;font-weight:800;color:var(--tx);line-height:1.35}.pm-follow-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.pm-flow-row{display:grid;grid-template-columns:120px 1fr 42px;gap:9px;align-items:center;margin-bottom:10px}.pm-flow-name{font-size:12px;font-weight:800;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pm-flow-track{height:10px;background:var(--s2);border-radius:999px;overflow:hidden}.pm-flow-fill{height:100%;background:var(--gr);border-radius:999px}.pm-flow-count{font-size:12px;font-weight:800;color:var(--t3);text-align:right}.pm-project-row{padding:11px 0;border-bottom:1px solid var(--bd);cursor:pointer}.pm-project-row:last-child{border-bottom:none}.pm-project-row-top{display:flex;align-items:center;gap:8px}.pm-project-row-title{font-size:13px;font-weight:900;color:var(--tx);flex:1}.pm-project-row-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.pm-progress-mini{height:7px;background:var(--s2);border-radius:999px;overflow:hidden;margin-top:8px}.pm-progress-mini-fill{height:100%;background:var(--gr);border-radius:999px}
+@media(max-width:900px){.pm-dash-grid{grid-template-columns:repeat(2,1fr)}.pm-dash-main{grid-template-columns:1fr}.project-popup-workitem-edit{grid-template-columns:1fr}}
+@media(max-width:600px){.pm-dash-grid{grid-template-columns:1fr}.pm-flow-row{grid-template-columns:90px 1fr 32px}}
+html[data-theme="dark"] .pm-dash-hero{background:linear-gradient(135deg,#061A12,#14734A 72%,#1FBE74)}
+html[data-theme="dark"] .project-popup-workitem-summary{background:var(--s2)}
+
 </style>
 <script>
 (function(){
@@ -630,6 +890,8 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
     </div>
     <!-- My Work -->
     <div class="tab-pane" id="pane-mywork"><div style="flex:1;overflow:auto"><div id="mywork-content"></div></div></div>
+    <!-- Projects -->
+    <div class="tab-pane" id="pane-project"><div style="flex:1;overflow:auto"><div id="project-content"></div></div></div>
     <!-- List -->
     <div class="tab-pane" id="pane-list" style="overflow:visible">
       <div class="filter-bar" id="filter-bar">
@@ -682,11 +944,32 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
     <h3 id="modal-title">Create task</h3>
     <div class="field"><label>Title *</label><input id="f-title" placeholder="What needs to be done?"></div>
     <div class="field"><label>Description</label><textarea id="f-desc" rows="3" placeholder="Add details…"></textarea></div>
-    <div class="field"><label>Type</label><select id="f-type"></select></div>
+    <div class="field"><label>Type</label><select id="f-type" onchange="toggleProjectFields()"></select></div>
     <div class="field"><label>Priority</label><select id="f-priority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select></div>
     <div class="field"><label>Assignee</label><select id="f-assignee"></select></div>
     <div class="field"><label>Status</label><select id="f-status"></select></div>
     <div class="field"><label>Due date</label><input type="date" id="f-due"></div>
+    <input type="hidden" id="f-project-parent">
+    <input type="hidden" id="f-create-project-mode" value="0">
+    <div class="project-form hidden" id="project-task-fields">
+      <div class="dp-label" style="margin-bottom:10px">Project work item link</div>
+      <div class="project-form-grid">
+        <div class="field"><label>Project team</label><select id="f-project-task-team"></select></div>
+        <div class="field"><label>Progress weight</label><select id="f-project-task-weight"><option value="1">Low weight 1</option><option value="2" selected>Medium weight 2</option><option value="3">High weight 3</option><option value="5">Critical weight 5</option></select></div>
+      </div>
+      <div class="project-form-grid">
+        <div class="field"><label>Flow step</label><input id="f-project-task-step" placeholder="e.g. Impact Analysis, Development, UAT"></div>
+        <div class="field"><label>Step order</label><input id="f-project-task-order" type="number" value="10" min="0" step="10"></div>
+      </div>
+    </div>
+    <div class="project-form hidden" id="project-fields">
+      <div class="dp-label" style="margin-bottom:10px">Project details</div>
+      <div class="field"><label>Assigned related team</label><input id="f-project-team" placeholder="e.g. DEV, QA, Infra, Business"></div>
+      <div class="project-form-grid">
+        <div class="field"><label>Next step</label><input id="f-project-next" placeholder="e.g. Wait for DEV impact analysis"></div>
+        <div class="field"><label>Progress %</label><input id="f-project-progress" type="number" min="0" max="100" step="5" value="0"></div>
+      </div>
+    </div>
     <div class="mactions"><button class="btn-s" onclick="closeModal('task-modal')">Cancel</button><button class="btn-p" onclick="saveTask()">Save</button></div>
   </div>
 </div>
@@ -840,7 +1123,20 @@ function fmtDate(iso){if(!iso)return'—';return new Date(iso).toLocaleDateStrin
 function fmtFull(iso){if(!iso)return'';return new Date(iso).toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
 function tcol(hex){try{const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return(0.299*r+0.587*g+0.114*b)>140?'#1A1916':'#fff';}catch{return'#fff';}}
 function avHtml(uid,sz='sm'){const u=getUser(uid)||{initials:(uid||'?').slice(0,2),color:'#aaa',text_color:'#fff',name:uid||'?'};return`<div class="av av-${sz}" style="background:${u.color};color:${u.text_color||tcol(u.color)}">${esc(u.initials)}<div class="av-tip">${esc(u.name)}</div></div>`;}
-function typeBadge(tid){const t=getType(tid);if(!t)return`<span class="badge" style="background:var(--s2);color:var(--t2)">${esc(tid||'—')}</span>`;return`<span class="badge" style="background:${t.bg};color:${t.color}">${esc(t.icon)} ${esc(t.name)}</span>`;}
+function typeBadge(tid){const t=getType(tid);if(!t)return`<span class="badge" style="background:var(--s2);color:var(--t2)">${esc(tid||'—')}</span>`;if(isProjectTypeId(tid))return`<span class="badge project-type-badge">🏗 Project</span>`;return`<span class="badge" style="background:${t.bg};color:${t.color}">${esc(t.icon)} ${esc(t.name)}</span>`;}
+
+function isProjectTypeId(typeId){const ty=getType(typeId);return String(typeId||'').toLowerCase()==='project'||String(ty?.name||'').trim().toLowerCase()==='project';}
+function getProjectType(){return taskTypes.find(ty=>isProjectTypeId(ty.id));}
+function stripProjectMeta(desc){return String(desc||'').replace(/\n?\[Project Meta\]\n[\s\S]*?\n\[\/Project Meta\]\s*$/i,'').trim();}
+function parseProjectMeta(desc){const meta={team:'',progress:null,next:''};const m=String(desc||'').match(/\[Project Meta\]\n([\s\S]*?)\n\[\/Project Meta\]\s*$/i);if(!m)return meta;m[1].split(/\r?\n/).forEach(line=>{const[rawKey,...rest]=line.split(':');const key=String(rawKey||'').trim().toLowerCase();const val=rest.join(':').trim();if(key==='related team')meta.team=val;if(key==='progress')meta.progress=Math.max(0,Math.min(100,parseInt(val,10)||0));if(key==='next step')meta.next=val;});return meta;}
+function projectProgress(t){const pm=parseProjectMeta(t.description);if(pm.progress!=null)return pm.progress;const st=getStatus(t.status);if(st?.is_done)return 100;const nm=String(st?.name||'').toLowerCase();if(nm.includes('review')||nm.includes('uat'))return 75;if(nm.includes('progress')||nm.includes('doing'))return 45;if(nm.includes('todo')||nm.includes('open'))return 10;return 25;}
+function composeProjectDescription(desc,meta){const base=stripProjectMeta(desc);const clean={team:String(meta?.team||'').trim(),progress:Math.max(0,Math.min(100,parseInt(meta?.progress,10)||0)),next:String(meta?.next||'').trim()};if(!clean.team&&!clean.next&&!clean.progress)return base;return `${base}${base?'\n\n':''}[Project Meta]\nRelated Team: ${clean.team}\nProgress: ${clean.progress}\nNext Step: ${clean.next}\n[/Project Meta]`;}
+function projectStatusBadge(t){const st=getStatus(t.status)||{};return `<span class="project-pill" style="background:${st.color||'var(--s2)'}22;color:${st.color||'var(--t2)'}">${esc(st.name||t.status||'—')}</span>`;}
+async function ensureProjectType(){let p=getProjectType();if(p)return p;try{const maxO=taskTypes.reduce((a,t)=>Math.max(a,Number(t.sort_order)||0),0);const row={id:'project',name:'Project',color:'#4530A0',bg:'#EDEAFC',icon:'🏗',sort_order:maxO+1};const{error}=await sb.from('task_types').insert(row);if(error)throw error;await reloadAndRefresh();p=getProjectType();if(p)showNotif('🏗','Project task type created.');return p;}catch(e){console.warn('Could not auto-create Project type:',e);showNotif('⚠️','Could not auto-create Project type. Add a task type named Project in Settings.');return null;}}
+async function openProjectModal(){const p=await ensureProjectType();openTaskModal();if(p){const sel=document.getElementById('f-type');if(sel){sel.value=p.id;toggleProjectFields();}}}
+function toggleProjectFields(){const typeId=document.getElementById('f-type')?.value;const box=document.getElementById('project-fields');if(box)box.classList.toggle('hidden',!isProjectTypeId(typeId));}
+function togglePopupProjectFields(){const typeId=document.getElementById('tpe-type')?.value;const box=document.getElementById('tpe-project-fields');if(box)box.classList.toggle('hidden',!isProjectTypeId(typeId));}
+
 function today0(){const d=new Date();d.setHours(0,0,0,0);return d;}
 function dueBadge(d,st){
   if(!d)return'';if(st&&st.hide_due)return'';
@@ -1190,12 +1486,12 @@ function buildNav(){
   const isAdmin=currentUser.role==='admin';
   const tabs=isAdmin?[
     {id:'board',label:'Board',icon:'⬛'},{id:'mywork',label:'Owners',icon:'👥'},
-    {id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'},
+    {id:'project',label:'Projects',icon:'🏗'},{id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'},
     {id:'archive',label:'Archive',icon:'📦'},{id:'users',label:'Users',icon:'👤'},
     {id:'settings',label:'Settings',icon:'🏷'},
   ]:[
-    {id:'mywork',label:'My Work',icon:'✓'},{id:'board',label:'Board',icon:'⬛'},
-    {id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'},
+    {id:'mywork',label:'My Work',icon:'✓'},{id:'project',label:'Projects',icon:'🏗'},
+    {id:'board',label:'Board',icon:'⬛'},{id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'},
     {id:'archive',label:'Archive',icon:'📦'},
   ];
   document.getElementById('desktop-nav').innerHTML=tabs.map(t=>`<button class="ntab${currentTab===t.id?' active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('');
@@ -1206,6 +1502,7 @@ function switchTab(t){currentTab=t;document.querySelectorAll('.tab-pane').forEac
 function renderCurrentTab(){
   if(currentTab==='board')renderBoard();
   else if(currentTab==='mywork')renderMyWork();
+  else if(currentTab==='project')renderProjects();
   else if(currentTab==='list'){renderList();}
   else if(currentTab==='dash')renderDash();
   else if(currentTab==='archive')renderArchive();
@@ -1231,7 +1528,7 @@ function renderBoard(){
     ct.forEach(t=>{
       const isDoneSt=st.is_done;
       const card=document.createElement('div');
-      card.className='card'+(t.id===selectedTaskId?' selected':'');
+      card.className='card'+(isProjectTask(t)?' project-board-card':'')+(t.id===selectedTaskId?' selected':'');
       card.draggable=can('editTask');
       card.innerHTML=`<div class="card-title">${esc(t.title)}</div>
         <div class="card-meta">${typeBadge(t.type)}${t.priority==='high'?`<span class="badge" style="background:var(--am-l);color:var(--am-d)">High</span>`:''}${avHtml(t.assignee)}${ccCount(t.id)>0?`<div class="cmmt-cnt">💬 ${ccCount(t.id)}</div>`:''}</div>
@@ -1245,7 +1542,7 @@ function renderBoard(){
       card.addEventListener('dragend',()=>{dragTaskId=null;card.classList.remove('dragging');});
       body.appendChild(card);
     });
-    if(can('createTask')){const ab=document.createElement('button');ab.className='add-btn';ab.textContent='+ Add task';ab.onclick=()=>openTaskModal(st.id);body.appendChild(ab);}
+    if(can('createTask')){const ab=document.createElement('button');ab.className='add-btn';ab.textContent='+ Add work item';ab.onclick=()=>openTaskModal(st.id);body.appendChild(ab);}
     col.appendChild(body);board.appendChild(col);
   });
 }
@@ -1319,10 +1616,13 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&!document.getElementById('task-popup-overlay').classList.contains('hidden'))closeTaskPopup();
 });
 
-function renderTaskPopup(id){
+function renderTaskPopupBase(id){
   const t=getTask(id);if(!t)return;
+  document.querySelector('.task-popup')?.classList.toggle('task-popup-project', isProjectTask(t));
+  document.getElementById('tp-left')?.classList.remove('project-popup-left');
   const u=getUser(t.assignee)||{name:t.assignee,initials:'?',color:'#aaa',text_color:'#fff'};
   const st=getStatus(t.status);const isDone=st?.is_done;
+  const isProject=isProjectTypeId(t.type);const pm=parseProjectMeta(t.description);const cleanDesc=stripProjectMeta(t.description);
   document.getElementById('tp-title').textContent=t.title;
   // One Edit button — switches left pane to inline form, no second popup
   document.getElementById('tp-head-actions').innerHTML=
@@ -1347,9 +1647,15 @@ function renderTaskPopup(id){
       <span class="tp-meta-key">Created</span>${fmtTimeHtml(t.created_at)}
       ${isDone&&t.completed_at?`<span class="tp-meta-key">Completed</span>${fmtTimeHtml(t.completed_at)}`:''}
     </div>
+    ${isProject?`<div class="project-detail-card">
+      <div class="tp-sec-label">Project Control</div>
+      <div class="project-progress" style="margin-top:0"><div class="project-progress-head"><span>Progress</span><span>${projectProgress(t)}%</span></div><div class="project-track"><div class="project-fill" style="width:${projectProgress(t)}%"></div></div></div>
+      <div class="dp-row"><div class="dp-key">Team</div><div class="dp-val">${esc(pm.team||'—')}</div></div>
+      <div class="dp-row"><div class="dp-key">Next step</div><div class="dp-val">${esc(pm.next||'—')}</div></div>
+    </div>`:''}
     <div class="tp-sec-label">Description</div>
-    ${t.description
-      ?`<div class="desc-text">${esc(t.description)}</div>`
+    ${cleanDesc
+      ?`<div class="desc-text">${esc(cleanDesc)}</div>`
       :`<div class="desc-empty" style="cursor:${can('editTask')?'pointer':'default'}" ${can('editTask')?`onclick="openTaskPopupEdit(${t.id})"`:''}>${can('editTask')?'Add a description…':'No description.'}</div>`
     }`;
   renderCmmts(id,'tp-comments');
@@ -1380,12 +1686,12 @@ function openTaskPopupEdit(id){
       <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Description</label>
       <textarea id="tpe-desc" style="width:100%;min-height:80px;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;line-height:1.55;resize:vertical;outline:none;font-family:inherit"
         onfocus="this.style.borderColor='var(--gr)';this.style.boxShadow='0 0 0 2.5px var(--gr-l)'"
-        onblur="this.style.borderColor='var(--bd)';this.style.boxShadow=''">${esc(t.description||'')}</textarea>
+        onblur="this.style.borderColor='var(--bd)';this.style.boxShadow=''">${esc(stripProjectMeta(t.description))}</textarea>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px">
       <div>
         <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Type</label>
-        <select id="tpe-type" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
+        <select id="tpe-type" onchange="togglePopupProjectFields()" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
           ${taskTypes.map(ty=>`<option value="${esc(ty.id)}"${t.type===ty.id?' selected':''}>${esc(ty.icon)} ${esc(ty.name)}</option>`).join('')}
         </select>
       </div>
@@ -1416,6 +1722,11 @@ function openTaskPopupEdit(id){
       <label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Due date</label>
       <input type="date" id="tpe-due" value="${t.due_date||''}" style="padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">
     </div>
+    <div class="project-form ${isProjectTypeId(t.type)?'':'hidden'}" id="tpe-project-fields" style="margin-bottom:16px">
+      <div class="dp-label" style="margin-bottom:10px">Project details</div>
+      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Assigned related team</label><input id="tpe-project-team" value="${esc(parseProjectMeta(t.description).team)}" placeholder="e.g. DEV, QA, Infra, Business" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none"></div>
+      <div class="project-form-grid"><div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Next step</label><input id="tpe-project-next" value="${esc(parseProjectMeta(t.description).next)}" placeholder="e.g. Wait for UAT confirmation" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none"></div><div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Progress %</label><input id="tpe-project-progress" type="number" min="0" max="100" step="5" value="${projectProgress(t)}" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none"></div></div>
+    </div>
     <div style="display:flex;gap:8px">
       <button class="btn-p" onclick="saveTaskPopupEdit(${t.id})" style="flex:1">💾 Save changes</button>
       <button class="btn-s" onclick="renderTaskPopup(${t.id})">Cancel</button>
@@ -1431,7 +1742,7 @@ async function saveTaskPopupEdit(id){
   const newSt=getStatus(newStatus);
   const upd={
     title,
-    description:document.getElementById('tpe-desc')?.value.trim()||null,
+    description:isProjectTypeId(document.getElementById('tpe-type')?.value)?composeProjectDescription(document.getElementById('tpe-desc')?.value.trim(),{team:document.getElementById('tpe-project-team')?.value,progress:document.getElementById('tpe-project-progress')?.value,next:document.getElementById('tpe-project-next')?.value}):(document.getElementById('tpe-desc')?.value.trim()||null),
     type:document.getElementById('tpe-type')?.value,
     priority:document.getElementById('tpe-priority')?.value,
     assignee:document.getElementById('tpe-assignee')?.value,
@@ -1453,7 +1764,8 @@ async function saveTaskPopupEdit(id){
 
 function renderDescHtml(t,ctxId){
   const ed=can('editTask');
-  if(t.description)return`<div class="desc-text">${esc(t.description)}</div>`;
+  const clean=stripProjectMeta(t.description);
+  if(clean)return`<div class="desc-text">${esc(clean)}</div>`;
   return ed?`<div class="desc-empty" onclick="openTaskPopupEdit(${t.id})">Add a description…</div>`:`<div class="desc-empty" style="cursor:default">No description.</div>`;
 }
 
@@ -1967,6 +2279,19 @@ function renderOwnerView(wrap){
 // ══════════════════════════════════════════════
 // ARCHIVE
 // ══════════════════════════════════════════════
+
+function renderProjects(){
+  const wrap=document.getElementById('project-content');if(!wrap)return;
+  const projectType=getProjectType();
+  const all=activeTasks().filter(t=>isProjectTypeId(t.type));
+  const visible=currentUser?.role==='admin'?all:all.filter(t=>t.assignee===currentUser?.id);
+  const atRisk=visible.filter(t=>{const st=getStatus(t.status);if(st?.is_done||!t.due_date)return false;const d=new Date(t.due_date);d.setHours(0,0,0,0);return d<today0();}).length;
+  const avg=visible.length?Math.round(visible.reduce((a,t)=>a+projectProgress(t),0)/visible.length):0;
+  const byStatus=statuses.map(st=>({st,items:visible.filter(t=>t.status===st.id)})).filter(x=>x.items.length>0);
+  wrap.innerHTML=`<div class="project-wrap"><div class="project-hero"><div style="font-size:32px">🏗</div><div><div class="project-title">Project Control Tower</div><div class="project-sub">Track CR-impact projects, related teams, work items, next step, progress, and risk in one tab.</div></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${visible.length}</div><div class="mstat-lbl">Projects</div></div><div class="mstat"><div class="mstat-val">${avg}%</div><div class="mstat-lbl">Avg progress</div></div><div class="mstat"><div class="mstat-val">${atRisk}</div><div class="mstat-lbl">At risk</div></div></div><div class="project-actions">${can('createTask')?`<button class="project-btn" onclick="openProjectModal()">+ New Project</button>`:''}</div></div>${!projectType?`<div class="project-empty"><div style="font-size:32px;margin-bottom:8px">🏷</div><b>No Project task type yet.</b><div style="font-size:13px;margin-top:6px">Click New Project to auto-create it, or add a task type named Project in Settings.</div></div>`:''}${visible.length?`<div class="project-grid">${visible.map(renderProjectCard).join('')}</div>`:`<div class="project-empty"><div style="font-size:34px;margin-bottom:8px">🌱</div><b>No active projects yet.</b><div style="font-size:13px;margin-top:6px">Create a Project record for each CR that needs cross-team follow-up.</div></div>`}${byStatus.length?`<div class="project-board">${byStatus.map(x=>`<div class="project-status-card"><div class="project-status-head"><span class="col-dot" style="background:${x.st.color}"></span>${esc(x.st.name)} <span class="section-badge" style="margin-left:auto">${x.items.length}</span></div>${x.items.map(t=>`<div class="project-mini-row" onclick="openDetail(${t.id})"><div class="project-mini-title">${esc(t.title)}</div><div class="project-mini-sub">${projectProgress(t)}% · ${esc(parseProjectMeta(t.description).team||'No team')}</div></div>`).join('')}</div>`).join('')}</div>`:''}</div>`;
+}
+function renderProjectCard(t){const pm=parseProjectMeta(t.description);const st=getStatus(t.status)||{};const u=getUser(t.assignee)||{};const pct=projectProgress(t);const due=t.due_date&&!st.hide_due?fmtDate(t.due_date):'No due date';return `<div class="project-card" onclick="openDetail(${t.id})"><div class="project-card-top"><div class="project-icon">🏗</div><div style="min-width:0;flex:1"><div class="project-name">${esc(t.title)}</div><div class="project-meta">${projectStatusBadge(t)}<span class="project-pill">${esc(u.name||t.assignee||'Unassigned')}</span><span class="project-pill">📅 ${esc(due)}</span></div></div></div><div class="project-progress"><div class="project-progress-head"><span>Progress</span><span>${pct}%</span></div><div class="project-track"><div class="project-fill" style="width:${pct}%"></div></div></div><div class="project-meta"><span class="project-pill">👥 ${esc(pm.team||'No related team')}</span>${t.priority==='high'?`<span class="project-pill" style="background:var(--am-l);color:var(--am-d)">🔥 High risk</span>`:''}</div><div class="project-next"><b>Next:</b> ${esc(pm.next||'Add next step to make follow-up clearer.')}</div></div>`;}
+
 function renderArchive(){
   const archived=tasks.filter(t=>t.archived).sort((a,b)=>new Date(b.archived_at||b.completed_at||0)-new Date(a.archived_at||a.completed_at||0));
   const grid=document.getElementById('archive-grid');
@@ -2083,11 +2408,14 @@ function openTaskModal(statusId=null,taskId=null){
   if(!can('createTask')&&!taskId)return;
   editingTaskId=taskId;document.getElementById('modal-title').textContent=taskId?'Edit task':'Create task';
   const t=taskId?getTask(taskId):null;
-  document.getElementById('f-title').value=t?t.title:'';document.getElementById('f-desc').value=t?t.description||'':'';
+  const pm=t?parseProjectMeta(t.description):{team:'',progress:0,next:''};
+  document.getElementById('f-title').value=t?t.title:'';document.getElementById('f-desc').value=t?stripProjectMeta(t.description):'';
   document.getElementById('f-priority').value=t?t.priority:'medium';document.getElementById('f-due').value=t?t.due_date||'':'';
+  document.getElementById('f-project-team').value=pm.team||'';document.getElementById('f-project-next').value=pm.next||'';document.getElementById('f-project-progress').value=pm.progress??0;
   document.getElementById('f-type').innerHTML=taskTypes.map(ty=>`<option value="${esc(ty.id)}"${(t?t.type:taskTypes[0]?.id)===ty.id?' selected':''}>${esc(ty.icon)} ${esc(ty.name)}</option>`).join('');
   document.getElementById('f-assignee').innerHTML=users.map(u=>`<option value="${esc(u.id)}"${(t?t.assignee:currentUser?.id)===u.id?' selected':''}>${esc(u.name)}</option>`).join('');
   document.getElementById('f-status').innerHTML=statuses.map(s=>`<option value="${esc(s.id)}"${(t?t.status:statusId||statuses[0]?.id)===s.id?' selected':''}>${esc(s.name)}</option>`).join('');
+  toggleProjectFields();
   openModal('task-modal');
 }
 async function saveTask(){
@@ -2095,11 +2423,15 @@ async function saveTask(){
   const newStatus=document.getElementById('f-status').value;const newSt=getStatus(newStatus);
   if(editingTaskId){
     const t=getTask(editingTaskId);
-    const upd={title,description:document.getElementById('f-desc').value.trim(),type:document.getElementById('f-type').value,priority:document.getElementById('f-priority').value,assignee:document.getElementById('f-assignee').value,status:newStatus,due_date:document.getElementById('f-due').value||null,updated_at:mkTs()};
+    const chosenType=document.getElementById('f-type').value;
+    const desc=isProjectTypeId(chosenType)?composeProjectDescription(document.getElementById('f-desc').value.trim(),{team:document.getElementById('f-project-team').value,progress:document.getElementById('f-project-progress').value,next:document.getElementById('f-project-next').value}):document.getElementById('f-desc').value.trim();
+    const upd={title,description:desc,type:chosenType,priority:document.getElementById('f-priority').value,assignee:document.getElementById('f-assignee').value,status:newStatus,due_date:document.getElementById('f-due').value||null,updated_at:mkTs()};
     if(t.status!==newStatus){await sb.from('comments').insert({task_id:editingTaskId,author:currentUser.id,text:`Status: <b>${getStatus(t.status).name}</b> → <b>${newSt.name}</b>`,is_system:true});if(newSt.is_done&&!t.completed_at)upd.completed_at=mkTs();}
     await sb.from('tasks').update(upd).eq('id',editingTaskId);
   }else{
-    await sb.from('tasks').insert({title,description:document.getElementById('f-desc').value.trim(),type:document.getElementById('f-type').value,priority:document.getElementById('f-priority').value,assignee:document.getElementById('f-assignee').value,status:newStatus,due_date:document.getElementById('f-due').value||null,archived:false,completed_at:newSt?.is_done?mkTs():null});
+    const chosenType=document.getElementById('f-type').value;
+    const desc=isProjectTypeId(chosenType)?composeProjectDescription(document.getElementById('f-desc').value.trim(),{team:document.getElementById('f-project-team').value,progress:document.getElementById('f-project-progress').value,next:document.getElementById('f-project-next').value}):document.getElementById('f-desc').value.trim();
+    await sb.from('tasks').insert({title,description:desc,type:chosenType,priority:document.getElementById('f-priority').value,assignee:document.getElementById('f-assignee').value,status:newStatus,due_date:document.getElementById('f-due').value||null,archived:false,completed_at:newSt?.is_done?mkTs():null});
     showNotif('✅',`"${esc(title)}" created!`);
   }
   editingTaskId=null;closeModal('task-modal');await reloadAndRefresh();
@@ -2156,8 +2488,492 @@ async function saveChangedPin(){
   }
 }
 
+
+// ══════════════════════════════════════════════
+// PROJECT PM MODULE — locked Project type, teams, work items, flow, weighted progress
+// ══════════════════════════════════════════════
+let projectTeams=[];
+let creatingProjectMode=false;
+let editingProjectParentId=null;
+let selectedProjectId=null;
+
+const PROJECT_TYPE_ID='project';
+function isProjectTask(t){return isProjectTypeId(t?.type);}
+function projectChildTasks(projectId){return activeTasks().filter(t=>String(t.project_id||'')===String(projectId) && !isProjectTask(t));}
+function projectTeamsFor(projectId){return projectTeams.filter(x=>String(x.project_id)===String(projectId)).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||String(a.name).localeCompare(String(b.name)));}
+function projectTeamName(id){const tm=projectTeams.find(x=>String(x.id)===String(id));return tm?.name||'Unassigned team';}
+function taskWeight(t){const explicit=Number(t.progress_weight);if(explicit>0)return explicit;if(t.priority==='high')return 3;if(t.priority==='low')return 1;return 2;}
+function taskCompletionPct(t){const st=getStatus(t.status);if(st?.is_done)return 100;const nm=String(st?.name||'').toLowerCase();if(nm.includes('review')||nm.includes('uat')||nm.includes('test'))return 75;if(nm.includes('progress')||nm.includes('doing')||nm.includes('dev'))return 50;if(nm.includes('pending')||nm.includes('wait')||nm.includes('block')||nm.includes('stuck'))return 15;return 0;}
+function projectCalculatedProgress(project){const kids=projectChildTasks(project.id);if(!kids.length)return 0;const total=kids.reduce((a,t)=>a+taskWeight(t),0);if(!total)return 0;return Math.round(kids.reduce((a,t)=>a+(taskCompletionPct(t)*taskWeight(t)),0)/total);}
+function projectProgress(t){const kids=projectChildTasks(t.id);if(kids.length)return projectCalculatedProgress(t);const st=getStatus(t.status);if(st?.is_done)return 100;return 0;}
+function projectRisk(t){const kids=projectChildTasks(t.id);const today=today0();const overdue=kids.filter(k=>k.due_date&&new Date(k.due_date)<today&&!getStatus(k.status)?.is_done).length;const blocked=kids.filter(k=>/block|stuck|hold|pending|wait/i.test(getStatus(k.status)?.name||'')).length;if(overdue||blocked)return{label:'Stuck',cls:'risk-stuck',count:overdue+blocked};const pending=kids.filter(k=>/review|uat|pending|wait/i.test(getStatus(k.status)?.name||'')).length;if(pending)return{label:'Pending',cls:'risk-pending',count:pending};return{label:'On track',cls:'risk-ok',count:0};}
+function projectSteps(projectId){const kids=projectChildTasks(projectId);const map=new Map();kids.forEach(t=>{const name=String(t.project_step||'Unplanned').trim()||'Unplanned';const order=Number(t.project_step_order);if(!map.has(name))map.set(name,{name,order:Number.isFinite(order)?order:999,items:[]});map.get(name).items.push(t);});return [...map.values()].sort((a,b)=>a.order-b.order||a.name.localeCompare(b.name)).map(s=>({...s,items:s.items.sort((a,b)=>(Number(b.progress_weight)||0)-(Number(a.progress_weight)||0)||new Date(a.created_at||0)-new Date(b.created_at||0))}));}
+function projectTypeOptions(currentType,allowProject=false){return taskTypes.filter(ty=>allowProject||!isProjectTypeId(ty.id)||String(currentType)===String(ty.id)).map(ty=>`<option value="${esc(ty.id)}"${String(currentType)===String(ty.id)?' selected':''}>${esc(ty.icon)} ${esc(ty.name)}${isProjectTypeId(ty.id)?' 🔒':''}</option>`).join('');}
+
+function projectVisibleList(){const all=activeTasks().filter(isProjectTask);return currentUser?.role==='admin'?all:all.filter(t=>t.assignee===currentUser?.id||projectChildTasks(t.id).some(k=>k.assignee===currentUser?.id));}
+function selectProject(id){selectedProjectId=id;renderProjects();}
+function projectTaskState(t){const st=getStatus(t.status)||{};const name=String(st.name||'').toLowerCase();if(st.is_done)return{label:'Done',cls:'risk-ok',card:''};if(/block|stuck|hold/.test(name))return{label:'Stuck',cls:'risk-stuck',card:'stuck'};if(/pending|wait|review|uat/.test(name))return{label:'Pending',cls:'risk-pending',card:'pending'};return{label:'Active',cls:'risk-pending',card:''};}
+function projectStepOptions(selected){const presets=['Backlog','Impact Analysis','Development','SIT','UAT','Deployment','Go-live','Done'];const found=new Set([...presets]);activeTasks().forEach(t=>{if(t.project_step)found.add(t.project_step)});return [...found].map(x=>`<option value="${esc(x)}"${String(selected||'Backlog')===String(x)?' selected':''}>${esc(x)}</option>`).join('');}
+function projectTypeSelectOptions(selected){return taskTypes.filter(ty=>!isProjectTypeId(ty.id)).map(ty=>`<option value="${esc(ty.id)}"${String(selected||'')===String(ty.id)?' selected':''}>${esc(ty.icon||'•')} ${esc(ty.name)}</option>`).join('');}
+function userOptions(selected){return users.map(u=>`<option value="${esc(u.id)}"${String(selected||'')===String(u.id)?' selected':''}>${esc(u.name)}</option>`).join('');}
+function statusOptions(selected){return statuses.map(st=>`<option value="${esc(st.id)}"${String(selected||'')===String(st.id)?' selected':''}>${esc(st.name)}</option>`).join('');}
+function teamOptions(projectId,selected){return `<option value="">Unassigned team</option>`+projectTeamsFor(projectId).map(tm=>`<option value="${esc(tm.id)}"${String(selected||'')===String(tm.id)?' selected':''}>${esc(tm.name)}</option>`).join('');}
+function fillProjectTaskFields(projectId,t=null){
+  const box=document.getElementById('project-task-fields');const parent=document.getElementById('f-project-parent');if(parent)parent.value=projectId||'';if(box)box.classList.toggle('hidden',!projectId);
+  const teamSel=document.getElementById('f-project-task-team');if(teamSel){const teams=projectTeamsFor(projectId);teamSel.innerHTML=`<option value="">Unassigned team</option>`+teams.map(tm=>`<option value="${esc(tm.id)}"${String(t?.project_team_id||'')===String(tm.id)?' selected':''}>${esc(tm.name)}</option>`).join('');}
+  const step=document.getElementById('f-project-task-step');if(step)step.value=t?.project_step||'Backlog';
+  const order=document.getElementById('f-project-task-order');if(order)order.value=t?.project_step_order??10;
+  const w=document.getElementById('f-project-task-weight');if(w)w.value=String(t?.progress_weight||taskWeight(t||{}));
+}
+
+// Override loadAll to include project teams with graceful fallback.
+async function loadAll(){
+  try{
+    const [uR,sR,tyR,tR,cR,ptR]=await Promise.all([
+      sb.from('users').select('*').order('name'),
+      sb.from('statuses').select('*').order('sort_order'),
+      sb.from('task_types').select('*').order('sort_order'),
+      sb.from('tasks').select('*').order('created_at',{ascending:false}),
+      sb.from('comments').select('*,comment_files(*),comment_replies(*,reply_files(*))').order('created_at'),
+      sb.from('project_teams').select('*').order('sort_order')
+    ]);
+    if(uR.error)throw uR.error;if(sR.error)throw sR.error;
+    users=uR.data||[];statuses=sR.data||[];taskTypes=tyR.error?[]:(tyR.data||[]);tasks=tR.error?[]:(tR.data||[]);projectTeams=ptR.error?[]:(ptR.data||[]);
+    if(cR.error){const{data:cPlain,error:cErr}=await sb.from('comments').select('*').order('created_at');comments=cErr?[]:(cPlain||[]).map(c=>({...c,comment_files:[],comment_replies:[]}));}
+    else comments=cR.data||[];
+    return true;
+  }catch(e){console.error('❌ loadAll failed:',e);return false;}
+}
+function subscribeRealtime(){
+  realtimeChannel=sb.channel('tf-rt')
+    .on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'comments'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'statuses'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'users'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'task_types'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_teams'},()=>reloadAndRefresh())
+    .subscribe(s=>{const el=document.getElementById('realtime-ind');if(el)el.classList.toggle('hidden',s!=='SUBSCRIBED');});
+}
+async function ensureProjectType(){let p=getProjectType();if(p)return p;try{const maxO=taskTypes.reduce((a,t)=>Math.max(a,Number(t.sort_order)||0),0);const row={id:PROJECT_TYPE_ID,name:'Project',color:'#4530A0',bg:'#EDEAFC',icon:'🏗',sort_order:maxO+1,is_locked:true};const{error}=await sb.from('task_types').insert(row);if(error)throw error;await reloadAndRefresh();return getProjectType();}catch(e){showNotif('⚠️','Could not auto-create Project type. Run the project SQL script first.');return null;}}
+async function openProjectModal(){const p=await ensureProjectType();creatingProjectMode=true;openTaskModal(null,null);const mode=document.getElementById('f-create-project-mode');if(mode)mode.value='1';if(p){const sel=document.getElementById('f-type');sel.value=p.id;sel.disabled=true;toggleProjectFields();}creatingProjectMode=false;}
+function openProjectChildTaskModal(projectId,taskId=null){editingProjectParentId=projectId;openTaskModal(null,taskId);fillProjectTaskFields(projectId,taskId?getTask(taskId):null);const sel=document.getElementById('f-type');if(sel){sel.disabled=false;sel.innerHTML=projectTypeOptions(taskId?getTask(taskId)?.type:taskTypes.find(ty=>!isProjectTypeId(ty.id))?.id,false);}toggleProjectFields();}
+function toggleProjectFields(){const typeId=document.getElementById('f-type')?.value;const box=document.getElementById('project-fields');if(box)box.classList.toggle('hidden',!isProjectTypeId(typeId));}
+function togglePopupProjectFields(){const typeId=document.getElementById('tpe-type')?.value;const box=document.getElementById('tpe-project-fields');if(box)box.classList.toggle('hidden',!isProjectTypeId(typeId));}
+
+function openTaskModal(statusId=null,taskId=null){
+  if(!can('createTask')&&!taskId)return;
+  editingTaskId=taskId;const modeEl=document.getElementById('f-create-project-mode');if(modeEl)modeEl.value=creatingProjectMode?'1':'0';document.getElementById('modal-title').textContent=taskId?'Edit task':(editingProjectParentId?'Add work item':creatingProjectMode?'Create project':'Create task');
+  const t=taskId?getTask(taskId):null;const isProj=t?isProjectTask(t):creatingProjectMode;
+  const pm=t?parseProjectMeta(t.description):{team:'',progress:0,next:''};
+  document.getElementById('f-title').value=t?t.title:'';document.getElementById('f-desc').value=t?stripProjectMeta(t.description):'';
+  document.getElementById('f-priority').value=t?t.priority:'medium';document.getElementById('f-due').value=t?t.due_date||'':'';
+  document.getElementById('f-project-team').value=pm.team||'';document.getElementById('f-project-next').value=pm.next||'';document.getElementById('f-project-progress').value=isProj?projectProgress(t||{id:null,status:statuses[0]?.id}):0;
+  const defaultType=isProj?(getProjectType()?.id||PROJECT_TYPE_ID):(t?t.type:(taskTypes.find(ty=>!isProjectTypeId(ty.id))?.id||taskTypes[0]?.id));
+  const sel=document.getElementById('f-type');sel.innerHTML=projectTypeOptions(defaultType,isProj||creatingProjectMode);sel.value=defaultType;sel.disabled=!!isProj;
+  document.getElementById('f-assignee').innerHTML=users.map(u=>`<option value="${esc(u.id)}"${(t?t.assignee:currentUser?.id)===u.id?' selected':''}>${esc(u.name)}</option>`).join('');
+  document.getElementById('f-status').innerHTML=statuses.map(s=>`<option value="${esc(s.id)}"${(t?t.status:statusId||statuses[0]?.id)===s.id?' selected':''}>${esc(s.name)}</option>`).join('');
+  fillProjectTaskFields(editingProjectParentId||t?.project_id||'',t);
+  toggleProjectFields();openModal('task-modal');
+}
+async function saveTask(){
+  const title=document.getElementById('f-title').value.trim();if(!title)return;
+  const newStatus=document.getElementById('f-status').value;const newSt=getStatus(newStatus);
+  const existing=editingTaskId?getTask(editingTaskId):null;
+  const forcedProject=existing&&isProjectTask(existing);
+  const chosenType=forcedProject?(existing.type||PROJECT_TYPE_ID):document.getElementById('f-type').value;
+  const parentId=document.getElementById('f-project-parent')?.value||editingProjectParentId||existing?.project_id||null;
+  const createProjectMode=document.getElementById('f-create-project-mode')?.value==='1';
+  if(!forcedProject&&isProjectTypeId(chosenType)&&!createProjectMode){showNotif('🔒','Project is locked. Use + New Project to create a project.');return;}
+  const isProj=isProjectTypeId(chosenType);
+  const desc=isProj?composeProjectDescription(document.getElementById('f-desc').value.trim(),{team:document.getElementById('f-project-team').value,progress:projectProgress(existing||{id:null,status:newStatus}),next:document.getElementById('f-project-next').value}):document.getElementById('f-desc').value.trim();
+  const projectLink=isProj?{project_id:null,project_team_id:null,project_step:null,project_step_order:null,progress_weight:null}:{project_id:parentId||null,project_team_id:document.getElementById('f-project-task-team')?.value||null,project_step:document.getElementById('f-project-task-step')?.value.trim()||null,project_step_order:Number(document.getElementById('f-project-task-order')?.value||0),progress_weight:Number(document.getElementById('f-project-task-weight')?.value||taskWeight({priority:document.getElementById('f-priority').value}))};
+  if(editingTaskId){
+    const upd={title,description:desc,type:chosenType,priority:document.getElementById('f-priority').value,assignee:document.getElementById('f-assignee').value,status:newStatus,due_date:document.getElementById('f-due').value||null,updated_at:mkTs(),...projectLink};
+    if(existing.status!==newStatus){await sb.from('comments').insert({task_id:editingTaskId,author:currentUser.id,text:`Status: <b>${getStatus(existing.status).name}</b> → <b>${newSt.name}</b>`,is_system:true});if(newSt.is_done&&!existing.completed_at)upd.completed_at=mkTs();}
+    await sb.from('tasks').update(upd).eq('id',editingTaskId);
+  }else{
+    await sb.from('tasks').insert({title,description:desc,type:chosenType,priority:document.getElementById('f-priority').value,assignee:document.getElementById('f-assignee').value,status:newStatus,due_date:document.getElementById('f-due').value||null,archived:false,completed_at:newSt?.is_done?mkTs():null,...projectLink});
+    showNotif('✅',`"${esc(title)}" created!`);
+  }
+  const reopenProject=parentId;editingTaskId=null;editingProjectParentId=null;const modeReset=document.getElementById('f-create-project-mode');if(modeReset)modeReset.value='0';document.getElementById('f-type').disabled=false;closeModal('task-modal');await reloadAndRefresh();
+  if(reopenProject)setTimeout(()=>openDetail(reopenProject),80);else if(selectedTaskId)setTimeout(()=>isMob()?openMobile(selectedTaskId):openDetail(selectedTaskId),80);
+}
+async function deleteTaskFromProject(id){const t=getTask(id);if(!t||!confirm(`Delete work item "${t.title}"?`))return;await sb.from('tasks').delete().eq('id',id);showNotif('🗑','Work item deleted.');await reloadAndRefresh();if(currentTab==='project'){selectedProjectId=t.project_id;renderProjects();}else if(t.project_id)setTimeout(()=>openDetail(t.project_id),80);}
+async function unlinkTaskFromProject(id){const t=getTask(id);await sb.from('tasks').update({project_id:null,project_team_id:null,project_step:null,project_step_order:null,progress_weight:null,updated_at:mkTs()}).eq('id',id);showNotif('↩','Task removed from project.');await reloadAndRefresh();if(t?.project_id)setTimeout(()=>openDetail(t.project_id),80);}
+async function updateProjectTaskQuick(id){const upd={project_team_id:document.getElementById(`pt-team-${id}`)?.value||null,project_step:document.getElementById(`pt-step-${id}`)?.value.trim()||null,project_step_order:Number(document.getElementById(`pt-order-${id}`)?.value||0),progress_weight:Number(document.getElementById(`pt-weight-${id}`)?.value||1),updated_at:mkTs()};await sb.from('tasks').update(upd).eq('id',id);showNotif('💾','Project work item updated.');await reloadAndRefresh();const t=getTask(id);if(currentTab==='project'){selectedProjectId=t?.project_id||selectedProjectId;renderProjects();}else if(t?.project_id)setTimeout(()=>openDetail(t.project_id),80);}
+async function addProjectTeam(projectId){const name=document.getElementById(`new-team-name-${projectId}`)?.value.trim();if(!name)return;const maxO=projectTeamsFor(projectId).reduce((a,t)=>Math.max(a,Number(t.sort_order)||0),0);await sb.from('project_teams').insert({project_id:projectId,name,sort_order:maxO+1});showNotif('👥','Project team added.');await reloadAndRefresh();if(currentTab==='project'){selectedProjectId=projectId;renderProjects();}else setTimeout(()=>openDetail(projectId),80);}
+async function renameProjectTeam(id){const tm=projectTeams.find(x=>String(x.id)===String(id));const name=prompt('Team name',tm?.name||'');if(!name)return;await sb.from('project_teams').update({name:name.trim()}).eq('id',id);await reloadAndRefresh();if(tm){if(currentTab==='project'){selectedProjectId=tm.project_id;renderProjects();}else setTimeout(()=>openDetail(tm.project_id),80);}}
+async function deleteProjectTeam(id){const tm=projectTeams.find(x=>String(x.id)===String(id));if(!tm||!confirm(`Delete team "${tm.name}"? Existing tasks will become unassigned team.`))return;await sb.from('tasks').update({project_team_id:null}).eq('project_team_id',id);await sb.from('project_teams').delete().eq('id',id);showNotif('🗑','Project team deleted.');await reloadAndRefresh();if(currentTab==='project'){selectedProjectId=tm.project_id;renderProjects();}else setTimeout(()=>openDetail(tm.project_id),80);}
+async function moveTaskStep(id,dir){const t=getTask(id);if(!t)return;await sb.from('tasks').update({project_step_order:(Number(t.project_step_order)||0)+dir,updated_at:mkTs()}).eq('id',id);await reloadAndRefresh();if(currentTab==='project'){selectedProjectId=t.project_id;renderProjects();}else if(t.project_id)setTimeout(()=>openDetail(t.project_id),80);}
+
+function renderProjectTeamsPanel(project){const teams=projectTeamsFor(project.id);return `<div class="project-panel"><div class="project-panel-head"><div class="project-panel-title">👥 Project teams</div><button class="project-small-btn" onclick="document.getElementById('new-team-name-${project.id}').focus()">+ Team</button></div><div class="project-panel-body"><div class="project-team-list">${teams.length?teams.map(tm=>`<span class="project-team-chip"><span>${esc(tm.name)}</span><button onclick="event.stopPropagation();renameProjectTeam(${tm.id})">✎</button><button onclick="event.stopPropagation();deleteProjectTeam(${tm.id})">✕</button></span>`).join(''):'<span class="project-lock-note">No team yet. Add DEV, QA, Infra, Business, Vendor, etc.</span>'}</div><div class="project-inline-form"><input id="new-team-name-${project.id}" placeholder="New team name"><button class="btn-p" style="font-size:12px;padding:7px 11px" onclick="addProjectTeam(${project.id})">Add team</button></div></div></div>`;}
+function renderProjectFlowPanel(project){const steps=projectSteps(project.id);return `<div class="project-panel"><div class="project-panel-head"><div class="project-panel-title">🧭 Flow board</div><span class="section-badge">Multiple work items per step</span></div><div class="project-panel-body"><div class="project-flow">${steps.length?steps.map(step=>`<div class="project-step"><div class="project-step-head"><div class="project-step-title">${esc(step.name)}</div><span class="section-badge">${step.items.length}</span></div><div class="project-step-body">${step.items.map(t=>{const r=projectRisk({id:project.id});const st=getStatus(t.status)||{};return `<div class="project-flow-task" onclick="openTaskPopup(${t.id})"><div class="project-flow-title">${esc(t.title)}</div><div class="project-flow-meta"><span class="project-workitem-label">Work item</span><span class="project-pill">${esc(projectTeamName(t.project_team_id))}</span><span class="project-pill">${esc(st.name||'—')}</span><span class="project-pill">W${taskWeight(t)}</span><span class="project-risk ${/block|stuck|hold|pending|wait/i.test(st.name||'')?'risk-stuck':getStatus(t.status)?.is_done?'risk-ok':'risk-pending'}">${getStatus(t.status)?.is_done?'Done':/block|stuck|hold|pending|wait/i.test(st.name||'')?'Stuck':'Pending'}</span></div></div>`}).join('')}</div></div>`).join(''):'<div class="project-empty" style="grid-column:1/-1">No project work items yet. Add work items to build the flow.</div>'}</div></div></div>`;}
+function renderProjectTasksPanel(project){const kids=projectChildTasks(project.id);const teams=projectTeamsFor(project.id);return `<div class="project-panel"><div class="project-panel-head"><div class="project-panel-title">✅ Project work items</div><button class="project-small-btn" onclick="openProjectChildTaskModal(${project.id})">+ Add work item</button></div><div class="project-panel-body"><div class="project-table-scroll"><table class="project-task-table"><thead><tr><th>Work item</th><th>Status</th><th>Assignee</th><th>Team</th><th>Step</th><th>Order</th><th>Weight</th><th></th></tr></thead><tbody>${kids.length?kids.map(t=>`<tr><td onclick="openTaskPopup(${t.id})"><b>${esc(t.title)}</b><div class="project-lock-note">${esc(t.priority||'medium')} priority · ${fmtDate(t.due_date)}</div></td><td>${esc(getStatus(t.status)?.name||'—')}</td><td>${esc(getUser(t.assignee)?.name||'—')}</td><td><select class="project-task-select" id="pt-team-${t.id}"><option value="">Unassigned</option>${teams.map(tm=>`<option value="${esc(tm.id)}"${String(t.project_team_id||'')===String(tm.id)?' selected':''}>${esc(tm.name)}</option>`).join('')}</select></td><td><input class="project-task-select" id="pt-step-${t.id}" value="${esc(t.project_step||'Backlog')}" style="width:120px"></td><td><input class="project-task-select" id="pt-order-${t.id}" type="number" value="${esc(t.project_step_order??10)}" style="width:58px"></td><td><select class="project-task-select" id="pt-weight-${t.id}">${[1,2,3,5].map(w=>`<option value="${w}"${taskWeight(t)===w?' selected':''}>${w}</option>`).join('')}</select></td><td style="white-space:nowrap"><button class="project-small-btn" onclick="updateProjectTaskQuick(${t.id})">Save</button><button class="project-small-btn" onclick="openProjectChildTaskModal(${project.id},${t.id})">Edit</button><button class="project-small-btn" onclick="deleteTaskFromProject(${t.id})">Delete</button></td></tr>`).join(''):`<tr><td colspan="8" style="text-align:center;color:var(--t3);padding:22px">No work items in this project yet.</td></tr>`}</tbody></table></div></div></div>`;}
+
+function renderProjects(){
+  const wrap=document.getElementById('project-content');if(!wrap)return;
+  const visible=projectVisibleList();
+  if(visible.length&&!visible.some(p=>String(p.id)===String(selectedProjectId)))selectedProjectId=visible[0].id;
+  const selected=visible.find(p=>String(p.id)===String(selectedProjectId));
+  const avg=visible.length?Math.round(visible.reduce((a,t)=>a+projectProgress(t),0)/visible.length):0;
+  const stuck=visible.filter(t=>projectRisk(t).cls==='risk-stuck').length;
+  wrap.innerHTML=`<div class="project-wrap"><div class="project-hero"><div style="font-size:32px">🏗</div><div><div class="project-title">Project Manager</div><div class="project-sub">Single-page control for project teams, work items, flow order, stuck work, and weighted progress.</div></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${visible.length}</div><div class="mstat-lbl">Projects</div></div><div class="mstat"><div class="mstat-val">${avg}%</div><div class="mstat-lbl">Avg progress</div></div><div class="mstat"><div class="mstat-val">${stuck}</div><div class="mstat-lbl">Stuck</div></div></div><div class="project-actions">${can('createTask')?`<button class="project-btn" onclick="openProjectModal()">+ New Project</button>`:''}</div></div>${visible.length?`<div class="project-single-layout"><div class="project-sidebar">${visible.map(renderProjectCard).join('')}</div>${selected?renderProjectManager(selected):'<div class="project-selected-empty">Select a project to manage.</div>'}</div>`:`<div class="project-empty"><div style="font-size:34px;margin-bottom:8px">🌱</div><b>No active projects yet.</b><div style="font-size:13px;margin-top:6px">Create a locked Project record for each CR that needs cross-team follow-up.</div></div>`}</div>`;
+}
+function renderProjectCard(t){const pm=parseProjectMeta(t.description);const pct=projectProgress(t);const kids=projectChildTasks(t.id);const risk=projectRisk(t);const active=String(t.id)===String(selectedProjectId);return `<div class="project-side-card ${active?'active':''}" onclick="selectProject(${t.id})"><div class="project-side-title"><span>🏗</span><span>${esc(t.title)}</span></div><div class="project-progress"><div class="project-progress-head"><span>${kids.length} work item${kids.length===1?'':'s'}</span><span>${pct}%</span></div><div class="project-track"><div class="project-fill" style="width:${pct}%"></div></div></div><div class="project-side-meta"><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span><span class="project-pill">👥 ${projectTeamsFor(t.id).length}</span><span class="project-pill">🧭 ${projectSteps(t.id).length}</span></div><div class="project-lock-note" style="margin-top:8px;background:transparent;border:none;padding:0;color:var(--t3)">${esc(pm.next||'No next step')}</div></div>`;}
+function renderProjectManager(project){const pm=parseProjectMeta(project.description);const pct=projectProgress(project);const risk=projectRisk(project);const kids=projectChildTasks(project.id);return `<div class="project-manager"><div class="project-manager-hero"><div><div class="project-manager-title">🏗 ${esc(project.title)}</div><div class="project-manager-sub">Locked Project record · ${kids.length} linked work item${kids.length===1?'':'s'} · weighted progress is calculated from work item status and weight.</div></div><div class="project-manager-actions"><button class="project-white-btn" onclick="saveProjectQuick(${project.id})">💾 Save project</button><button class="project-outline-white-btn" onclick="openTaskPopup(${project.id})">View summary</button></div></div><div class="project-kpi-grid"><div class="project-kpi"><div class="project-kpi-val">${pct}%</div><div class="project-kpi-lbl">Calculated progress</div></div><div class="project-kpi"><div class="project-kpi-val">${kids.length}</div><div class="project-kpi-lbl">Project work items</div></div><div class="project-kpi"><div class="project-kpi-val">${projectTeamsFor(project.id).length}</div><div class="project-kpi-lbl">Teams</div></div><div class="project-kpi"><div class="project-kpi-val">${risk.count||0}</div><div class="project-kpi-lbl">Stuck / pending</div></div></div><div class="project-manager-grid"><div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Project details</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="project-panel-body"><div class="project-edit-grid"><div class="project-field"><label>Project title</label><input id="pm-title-${project.id}" value="${esc(project.title)}"></div><div class="project-field"><label>Owner</label><select id="pm-assignee-${project.id}">${userOptions(project.assignee)}</select></div><div class="project-field"><label>Status</label><select id="pm-status-${project.id}">${statusOptions(project.status)}</select></div><div class="project-field"><label>Next step</label><input id="pm-next-${project.id}" value="${esc(pm.next||'')}" placeholder="e.g. Wait for QA SIT result"></div><div class="project-field"><label>Due date</label><input id="pm-due-${project.id}" type="date" value="${esc(project.due_date||'')}"></div><div class="project-field"><label>Project type</label><input value="🏗 Project - locked" disabled></div><div class="project-field" style="grid-column:1/-1"><label>Description</label><textarea id="pm-desc-${project.id}">${esc(stripProjectMeta(project.description)||'')}</textarea></div></div></div></div>${renderProjectTeamManager(project)}${renderProjectTaskCreator(project)}<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Flow arranger</div><span class="section-badge">Multiple work items per step</span></div><div class="project-panel-body">${renderProjectFlowManager(project)}</div></div></div></div>`;}
+function renderProjectTeamManager(project){const teams=projectTeamsFor(project.id);return `<div class="project-panel"><div class="project-panel-head"><div class="project-panel-title">👥 Teams in project</div><span class="section-badge">Assign work items by team</span></div><div class="project-panel-body"><div class="project-team-manager">${teams.length?teams.map(tm=>`<div class="project-team-row"><input id="pm-team-name-${tm.id}" value="${esc(tm.name)}"><input id="pm-team-order-${tm.id}" type="number" value="${esc(tm.sort_order??10)}" title="Team display order"><div style="display:flex;gap:5px"><button class="project-small-btn" onclick="updateProjectTeamInline(${tm.id})">Save</button><button class="project-mini-danger" onclick="deleteProjectTeam(${tm.id})">Delete</button></div></div>`).join(''):'<div class="project-lock-note">No teams yet. Add DEV, QA, Infra, Business, Vendor, etc.</div>'}<div class="project-inline-form"><input id="pm-new-team-${project.id}" placeholder="New team name, e.g. DEV" onkeydown="if(event.key==='Enter')addProjectTeamInline(${project.id})"><input id="pm-new-team-order-${project.id}" type="number" value="${teams.length+1}" style="width:80px" title="Team display order"><button class="btn-p" style="font-size:12px;padding:7px 11px" onclick="addProjectTeamInline(${project.id})">Add team</button></div><div class="project-helper-text">Tip: create teams like DEV, QA, Business, Infra, Vendor. These teams will appear in the work item assignment dropdown.</div></div></div></div>`;}
+function renderProjectTaskCreator(project){const defaultType=taskTypes.find(ty=>!isProjectTypeId(ty.id))?.id||'';return `<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">➕ Add project work item</div><span class="section-badge">Separate from normal tasks</span></div><div class="project-panel-body"><div class="project-add-task project-add-task-easy"><div class="project-field wide"><label>Work item title</label><input id="pm-task-title-${project.id}" placeholder="e.g. DEV impact analysis / QA SIT execution / Business UAT confirmation"></div><input type="hidden" id="pm-task-type-${project.id}" value="${esc(defaultType)}"><div class="project-field"><label>Priority / weight</label><select id="pm-task-priority-${project.id}" onchange="syncProjectTaskWeight(${project.id})"><option value="low">Low / weight 1</option><option value="medium" selected>Medium / weight 2</option><option value="high">High / weight 3</option></select></div><div class="project-field"><label>Assignee</label><select id="pm-task-assignee-${project.id}">${userOptions(currentUser?.id)}</select></div><div class="project-field"><label>Team</label><select id="pm-task-team-${project.id}">${teamOptions(project.id,'')}</select></div><div class="project-field"><label>Status</label><select id="pm-task-status-${project.id}">${statusOptions(statuses[0]?.id)}</select></div><div class="project-field"><label>Flow step</label><select id="pm-task-step-${project.id}">${projectStepOptions('Backlog')}</select></div><div class="project-field"><label>Progress weight</label><select id="pm-task-weight-${project.id}"><option value="1">1 - small</option><option value="2" selected>2 - normal</option><option value="3">3 - important</option><option value="5">5 - major milestone</option></select></div><div class="project-field"><label>Due date</label><input id="pm-task-due-${project.id}" type="date"></div><div class="project-field wide"><label>Description / dependency / expected output</label><textarea id="pm-task-desc-${project.id}" placeholder="Add useful context, dependency, expected output, blocker, or follow-up note..."></textarea></div><div class="project-add-actions"><span class="project-helper-text" style="margin-right:auto">Work item order is controlled by drag and drop in the Flow arranger below.</span><button class="btn-p" onclick="addProjectTaskInline(${project.id})">Add work item</button></div></div></div></div>`;}
+function renderProjectFlowManager(project){const steps=projectSteps(project.id);if(!steps.length)return '<div class="project-empty">No project work items yet. Add a work item above to start building the flow.</div>';return `<div class="project-flow-manager">${steps.map(step=>`<div class="project-step-manager"><div class="project-step-manager-head"><div class="project-step-manager-title">${esc(step.name)}</div><span class="section-badge">${step.items.length}</span></div><div class="project-step-drop" ondragover="onProjectFlowDragOver(event,this)" ondragleave="onProjectFlowDragLeave(this)" ondrop="onProjectFlowDrop(event,${project.id},'${escAttr(step.name)}',null)">${step.items.map(t=>renderProjectManageTask(t,project)).join('')}</div></div>`).join('')}</div><div class="project-helper-text">Drag the ⋮⋮ handle to move a work item between steps or reorder it inside the same step. Manual order is hidden from the form.</div>`;}
+function renderProjectManageTask(t,project){const state=projectTaskState(t);return `<div class="project-manage-task ${state.card}" data-project-task-id="${esc(t.id)}" ondragover="onProjectFlowDragOver(event,this)" ondrop="onProjectFlowDrop(event,${project.id},'${escAttr(t.project_step||'Backlog')}',${t.id})"><div class="project-manage-title-row"><span class="project-flow-handle" draggable="true" ondragstart="onProjectFlowDragStart(event,${t.id})" ondragend="onProjectFlowDragEnd(event)" title="Drag to arrange work item flow">⋮⋮</span><div class="project-manage-title">${esc(t.title)}</div></div><div class="project-manage-meta"><span class="project-workitem-label">Work item</span><span class="project-risk ${state.cls}">${state.label}</span><span class="project-pill">${esc(projectTeamName(t.project_team_id))}</span><span class="project-pill">${esc(getUser(t.assignee)?.name||'Unassigned')}</span><span class="project-pill">W${taskWeight(t)}</span></div><div class="project-manage-edit project-manage-edit-easy"><select id="pm-flow-status-${t.id}"><option disabled>Status</option>${statusOptions(t.status)}</select><select id="pm-flow-team-${t.id}"><option disabled>Team</option>${teamOptions(project.id,t.project_team_id)}</select><select id="pm-flow-assignee-${t.id}"><option disabled>Assignee</option>${userOptions(t.assignee)}</select><select id="pm-flow-step-${t.id}"><option disabled>Step</option>${projectStepOptions(t.project_step||'Backlog')}</select><select id="pm-flow-weight-${t.id}" class="wide-edit">${[1,2,3,5].map(w=>`<option value="${w}"${taskWeight(t)===w?' selected':''}>Weight ${w}</option>`).join('')}</select></div><div class="project-manage-actions"><button class="project-small-btn" onclick="saveProjectTaskInline(${t.id})">Save</button><button class="project-small-btn" onclick="openProjectChildTaskModal(${project.id},${t.id})">Edit work item</button><button class="project-mini-danger" onclick="deleteTaskFromProject(${t.id})">Delete</button></div></div>`;}
+
+async function saveProjectQuick(projectId){
+  const project=getTask(projectId);if(!project)return;
+  const title=document.getElementById(`pm-title-${projectId}`)?.value.trim();if(!title){showNotif('⚠️','Project title is required.');return;}
+  const status=document.getElementById(`pm-status-${projectId}`)?.value;const oldStatus=project.status;const newSt=getStatus(status);
+  const desc=composeProjectDescription(document.getElementById(`pm-desc-${projectId}`)?.value.trim()||'',{team:'',progress:projectProgress(project),next:document.getElementById(`pm-next-${projectId}`)?.value.trim()||''});
+  const upd={title,description:desc,assignee:document.getElementById(`pm-assignee-${projectId}`)?.value,status,due_date:document.getElementById(`pm-due-${projectId}`)?.value||null,updated_at:mkTs()};
+  if(oldStatus!==status){const old=getStatus(oldStatus)||{};await sb.from('comments').insert({task_id:projectId,author:currentUser.id,text:`Status: <b>${esc(old.name||'')}</b> → <b>${esc(newSt?.name||'')}</b>`,is_system:true});if(newSt?.is_done&&!project.completed_at)upd.completed_at=mkTs();}
+  await sb.from('tasks').update(upd).eq('id',projectId);showNotif('💾','Project updated.');await reloadAndRefresh();selectedProjectId=projectId;renderProjects();
+}
+async function addProjectTeamInline(projectId){
+  const name=document.getElementById(`pm-new-team-${projectId}`)?.value.trim();if(!name){showNotif('⚠️','Team name is required.');return;}
+  const sort=Number(document.getElementById(`pm-new-team-order-${projectId}`)?.value||projectTeamsFor(projectId).length+1);
+  try{
+    const {error}=await sb.from('project_teams').insert({project_id:projectId,name,sort_order:sort});
+    if(error)throw error;
+    showNotif('👥','Team added.');await reloadAndRefresh();selectedProjectId=projectId;renderProjects();
+  }catch(e){console.error('Add team failed:',e);const msg=(e&&e.message)||String(e);if(msg.toLowerCase().includes('row-level security')){showNotif('🔒','Add team blocked by Supabase RLS. Run the updated project_module_db_migration_v2.sql policy section.');}else{showNotif('⚠️',`Add team failed: ${esc(msg)}`);}}
+}
+async function updateProjectTeamInline(id){
+  const tm=projectTeams.find(x=>String(x.id)===String(id));if(!tm)return;
+  const name=document.getElementById(`pm-team-name-${id}`)?.value.trim();if(!name){showNotif('⚠️','Team name is required.');return;}
+  const sort=Number(document.getElementById(`pm-team-order-${id}`)?.value||0);
+  await sb.from('project_teams').update({name,sort_order:sort}).eq('id',id);showNotif('💾','Team updated.');await reloadAndRefresh();selectedProjectId=tm.project_id;renderProjects();
+}
+async function addProjectTaskInline(projectId){
+  const title=document.getElementById(`pm-task-title-${projectId}`)?.value.trim();if(!title){showNotif('⚠️','Work item title is required.');return;}
+  const status=document.getElementById(`pm-task-status-${projectId}`)?.value;const st=getStatus(status);
+  const priority=document.getElementById(`pm-task-priority-${projectId}`)?.value||'medium';
+  const weight=Number(document.getElementById(`pm-task-weight-${projectId}`)?.value||({low:1,medium:2,high:3}[priority]||2));
+  const step=document.getElementById(`pm-task-step-${projectId}`)?.value||'Backlog';
+  const maxOrder=projectChildTasks(projectId).filter(t=>String(t.project_step||'Backlog')===String(step)).reduce((a,t)=>Math.max(a,Number(t.project_step_order)||0),0);
+  try{
+    const {error}=await sb.from('tasks').insert({
+      title,
+      description:document.getElementById(`pm-task-desc-${projectId}`)?.value.trim()||null,
+      type:document.getElementById(`pm-task-type-${projectId}`)?.value,
+      priority,
+      assignee:document.getElementById(`pm-task-assignee-${projectId}`)?.value,
+      status,
+      due_date:document.getElementById(`pm-task-due-${projectId}`)?.value||null,
+      archived:false,
+      completed_at:st?.is_done?mkTs():null,
+      project_id:projectId,
+      project_team_id:document.getElementById(`pm-task-team-${projectId}`)?.value||null,
+      project_step:step,
+      project_step_order:maxOrder+10,
+      progress_weight:weight
+    });
+    if(error)throw error;
+    showNotif('✅','Work item added.');await reloadAndRefresh();selectedProjectId=projectId;renderProjects();
+  }catch(e){console.error('Add work item failed:',e);showNotif('⚠️',`Add work item failed: ${esc(e.message||e)}`);}
+}
+async function saveProjectTaskInline(id){
+  const t=getTask(id);if(!t)return;
+  const status=document.getElementById(`pm-flow-status-${id}`)?.value;const newSt=getStatus(status);const newStep=document.getElementById(`pm-flow-step-${id}`)?.value||'Backlog';
+  let stepOrder=Number(t.project_step_order)||10;
+  if(String(newStep)!==String(t.project_step||'Backlog')){
+    const maxOrder=projectChildTasks(t.project_id).filter(x=>String(x.project_step||'Backlog')===String(newStep)&&String(x.id)!==String(id)).reduce((a,x)=>Math.max(a,Number(x.project_step_order)||0),0);
+    stepOrder=maxOrder+10;
+  }
+  const upd={status,project_team_id:document.getElementById(`pm-flow-team-${id}`)?.value||null,assignee:document.getElementById(`pm-flow-assignee-${id}`)?.value,project_step:newStep,project_step_order:stepOrder,progress_weight:Number(document.getElementById(`pm-flow-weight-${id}`)?.value||taskWeight(t)),updated_at:mkTs()};
+  if(t.status!==status){const old=getStatus(t.status)||{};await sb.from('comments').insert({task_id:id,author:currentUser.id,text:`Status: <b>${esc(old.name||'')}</b> → <b>${esc(newSt?.name||'')}</b>`,is_system:true});if(newSt?.is_done&&!t.completed_at)upd.completed_at=mkTs();}
+  const {error}=await sb.from('tasks').update(upd).eq('id',id);if(error){showNotif('⚠️',`Save failed: ${esc(error.message)}`);return;}
+  showNotif('💾','Work item updated.');await reloadAndRefresh();selectedProjectId=t.project_id;renderProjects();
+}
+
+function projectPopupWorkItemRow(k,projectId){
+  const st=getStatus(k.status)||{};const state=projectWorkItemState(k);const team=projectTeamName(k.project_team_id);const owner=getUser(k.assignee)?.name||'Unassigned';
+  const due=k.due_date&&!st.hide_due?fmtDate(k.due_date):'No due';const id=escAttr(k.id);const desc=(k.description||'').trim();
+  return `<details class="project-popup-workitem-details" id="pwi-detail-${id}">
+    <summary class="project-popup-workitem-summary">
+      <span class="project-popup-workitem-caret">›</span>
+      <div class="project-popup-workitem-main">
+        <div class="project-popup-workitem-title">${esc(k.title)}</div>
+        <div class="project-popup-workitem-desc-preview">${desc?esc(desc):'No description yet — expand to add follow-up detail.'}</div>
+        <div class="project-popup-review-task-meta"><span class="project-workitem-label">Separate work item</span><span class="project-risk ${state.cls}">${state.label}</span><span class="project-pill">${esc(st.name||'No status')}</span><span class="project-pill">👥 ${esc(team)}</span><span class="project-pill">👤 ${esc(owner)}</span></div>
+      </div>
+      <div class="project-popup-workitem-side"><span class="project-pill">W${taskWeight(k)}</span><span class="project-pill">📅 ${esc(due)}</span></div>
+    </summary>
+    <div class="project-popup-workitem-edit">
+      <div class="project-field wide"><label>Work item title</label><input id="pwi-title-${id}" value="${esc(k.title||'')}"></div>
+      <div class="project-field"><label>Status</label><select id="pwi-status-${id}">${statusOptions(k.status)}</select></div>
+      <div class="project-field"><label>Team</label><select id="pwi-team-${id}">${teamOptions(projectId,k.project_team_id)}</select></div>
+      <div class="project-field"><label>Assignee</label><select id="pwi-assignee-${id}">${userOptions(k.assignee)}</select></div>
+      <div class="project-field"><label>Weight</label><select id="pwi-weight-${id}">${[1,2,3,5].map(w=>`<option value="${w}"${taskWeight(k)===w?' selected':''}>Weight ${w}</option>`).join('')}</select></div>
+      <div class="project-field wide"><label>Description / follow-up note</label><textarea id="pwi-desc-${id}" placeholder="Add detail, dependency, pending owner, expected output, or follow-up note...">${esc(k.description||'')}</textarea></div>
+      <div class="project-popup-workitem-actions"><span class="project-helper-text" style="margin-right:auto">Quick edit here, or use full Project Manager for flow drag/drop.</span><button class="btn-p" onclick="savePopupWorkItem('${id}')">Save work item</button></div>
+    </div>
+  </details>`;
+}
+
+async function savePopupWorkItem(id){
+  const item=getProjectWorkItem(id);if(!item)return;
+  const status=document.getElementById(`pwi-status-${id}`)?.value;const st=getStatus(status);
+  const upd={
+    title:document.getElementById(`pwi-title-${id}`)?.value.trim()||item.title,
+    description:document.getElementById(`pwi-desc-${id}`)?.value.trim()||null,
+    status,
+    project_team_id:document.getElementById(`pwi-team-${id}`)?.value||null,
+    assignee:document.getElementById(`pwi-assignee-${id}`)?.value||null,
+    progress_weight:Number(document.getElementById(`pwi-weight-${id}`)?.value||taskWeight(item)),
+    updated_at:mkTs()
+  };
+  if(item.status!==status&&st?.is_done&&!item.completed_at)upd.completed_at=mkTs();
+  if(item.status!==status&&!st?.is_done&&item.completed_at)upd.completed_at=null;
+  const {error}=await sb.from('project_work_items').update(upd).eq('id',id);
+  if(error){showNotif('⚠️',`Save failed: ${esc(error.message)}`);return;}
+  showNotif('💾','Project work item updated.');
+  const projectId=item.project_id;await reloadAndRefresh();selectedProjectId=projectId;renderTaskPopup(projectId);
+}
+
+function renderTaskPopup(id){
+  const popupId = id ?? selectedTaskId;
+  if(!popupId)return;
+  renderTaskPopupBase(popupId);
+  const t=getTask(popupId);if(!t||!isProjectTask(t))return;
+  const left=document.getElementById('tp-left');if(!left)return;
+  left.classList.add('project-popup-left');
+  document.querySelector('.task-popup')?.classList.add('task-popup-project');
+  const editBtn=document.getElementById('tp-edit-btn');
+  if(editBtn){editBtn.textContent='Open full Project Manager';editBtn.onclick=()=>{switchTab('project');selectProject(t.id);closeTaskPopup();};}
+  const pct=projectProgress(t);const risk=projectRisk(t);const kids=projectChildTasks(t.id);const done=kids.filter(k=>getStatus(k.status)?.is_done).length;
+  const totalWeight=kids.reduce((a,k)=>a+taskWeight(k),0);const openCnt=kids.length-done;const steps=projectSteps(t.id);
+  const stepRows=steps.length?steps.map(step=>{const total=step.items.reduce((a,x)=>a+taskWeight(x),0)||1;const val=Math.round(step.items.reduce((a,x)=>a+taskCompletionPct(x)*taskWeight(x),0)/total);return `<div class="project-popup-step-row"><div class="project-popup-step-name">${esc(step.name)}</div><div class="project-popup-step-track"><div class="project-popup-step-fill" style="width:${val}%"></div></div><div class="project-popup-step-count">${step.items.length}</div></div>`;}).join(''):'<div class="project-lock-note">No project work items yet. Add work items in the Project Manager.</div>';
+  const taskReview=steps.length?steps.map(step=>`<div class="project-popup-review-step"><div class="project-popup-review-step-head"><span>${esc(step.name)}</span><span class="section-badge" style="margin-left:auto">${step.items.length}</span></div>${step.items.map(k=>projectPopupWorkItemRow(k,t.id)).join('')}</div>`).join(''):'<div class="project-popup-review-empty">No project work items yet. Open the full Project Manager to add work items and build the flow.</div>';
+  const inject=`<div class="project-panel"><div class="project-panel-head"><div class="project-panel-title">🏗 Project progress summary</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="project-panel-body"><div class="project-popup-summary-wide"><div class="project-popup-progress-hero"><div><div class="project-popup-progress-big">${pct}%</div><div class="project-popup-progress-label">Weighted progress</div></div><div class="project-track"><div class="project-fill" style="width:${pct}%"></div></div><div class="project-lock-note" style="margin:0">Calculated from separate project work items and progress weight.</div></div><div><div class="project-popup-kpi-grid"><div class="project-popup-kpi-card"><div class="v">${kids.length}</div><div class="l">Work items</div></div><div class="project-popup-kpi-card"><div class="v">${done}</div><div class="l">Done</div></div><div class="project-popup-kpi-card"><div class="v">${openCnt}</div><div class="l">Open</div></div><div class="project-popup-kpi-card"><div class="v">${projectTeamsFor(t.id).length}</div><div class="l">Teams</div></div><div class="project-popup-kpi-card"><div class="v">${steps.length}</div><div class="l">Flow steps</div></div><div class="project-popup-kpi-card"><div class="v">${totalWeight}</div><div class="l">Total weight</div></div></div><div class="project-popup-flow-summary">${stepRows}</div><div class="project-detail-actions"><button class="btn-p" onclick="switchTab('project');selectProject(${t.id});closeTaskPopup()">Open full Project Manager</button></div></div></div><div class="project-popup-task-review"><div class="project-popup-task-review-title">All project work items / follow-up review</div><div class="project-lock-note" style="margin-bottom:10px">Expand a work item to review or update its description, status, team, assignee, and weight without leaving this popup.</div>${taskReview}</div></div></div>`;
+  left.insertAdjacentHTML('beforeend',inject);
+}
+
+function editTypeRow(i){const ty=taskTypes[i];if(isProjectTypeId(ty.id)){showNotif('🔒','Project type is locked and cannot be edited.');return;}const rows=document.querySelectorAll('.settings-section:last-child .settings-row');const row=rows[i];if(!row)return;const actDiv=row.querySelector('.smgr-actions');if(actDiv)actDiv.innerHTML=`<button class="btn-p" style="font-size:12px;padding:5px 11px" onclick="saveTypeRow(${i})">Save</button><button class="btn-sm" onclick="renderSettings()">Cancel</button>`;const first=row.firstElementChild;if(first)first.outerHTML=`<div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap"><input type="color" id="etr-c-${i}" value="${ty.color}" style="width:26px;height:26px;border-radius:50%;border:1px solid var(--bd);cursor:pointer;padding:0;overflow:hidden"><button type="button" id="etr-i-btn-${i}" class="icon-picker-btn" onclick="openIconPicker(this,'${esc(ty.icon||'•')}',v=>{document.getElementById('etr-i-${i}').value=v;document.getElementById('etr-i-btn-${i}').textContent=v;})">${esc(ty.icon||'•')}</button><input type="hidden" id="etr-i-${i}" value="${esc(ty.icon||'•')}"><input id="etr-n-${i}" value="${esc(ty.name)}" style="flex:1;min-width:80px;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);outline:none;font-size:13px"></div>`;}
+async function saveTypeRow(i){if(isProjectTypeId(taskTypes[i]?.id)){showNotif('🔒','Project type is locked.');return;}const name=document.getElementById(`etr-n-${i}`)?.value.trim();const color=document.getElementById(`etr-c-${i}`)?.value;const icon=document.getElementById(`etr-i-${i}`)?.value.trim()||'•';if(!name)return;if(String(name).trim().toLowerCase()==='project'){showNotif('🔒','Only the locked Project type can use this name.');return;}await sb.from('task_types').update({name,color,bg:color+'22',icon}).eq('id',taskTypes[i].id);await reloadAndRefresh();renderSettings();}
+async function addType(){const name=document.getElementById('new-ty-name')?.value.trim();if(!name)return;if(name.toLowerCase()==='project'){showNotif('🔒','Use + New Project to create the locked Project type.');return;}const color=document.getElementById('new-ty-color').value;const icon=document.getElementById('new-ty-icon-val')?.value.trim()||'•';const maxO=taskTypes.reduce((a,t)=>Math.max(a,t.sort_order),0);await sb.from('task_types').insert({id:'ty'+Date.now(),name,color,bg:color+'22',icon,sort_order:maxO+1});document.getElementById('new-ty-name').value='';await reloadAndRefresh();renderSettings();}
+async function deleteType(id){if(isProjectTypeId(id)){showNotif('🔒','Project type is locked and cannot be deleted.');return;}if(taskTypes.length<=1){showNotif('⚠️','Need at least one type.');return;}const fb=taskTypes.find(t=>t.id!==id&&!isProjectTypeId(t.id))||taskTypes.find(t=>t.id!==id);await sb.from('tasks').update({type:fb.id}).eq('type',id);await sb.from('task_types').delete().eq('id',id);await reloadAndRefresh();renderSettings();}
+
+
+const _openTaskPopupEditBase=openTaskPopupEdit;
+function openTaskPopupEdit(id){
+  _openTaskPopupEditBase(id);
+  const t=getTask(id);const sel=document.getElementById('tpe-type');if(!t||!sel)return;
+  if(isProjectTask(t)){
+    sel.innerHTML=projectTypeOptions(t.type,true);sel.value=t.type;sel.disabled=true;
+    sel.insertAdjacentHTML('afterend','<div class="project-lock-note">🔒 Project is a locked task type. It cannot be changed to another type.</div>');
+  }else{
+    sel.innerHTML=projectTypeOptions(t.type,false);sel.value=t.type;sel.disabled=false;
+  }
+}
+async function saveTaskPopupEdit(id){
+  const title=document.getElementById('tpe-title')?.value.trim();if(!title){showNotif('⚠️','Title is required.');return;}
+  const t=getTask(id);if(!t)return;
+  const chosenType=isProjectTask(t)?t.type:document.getElementById('tpe-type')?.value;
+  if(!isProjectTask(t)&&isProjectTypeId(chosenType)){showNotif('🔒','Normal tasks cannot be converted to Project. Use + New Project.');return;}
+  const newStatus=document.getElementById('tpe-status')?.value;const newSt=getStatus(newStatus);
+  const upd={title,description:isProjectTypeId(chosenType)?composeProjectDescription(document.getElementById('tpe-desc')?.value.trim(),{team:document.getElementById('tpe-project-team')?.value,progress:projectProgress(t),next:document.getElementById('tpe-project-next')?.value}):(document.getElementById('tpe-desc')?.value.trim()||null),type:chosenType,priority:document.getElementById('tpe-priority')?.value,assignee:document.getElementById('tpe-assignee')?.value,status:newStatus,due_date:document.getElementById('tpe-due')?.value||null,updated_at:mkTs()};
+  if(t.status!==newStatus){const old=getStatus(t.status);await sb.from('comments').insert({task_id:id,author:currentUser.id,text:`Status: <b>${esc(old.name)}</b> → <b>${esc(newSt.name)}</b>`,is_system:true});if(newSt?.is_done&&!t.completed_at)upd.completed_at=mkTs();}
+  await sb.from('tasks').update(upd).eq('id',id);showNotif('✅','Task updated!');await reloadAndRefresh();if(selectedTaskId===id)renderTaskPopup(id);
+}
 // EXPOSE GLOBALS
-Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,renderTaskPopup,fmtTimeHtml,openTaskPopupEdit,saveTaskPopupEdit,openChangePinModal,saveChangedPin});
+
+function escAttr(v){return String(v??'').replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function syncProjectTaskWeight(projectId){const p=document.getElementById(`pm-task-priority-${projectId}`)?.value;const w=document.getElementById(`pm-task-weight-${projectId}`);if(w)w.value=String({low:1,medium:2,high:3}[p]||2);}
+draggedProjectTaskId=null;
+function onProjectFlowDragStart(ev,id){draggedProjectTaskId=id;ev.dataTransfer.effectAllowed='move';try{ev.dataTransfer.setData('text/plain',String(id));}catch(_){ }ev.target.closest('.project-manage-task')?.classList.add('dragging');}
+function onProjectFlowDragEnd(ev){ev.target.closest('.project-manage-task')?.classList.remove('dragging');document.querySelectorAll('.project-step-drop.drag-over').forEach(x=>x.classList.remove('drag-over'));draggedProjectTaskId=null;}
+function onProjectFlowDragOver(ev,el){ev.preventDefault();ev.stopPropagation();ev.dataTransfer.dropEffect='move';const drop=el.classList.contains('project-step-drop')?el:el.closest('.project-step-drop');if(drop)drop.classList.add('drag-over');}
+function onProjectFlowDragLeave(el){const drop=el.classList?.contains('project-step-drop')?el:el.closest?.('.project-step-drop');if(drop)drop.classList.remove('drag-over');}
+async function onProjectFlowDrop(ev,projectId,targetStep,beforeTaskId=null){
+  ev.preventDefault();ev.stopPropagation();document.querySelectorAll('.project-step-drop.drag-over').forEach(x=>x.classList.remove('drag-over'));
+  const taskId=draggedProjectTaskId||ev.dataTransfer.getData('text/plain');draggedProjectTaskId=null;if(!taskId)return;
+  const moving=getTask(taskId);if(!moving||String(moving.project_id)!==String(projectId)||String(taskId)===String(beforeTaskId||''))return;
+  const step=String(targetStep||moving.project_step||'Backlog');
+  let list=projectChildTasks(projectId).filter(t=>String(t.project_step||'Backlog')===step&&String(t.id)!==String(taskId)).sort((a,b)=>(Number(a.project_step_order)||0)-(Number(b.project_step_order)||0)||new Date(a.created_at||0)-new Date(b.created_at||0));
+  const idx=beforeTaskId?Math.max(0,list.findIndex(t=>String(t.id)===String(beforeTaskId))):list.length;if(idx>=0)list.splice(idx,0,moving);else list.push(moving);
+  const updates=list.map((t,i)=>sb.from('tasks').update({project_step:step,project_step_order:(i+1)*10,updated_at:mkTs()}).eq('id',t.id));
+  if(String(moving.project_step||'Backlog')!==step && !list.some(t=>String(t.id)===String(moving.id)))updates.push(sb.from('tasks').update({project_step:step,project_step_order:(idx+1)*10,updated_at:mkTs()}).eq('id',moving.id));
+  const results=await Promise.all(updates);const err=results.find(r=>r.error)?.error;if(err){showNotif('⚠️',`Move failed: ${esc(err.message)}`);return;}
+  await reloadAndRefresh();selectedProjectId=projectId;renderProjects();showNotif('↕️','Flow updated.');
+}
+
+
+// ══════════════════════════════════════════════
+// PROJECT WORK ITEMS V6 — separate table, not normal TaskFlow tasks
+// ══════════════════════════════════════════════
+let projectWorkItems=[];
+
+// Hide legacy linked task rows from normal TaskFlow boards/lists if any still exist.
+// Project work items now live in project_work_items, not tasks.
+function activeTasks(){return tasks.filter(t=>!t.archived && !t.project_id);}
+function allTasksForAdminExport(){return tasks.filter(t=>!t.archived && !t.project_id);}
+
+function projectChildTasks(projectId){
+  return (projectWorkItems||[])
+    .filter(w=>String(w.project_id)===String(projectId) && !w.archived)
+    .map(w=>({...w,is_project_work_item:true}));
+}
+function getProjectWorkItem(id){return (projectWorkItems||[]).find(w=>String(w.id)===String(id));}
+function taskWeight(t){const explicit=Number(t.progress_weight);if(explicit>0)return explicit;if(t.priority==='critical')return 5;if(t.priority==='high')return 3;if(t.priority==='low')return 1;return 2;}
+function taskCompletionPct(t){const st=getStatus(t.status);if(st?.is_done)return 100;const nm=String(st?.name||'').toLowerCase();if(nm.includes('review')||nm.includes('uat')||nm.includes('test'))return 75;if(nm.includes('progress')||nm.includes('doing')||nm.includes('dev'))return 50;if(nm.includes('pending')||nm.includes('wait')||nm.includes('block')||nm.includes('stuck'))return 15;return 0;}
+function projectCalculatedProgress(project){const kids=projectChildTasks(project.id);if(!kids.length)return 0;const total=kids.reduce((a,t)=>a+taskWeight(t),0);if(!total)return 0;return Math.round(kids.reduce((a,t)=>a+(taskCompletionPct(t)*taskWeight(t)),0)/total);}
+function projectProgress(t){const kids=projectChildTasks(t.id);if(kids.length)return projectCalculatedProgress(t);const st=getStatus(t.status);if(st?.is_done)return 100;return 0;}
+function projectRisk(t){const kids=projectChildTasks(t.id);const today=today0();const overdue=kids.filter(k=>k.due_date&&new Date(k.due_date)<today&&!getStatus(k.status)?.is_done).length;const blocked=kids.filter(k=>/block|stuck|hold|pending|wait/i.test(getStatus(k.status)?.name||'')).length;if(overdue||blocked)return{label:'Stuck',cls:'risk-stuck',count:overdue+blocked};const pending=kids.filter(k=>/review|uat|pending|wait/i.test(getStatus(k.status)?.name||'')).length;if(pending)return{label:'Pending',cls:'risk-pending',count:pending};return{label:'On track',cls:'risk-ok',count:0};}
+function projectSteps(projectId){const kids=projectChildTasks(projectId);const map=new Map();kids.forEach(t=>{const name=String(t.project_step||'Backlog').trim()||'Backlog';const order=Number(t.project_step_order);if(!map.has(name))map.set(name,{name,order:Number.isFinite(order)?order:999,items:[]});map.get(name).items.push(t);});return [...map.values()].sort((a,b)=>a.order-b.order||a.name.localeCompare(b.name)).map(s=>({...s,items:s.items.sort((a,b)=>(Number(a.project_step_order)||0)-(Number(b.project_step_order)||0)||new Date(a.created_at||0)-new Date(b.created_at||0))}));}
+function projectStepOptions(selected){const presets=['Backlog','Impact Analysis','Development','SIT','UAT','Deployment','Go-live','Done'];const found=new Set([...presets]);(projectWorkItems||[]).forEach(t=>{if(t.project_step)found.add(t.project_step)});return [...found].map(x=>`<option value="${esc(x)}"${String(selected||'Backlog')===String(x)?' selected':''}>${esc(x)}</option>`).join('');}
+function projectWorkItemState(t){const st=getStatus(t.status)||{};const name=String(st.name||'').toLowerCase();if(st.is_done)return{label:'Done',cls:'risk-ok',card:''};if(/block|stuck|hold/.test(name))return{label:'Stuck',cls:'risk-stuck',card:'stuck'};if(/pending|wait|review|uat/.test(name))return{label:'Pending',cls:'risk-pending',card:'pending'};return{label:'Active',cls:'risk-pending',card:''};}
+function projectTaskState(t){return projectWorkItemState(t);}
+
+// Final loadAll override: includes separate project_work_items table.
+async function loadAll(){
+  try{
+    const [uR,sR,tyR,tR,cR,ptR,pwR]=await Promise.all([
+      sb.from('users').select('*').order('name'),
+      sb.from('statuses').select('*').order('sort_order'),
+      sb.from('task_types').select('*').order('sort_order'),
+      sb.from('tasks').select('*').order('created_at',{ascending:false}),
+      sb.from('comments').select('*,comment_files(*),comment_replies(*,reply_files(*))').order('created_at'),
+      sb.from('project_teams').select('*').order('sort_order'),
+      sb.from('project_work_items').select('*').order('project_step_order',{ascending:true})
+    ]);
+    if(uR.error)throw uR.error;if(sR.error)throw sR.error;
+    users=uR.data||[];statuses=sR.data||[];taskTypes=tyR.error?[]:(tyR.data||[]);tasks=tR.error?[]:(tR.data||[]);projectTeams=ptR.error?[]:(ptR.data||[]);projectWorkItems=pwR.error?[]:(pwR.data||[]);
+    if(pwR.error)console.warn('project_work_items unavailable. Run project_work_items_migration_v6.sql',pwR.error);
+    if(cR.error){const{data:cPlain,error:cErr}=await sb.from('comments').select('*').order('created_at');comments=cErr?[]:(cPlain||[]).map(c=>({...c,comment_files:[],comment_replies:[]}));}
+    else comments=cR.data||[];
+    return true;
+  }catch(e){console.error('❌ loadAll failed:',e);return false;}
+}
+function subscribeRealtime(){
+  realtimeChannel=sb.channel('tf-rt')
+    .on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_work_items'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_teams'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'comments'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'statuses'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'users'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'task_types'},()=>reloadAndRefresh())
+    .subscribe(s=>{const el=document.getElementById('realtime-ind');if(el)el.classList.toggle('hidden',s!=='SUBSCRIBED');});
+}
+
+// Clean task popup edit override. Normal tasks edit normally. Project record opens manager.
+function openTaskPopupEdit(id){
+  const t=getTask(id);if(!t)return;
+  if(isProjectTask(t)){switchTab('project');selectProject(t.id);closeTaskPopup();return;}
+  const left=document.getElementById('tp-left');if(!left)return;
+  if(left.dataset.editMode==='1'){renderTaskPopup(id);return;}
+  left.dataset.editMode='1';
+  const editBtn=document.getElementById('tp-edit-btn');if(editBtn){editBtn.textContent='← Cancel';editBtn.onclick=()=>renderTaskPopup(id);}
+  left.innerHTML=`
+    <div style="font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px">Editing task</div>
+    <div style="margin-bottom:11px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Title *</label><input id="tpe-title" value="${esc(t.title)}" style="width:100%;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:14px;font-weight:500;outline:none;font-family:inherit"></div>
+    <div style="margin-bottom:11px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Description</label><textarea id="tpe-desc" style="width:100%;min-height:120px;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;line-height:1.55;resize:vertical;outline:none;font-family:inherit">${esc(stripProjectMeta(t.description))}</textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px">
+      <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Type</label><select id="tpe-type" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">${taskTypes.filter(ty=>!isProjectTypeId(ty.id)).map(ty=>`<option value="${esc(ty.id)}"${t.type===ty.id?' selected':''}>${esc(ty.icon)} ${esc(ty.name)}</option>`).join('')}</select></div>
+      <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Priority</label><select id="tpe-priority" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none"><option value="high"${t.priority==='high'?' selected':''}>⚡ High</option><option value="medium"${t.priority==='medium'?' selected':''}>Medium</option><option value="low"${t.priority==='low'?' selected':''}>Low</option></select></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px">
+      <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Assignee</label><select id="tpe-assignee" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">${users.map(u2=>`<option value="${esc(u2.id)}"${t.assignee===u2.id?' selected':''}>${esc(u2.name)}</option>`).join('')}</select></div>
+      <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Status</label><select id="tpe-status" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none">${statuses.map(s=>`<option value="${esc(s.id)}"${t.status===s.id?' selected':''}>${esc(s.name)}</option>`).join('')}</select></div>
+    </div>
+    <div style="margin-bottom:16px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Due date</label><input type="date" id="tpe-due" value="${t.due_date||''}" style="padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);font-size:13px;outline:none"></div>
+    <div style="display:flex;gap:8px"><button class="btn-p" onclick="saveTaskPopupEdit(${t.id})" style="flex:1">💾 Save changes</button><button class="btn-s" onclick="renderTaskPopup(${t.id})">Cancel</button></div>`;
+  setTimeout(()=>document.getElementById('tpe-title')?.select(),40);
+}
+async function saveTaskPopupEdit(id){
+  const title=document.getElementById('tpe-title')?.value.trim();if(!title){showNotif('⚠️','Title is required.');return;}
+  const t=getTask(id);if(!t)return;
+  const chosenType=document.getElementById('tpe-type')?.value;if(isProjectTypeId(chosenType)){showNotif('🔒','Normal tasks cannot be converted to Project. Use + New Project.');return;}
+  const newStatus=document.getElementById('tpe-status')?.value;const newSt=getStatus(newStatus);
+  const upd={title,description:document.getElementById('tpe-desc')?.value.trim()||null,type:chosenType,priority:document.getElementById('tpe-priority')?.value,assignee:document.getElementById('tpe-assignee')?.value,status:newStatus,due_date:document.getElementById('tpe-due')?.value||null,updated_at:mkTs()};
+  if(t.status!==newStatus){const old=getStatus(t.status)||{};await sb.from('comments').insert({task_id:id,author:currentUser.id,text:`Status: <b>${esc(old.name||'')}</b> → <b>${esc(newSt?.name||'')}</b>`,is_system:true});if(newSt?.is_done&&!t.completed_at)upd.completed_at=mkTs();}
+  const {error}=await sb.from('tasks').update(upd).eq('id',id);if(error){showNotif('⚠️',`Save failed: ${esc(error.message)}`);return;}
+  showNotif('✅','Task updated!');await reloadAndRefresh();if(selectedTaskId===id)renderTaskPopup(id);
+}
+
+// Project work item CRUD now uses project_work_items table.
+function renderProjectTaskCreator(project){return `<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">➕ Add project work item</div><span class="section-badge">Separate from normal tasks</span></div><div class="project-panel-body"><div class="project-workitem-note">Project work items are stored separately from normal TaskFlow tasks. They only appear inside this Project Manager and are used to calculate project progress.</div><div class="project-task-create-grid easy"><div class="project-field title-wide"><label>Work item title *</label><input id="pm-task-title-${project.id}" placeholder="e.g. DEV - Update report logic"></div><div class="project-field"><label>Team</label><select id="pm-task-team-${project.id}">${teamOptions(project.id,'')}</select></div><div class="project-field"><label>Assignee</label><select id="pm-task-assignee-${project.id}">${userOptions(project.assignee)}</select></div><div class="project-field"><label>Status</label><select id="pm-task-status-${project.id}">${statusOptions(statuses.find(s=>!s.is_done)?.id||statuses[0]?.id)}</select></div><div class="project-field"><label>Priority</label><select id="pm-task-priority-${project.id}" onchange="syncProjectTaskWeight(${project.id})"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div><div class="project-field"><label>Flow step</label><select id="pm-task-step-${project.id}">${projectStepOptions('Backlog')}</select></div><div class="project-field"><label>Weight</label><select id="pm-task-weight-${project.id}"><option value="1">1 - Small</option><option value="2" selected>2 - Normal</option><option value="3">3 - Important</option><option value="5">5 - Critical</option></select></div><div class="project-field"><label>Due date</label><input id="pm-task-due-${project.id}" type="date"></div><div class="project-field desc-wide"><label>Description / expected output</label><textarea id="pm-task-desc-${project.id}" placeholder="Add context, dependency, expected output, blocker, or follow-up note..."></textarea></div><div class="project-add-actions"><span class="project-helper-text" style="margin-right:auto">Arrange work item order by drag and drop in the Flow arranger.</span><button class="btn-p" onclick="addProjectTaskInline(${project.id})">Add work item</button></div></div></div></div>`;}
+function renderProjectManageTask(t,project){const state=projectWorkItemState(t);const id=esc(t.id);return `<div class="project-manage-task ${state.card}" data-project-task-id="${id}" ondragover="onProjectFlowDragOver(event,this)" ondrop="onProjectFlowDrop(event,${project.id},'${escAttr(t.project_step||'Backlog')}','${escAttr(t.id)}')"><div class="project-manage-title-row"><span class="project-flow-handle" draggable="true" ondragstart="onProjectFlowDragStart(event,'${escAttr(t.id)}')" ondragend="onProjectFlowDragEnd(event)" title="Drag to arrange work item flow">⋮⋮</span><div class="project-manage-title">${esc(t.title)}</div></div><div class="project-manage-meta"><span class="project-workitem-label">Separate work item</span><span class="project-risk ${state.cls}">${state.label}</span><span class="project-pill">${esc(projectTeamName(t.project_team_id))}</span><span class="project-pill">${esc(getUser(t.assignee)?.name||'Unassigned')}</span><span class="project-pill">W${taskWeight(t)}</span>${t.due_date?`<span class="project-pill">Due ${fmtDate(t.due_date)}</span>`:''}</div><div class="project-manage-edit project-manage-edit-easy"><input id="pm-flow-title-${id}" value="${esc(t.title)}" class="wide-edit" title="Title"><select id="pm-flow-status-${id}">${statusOptions(t.status)}</select><select id="pm-flow-team-${id}">${teamOptions(project.id,t.project_team_id)}</select><select id="pm-flow-assignee-${id}">${userOptions(t.assignee)}</select><select id="pm-flow-step-${id}">${projectStepOptions(t.project_step||'Backlog')}</select><select id="pm-flow-weight-${id}" class="wide-edit">${[1,2,3,5].map(w=>`<option value="${w}"${taskWeight(t)===w?' selected':''}>Weight ${w}</option>`).join('')}</select><textarea id="pm-flow-desc-${id}" class="wide-edit" placeholder="Description / follow-up note">${esc(t.description||'')}</textarea></div><div class="project-manage-actions"><button class="project-small-btn" onclick="saveProjectTaskInline('${escAttr(t.id)}')">Save work item</button><button class="project-mini-danger" onclick="deleteTaskFromProject('${escAttr(t.id)}')">Delete</button></div></div>`;}
+async function addProjectTaskInline(projectId){
+  const title=document.getElementById(`pm-task-title-${projectId}`)?.value.trim();if(!title){showNotif('⚠️','Work item title is required.');return;}
+  const status=document.getElementById(`pm-task-status-${projectId}`)?.value;const st=getStatus(status);const priority=document.getElementById(`pm-task-priority-${projectId}`)?.value||'medium';
+  const weight=Number(document.getElementById(`pm-task-weight-${projectId}`)?.value||({low:1,medium:2,high:3}[priority]||2));const step=document.getElementById(`pm-task-step-${projectId}`)?.value||'Backlog';
+  const maxOrder=projectChildTasks(projectId).filter(t=>String(t.project_step||'Backlog')===String(step)).reduce((a,t)=>Math.max(a,Number(t.project_step_order)||0),0);
+  const row={project_id:projectId,title,description:document.getElementById(`pm-task-desc-${projectId}`)?.value.trim()||null,priority,assignee:document.getElementById(`pm-task-assignee-${projectId}`)?.value,status,due_date:document.getElementById(`pm-task-due-${projectId}`)?.value||null,completed_at:st?.is_done?mkTs():null,project_team_id:document.getElementById(`pm-task-team-${projectId}`)?.value||null,project_step:step,project_step_order:maxOrder+10,progress_weight:weight,archived:false};
+  const {error}=await sb.from('project_work_items').insert(row);if(error){console.error('Add work item failed:',error);showNotif('⚠️',`Add work item failed: ${esc(error.message)}. Run project_work_items_migration_v6.sql.`);return;}
+  showNotif('✅','Project work item added.');await reloadAndRefresh();selectedProjectId=projectId;renderProjects();
+}
+async function saveProjectTaskInline(id){
+  const t=getProjectWorkItem(id);if(!t)return;
+  const status=document.getElementById(`pm-flow-status-${id}`)?.value;const newSt=getStatus(status);const newStep=document.getElementById(`pm-flow-step-${id}`)?.value||'Backlog';
+  let stepOrder=Number(t.project_step_order)||10;if(String(newStep)!==String(t.project_step||'Backlog')){const maxOrder=projectChildTasks(t.project_id).filter(x=>String(x.project_step||'Backlog')===String(newStep)&&String(x.id)!==String(id)).reduce((a,x)=>Math.max(a,Number(x.project_step_order)||0),0);stepOrder=maxOrder+10;}
+  const upd={title:document.getElementById(`pm-flow-title-${id}`)?.value.trim()||t.title,description:document.getElementById(`pm-flow-desc-${id}`)?.value.trim()||null,status,project_team_id:document.getElementById(`pm-flow-team-${id}`)?.value||null,assignee:document.getElementById(`pm-flow-assignee-${id}`)?.value,project_step:newStep,project_step_order:stepOrder,progress_weight:Number(document.getElementById(`pm-flow-weight-${id}`)?.value||taskWeight(t)),updated_at:mkTs()};
+  if(t.status!==status&&newSt?.is_done&&!t.completed_at)upd.completed_at=mkTs();
+  const {error}=await sb.from('project_work_items').update(upd).eq('id',id);if(error){showNotif('⚠️',`Save failed: ${esc(error.message)}`);return;}
+  showNotif('💾','Project work item updated.');await reloadAndRefresh();selectedProjectId=t.project_id;renderProjects();
+}
+async function deleteTaskFromProject(id){const t=getProjectWorkItem(id);if(!t||!confirm(`Delete project work item "${t.title}"?`))return;const {error}=await sb.from('project_work_items').delete().eq('id',id);if(error){showNotif('⚠️',`Delete failed: ${esc(error.message)}`);return;}showNotif('🗑','Project work item deleted.');await reloadAndRefresh();selectedProjectId=t.project_id;renderProjects();}
+async function deleteProjectTeam(id){const tm=projectTeams.find(x=>String(x.id)===String(id));if(!tm||!confirm(`Delete team "${tm.name}"? Existing work items will become unassigned team.`))return;await sb.from('project_work_items').update({project_team_id:null}).eq('project_team_id',id);await sb.from('project_teams').delete().eq('id',id);showNotif('🗑','Project team deleted.');await reloadAndRefresh();selectedProjectId=tm.project_id;renderProjects();}
+function openProjectChildTaskModal(projectId,taskId=null){showNotif('ℹ️','Project work items are edited directly in the full Project Manager.');switchTab('project');selectProject(projectId);closeTaskPopup();}
+async function unlinkTaskFromProject(id){return deleteTaskFromProject(id);}
+async function updateProjectTaskQuick(id){return saveProjectTaskInline(id);}
+async function moveTaskStep(id,dir){const t=getProjectWorkItem(id);if(!t)return;await sb.from('project_work_items').update({project_step_order:(Number(t.project_step_order)||0)+dir,updated_at:mkTs()}).eq('id',id);await reloadAndRefresh();selectedProjectId=t.project_id;renderProjects();}
+
+draggedProjectTaskId=null;
+function onProjectFlowDragStart(ev,id){draggedProjectTaskId=String(id);ev.dataTransfer.effectAllowed='move';try{ev.dataTransfer.setData('text/plain',String(id));}catch(_){ }ev.target.closest('.project-manage-task')?.classList.add('dragging');}
+function onProjectFlowDragEnd(ev){ev.target.closest('.project-manage-task')?.classList.remove('dragging');document.querySelectorAll('.project-step-drop.drag-over').forEach(x=>x.classList.remove('drag-over'));draggedProjectTaskId=null;}
+function onProjectFlowDragOver(ev,el){ev.preventDefault();ev.stopPropagation();ev.dataTransfer.dropEffect='move';const drop=el.classList.contains('project-step-drop')?el:el.closest('.project-step-drop');if(drop)drop.classList.add('drag-over');}
+function onProjectFlowDragLeave(el){const drop=el.classList?.contains('project-step-drop')?el:el.closest?.('.project-step-drop');if(drop)drop.classList.remove('drag-over');}
+async function onProjectFlowDrop(ev,projectId,targetStep,beforeTaskId=null){
+  ev.preventDefault();ev.stopPropagation();document.querySelectorAll('.project-step-drop.drag-over').forEach(x=>x.classList.remove('drag-over'));
+  const itemId=draggedProjectTaskId||ev.dataTransfer.getData('text/plain');draggedProjectTaskId=null;if(!itemId)return;
+  const moving=getProjectWorkItem(itemId);if(!moving||String(moving.project_id)!==String(projectId)||String(itemId)===String(beforeTaskId||''))return;
+  const step=String(targetStep||moving.project_step||'Backlog');
+  let list=projectChildTasks(projectId).filter(t=>String(t.project_step||'Backlog')===step&&String(t.id)!==String(itemId)).sort((a,b)=>(Number(a.project_step_order)||0)-(Number(b.project_step_order)||0)||new Date(a.created_at||0)-new Date(b.created_at||0));
+  const idx=beforeTaskId?Math.max(0,list.findIndex(t=>String(t.id)===String(beforeTaskId))):list.length;if(idx>=0)list.splice(idx,0,moving);else list.push(moving);
+  const updates=list.map((t,i)=>sb.from('project_work_items').update({project_step:step,project_step_order:(i+1)*10,updated_at:mkTs()}).eq('id',t.id));
+  const results=await Promise.all(updates);const err=results.find(r=>r.error)?.error;if(err){showNotif('⚠️',`Move failed: ${esc(err.message)}`);return;}
+  await reloadAndRefresh();selectedProjectId=projectId;renderProjects();showNotif('↕️','Flow updated.');
+}
+
+
+
+function renderDash(){
+  const normalTasks=activeTasks().filter(t=>!isProjectTask(t));
+  const projects=projectVisibleList();
+  const allItems=projectWorkItems||[];
+  const doneSt=statuses.find(s=>s.is_done);const today=today0();
+  const openTasks=normalTasks.filter(t=>!doneSt||t.status!==doneSt.id);
+  const overdueTasks=openTasks.filter(t=>t.due_date&&new Date(t.due_date)<today);
+  const doneItems=allItems.filter(w=>getStatus(w.status)?.is_done).length;
+  const openItems=allItems.length-doneItems;
+  const weightedTotal=allItems.reduce((a,w)=>a+taskWeight(w),0);
+  const weightedDone=allItems.reduce((a,w)=>a+taskCompletionPct(w)*taskWeight(w),0);
+  const portfolioPct=weightedTotal?Math.round(weightedDone/weightedTotal):0;
+  const riskProjects=projects.filter(p=>projectRisk(p).cls==='risk-stuck');
+  const pendingItems=allItems.filter(w=>/block|stuck|hold|pending|wait|review|uat/i.test(getStatus(w.status)?.name||'')&&!getStatus(w.status)?.is_done);
+  const overdueItems=allItems.filter(w=>w.due_date&&new Date(w.due_date)<today&&!getStatus(w.status)?.is_done);
+  const follow=[...overdueItems.map(w=>({...w,_kind:'workitem',_reason:'Overdue work item'})),...pendingItems.map(w=>({...w,_kind:'workitem',_reason:'Needs follow-up'})),...overdueTasks.map(t=>({...t,_kind:'task',_reason:'Overdue task'}))]
+    .filter((x,i,a)=>a.findIndex(y=>String(y._kind)===String(x._kind)&&String(y.id)===String(x.id))===i)
+    .sort((a,b)=>new Date(a.due_date||'2999-12-31')-new Date(b.due_date||'2999-12-31')).slice(0,10);
+  const stepMap=new Map();
+  allItems.forEach(w=>{const k=w.project_step||'Backlog';stepMap.set(k,(stepMap.get(k)||0)+1);});
+  const maxStep=Math.max(1,...stepMap.values());
+  const projectRows=projects.slice().sort((a,b)=>projectProgress(a)-projectProgress(b)).slice(0,8).map(p=>{const risk=projectRisk(p);const pct=projectProgress(p);const kids=projectChildTasks(p.id);return `<div class="pm-project-row" onclick="openTaskPopup(${p.id})"><div class="pm-project-row-top"><div class="pm-project-row-title">🏗 ${esc(p.title)}</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="pm-progress-mini"><div class="pm-progress-mini-fill" style="width:${pct}%"></div></div><div class="pm-project-row-meta"><span class="project-pill">${pct}%</span><span class="project-pill">${kids.length} work items</span><span class="project-pill">👥 ${projectTeamsFor(p.id).length}</span></div></div>`;}).join('')||'<div class="section-empty">No active projects yet.</div>';
+  const followRows=follow.map(x=>{const isWi=x._kind==='workitem';const project=isWi?getTask(x.project_id):null;const st=getStatus(x.status)||{};const team=isWi?projectTeamName(x.project_team_id):'';const click=isWi?`switchTab('project');selectProject(${x.project_id})`:`openTaskPopup(${x.id})`;return `<div class="pm-follow-row" onclick="${click}"><div class="pm-follow-main"><div class="pm-follow-title">${isWi?'🔹':'✅'} ${esc(x.title)}</div><div class="pm-follow-meta"><span class="project-risk ${/overdue/i.test(x._reason)?'risk-stuck':'risk-pending'}">${esc(x._reason)}</span><span class="project-pill">${esc(st.name||'No status')}</span>${project?`<span class="project-pill">🏗 ${esc(project.title)}</span>`:''}${team?`<span class="project-pill">👥 ${esc(team)}</span>`:''}${x.due_date?`<span class="project-pill">📅 ${fmtDate(x.due_date)}</span>`:''}</div></div></div>`;}).join('')||'<div class="section-empty">Nothing urgent. No overdue or pending follow-up items.</div>';
+  const flowRows=[...stepMap.entries()].sort((a,b)=>b[1]-a[1]).map(([name,cnt])=>`<div class="pm-flow-row"><div class="pm-flow-name">${esc(name)}</div><div class="pm-flow-track"><div class="pm-flow-fill" style="width:${Math.round(cnt/maxStep*100)}%"></div></div><div class="pm-flow-count">${cnt}</div></div>`).join('')||'<div class="section-empty">No project flow data yet.</div>';
+  const statusBars=statuses.map(st=>{const cnt=openTasks.filter(t=>t.status===st.id).length;const pct=openTasks.length?Math.round(cnt/openTasks.length*100):0;return `<div style="display:flex;align-items:center;gap:11px;margin-bottom:11px"><span style="font-size:12px;color:var(--t2);width:110px;flex-shrink:0;font-weight:700">${esc(st.name)}</span><div style="flex:1;height:8px;background:var(--s2);border-radius:999px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${st.color};border-radius:999px"></div></div><span style="font-size:12px;color:var(--t3);width:28px;text-align:right;font-weight:800">${cnt}</span></div>`;}).join('');
+  const dash=document.querySelector('#pane-dash .dash-wrap');
+  if(dash){dash.innerHTML=`<div class="pm-dash-wrap"><div class="pm-dash-hero"><div><div class="pm-dash-title">PM Control Tower</div><div class="pm-dash-sub">Combined view of normal tasks, project portfolio health, and project work-item follow-ups.</div></div><button class="project-white-btn" onclick="switchTab('project')">Open Project Manager</button></div><div class="pm-dash-grid"><div class="pm-dash-card"><div class="pm-dash-kpi">${projects.length}</div><div class="pm-dash-label">Active projects</div><div class="pm-dash-note">${riskProjects.length} project(s) at risk</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${portfolioPct}%</div><div class="pm-dash-label">Portfolio progress</div><div class="pm-dash-note">Weighted from ${allItems.length} project work items</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openTasks.length}</div><div class="pm-dash-label">Open normal tasks</div><div class="pm-dash-note">${overdueTasks.length} overdue</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openItems}</div><div class="pm-dash-label">Open work items</div><div class="pm-dash-note">${overdueItems.length} overdue · ${pendingItems.length} pending/stuck</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Follow-up queue</div><span class="section-badge">Top ${follow.length}</span></div><div class="pm-dash-panel-body">${followRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project portfolio</div><span class="section-badge">Lowest progress first</span></div><div class="pm-dash-panel-body">${projectRows}</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project flow load</div><span class="section-badge">Work items by step</span></div><div class="pm-dash-panel-body">${flowRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Normal task status</div><span class="section-badge">TaskFlow tasks only</span></div><div class="pm-dash-panel-body">${statusBars}</div></div></div></div>`;return;}
+}
+Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,renderTaskPopup,fmtTimeHtml,openTaskPopupEdit,saveTaskPopupEdit,openChangePinModal,saveChangedPin,renderProjects,openProjectModal,toggleProjectFields,togglePopupProjectFields,openProjectChildTaskModal,deleteTaskFromProject,unlinkTaskFromProject,updateProjectTaskQuick,addProjectTeam,renameProjectTeam,deleteProjectTeam,moveTaskStep,selectProject,saveProjectQuick,addProjectTeamInline,updateProjectTeamInline,addProjectTaskInline,saveProjectTaskInline,savePopupWorkItem,syncProjectTaskWeight,onProjectFlowDragStart,onProjectFlowDragEnd,onProjectFlowDragOver,onProjectFlowDragLeave,onProjectFlowDrop,projectPopupWorkItemRow,savePopupWorkItem});
 
 // INIT — defer until DOM is fully ready so all element IDs exist
 if(document.readyState==='loading'){
