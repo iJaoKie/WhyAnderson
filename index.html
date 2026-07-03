@@ -884,6 +884,311 @@ html[data-theme="dark"] .mw-workitem-chip{background:#282243;color:#E0D9FF;}
 #project-modal .project-lock-note{margin-top:8px}
 @media(max-width:700px){#project-modal .project-create-grid{grid-template-columns:1fr}#project-modal .project-create-modal{padding:22px 18px}}
 
+
+
+/* Patch v11: dark-mode project/progress bar contrast tuning */
+:root{
+  --project-track:#E7E5DF;
+  --project-fill-a:#4530A0;
+  --project-fill-b:#1B6446;
+  --project-fill-solid:#1B6446;
+  --project-track-border:#D6D3CB;
+}
+html[data-theme="dark"]{
+  --project-track:#2A3035;
+  --project-track-border:#3B454D;
+  --project-fill-a:#B8A7FF;
+  --project-fill-b:#56E0A1;
+  --project-fill-solid:#56E0A1;
+}
+.project-track,
+.project-popup-step-track,
+.pm-flow-track,
+.pm-progress-mini,
+.mw-type-track,
+.mw-priority-track{
+  background:var(--project-track)!important;
+  border:1px solid var(--project-track-border);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.10);
+}
+.project-fill,
+.project-popup-step-fill,
+.pm-progress-mini-fill{
+  background:linear-gradient(90deg,var(--project-fill-a),var(--project-fill-b))!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset;
+}
+.pm-flow-fill,
+.mw-type-fill,
+.mw-priority-fill{
+  background:var(--project-fill-solid)!important;
+}
+html[data-theme="dark"] .project-track,
+html[data-theme="dark"] .project-popup-step-track,
+html[data-theme="dark"] .pm-flow-track,
+html[data-theme="dark"] .pm-progress-mini,
+html[data-theme="dark"] .mw-type-track,
+html[data-theme="dark"] .mw-priority-track{
+  background:linear-gradient(180deg,#22282D,#1A1F23)!important;
+  border-color:#44505A;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.025);
+}
+html[data-theme="dark"] .project-fill,
+html[data-theme="dark"] .project-popup-step-fill,
+html[data-theme="dark"] .pm-progress-mini-fill{
+  background:linear-gradient(90deg,#B8A7FF 0%,#6EE7B7 100%)!important;
+  box-shadow:0 0 10px rgba(86,224,161,.18),inset 0 0 0 1px rgba(255,255,255,.18);
+}
+html[data-theme="dark"] .pm-flow-fill,
+html[data-theme="dark"] .mw-type-fill,
+html[data-theme="dark"] .mw-priority-fill{
+  background:linear-gradient(90deg,#56E0A1,#7DD3FC)!important;
+  box-shadow:0 0 8px rgba(86,224,161,.18),inset 0 0 0 1px rgba(255,255,255,.12);
+}
+html[data-theme="dark"] .project-progress-head,
+html[data-theme="dark"] .project-popup-step-count,
+html[data-theme="dark"] .pm-flow-count{
+  color:#D8D2C8;
+}
+html[data-theme="dark"] .project-card,
+html[data-theme="dark"] .project-side-card,
+html[data-theme="dark"] .project-panel,
+html[data-theme="dark"] .project-step-manager{
+  border-color:#3A444D;
+}
+html[data-theme="dark"] .project-side-card.active,
+html[data-theme="dark"] .project-card:hover{
+  border-color:#8F7DFF;
+  box-shadow:0 0 0 1px rgba(184,167,255,.32),0 16px 40px rgba(0,0,0,.32);
+}
+
+
+
+/* Patch v12: green Project Manager theme + modern tab headers + work item progress bars */
+:root{
+  --modern-head-a:var(--gr-d);
+  --modern-head-b:var(--gr);
+  --modern-head-c:#27A56D;
+}
+.project-hero,
+.project-manager-hero,
+.pm-dash-hero,
+.project-popup-progress-hero{
+  background:linear-gradient(135deg,var(--modern-head-a) 0%,var(--modern-head-b) 68%,var(--modern-head-c) 100%)!important;
+  color:#fff!important;
+}
+.task-popup-project .tp-head{
+  background:linear-gradient(135deg,var(--gr-l),var(--sf))!important;
+  border-bottom-color:var(--gr)!important;
+}
+.project-board-card,
+.project-popup-left .project-detail-card{
+  border-color:var(--gr)!important;
+  background:linear-gradient(180deg,var(--sf),var(--gr-l))!important;
+}
+.project-board-card::before{background:var(--gr)!important;}
+.project-icon{background:var(--gr-l)!important;color:var(--gr-d)!important;}
+.project-type-badge{background:linear-gradient(135deg,var(--gr-d),var(--gr))!important;}
+.project-tab-btn.active{background:var(--gr-l)!important;color:var(--gr-d)!important;border-color:var(--gr-l)!important;}
+.project-side-card.active,
+.project-card:hover{border-color:var(--gr)!important;box-shadow:0 0 0 1px rgba(27,100,70,.22),var(--sh-md)!important;}
+.project-lock-note{color:var(--gr-d)!important;background:var(--gr-l)!important;border-color:var(--gr)!important;}
+.project-track,
+.project-popup-step-track,
+.pm-flow-track,
+.pm-progress-mini,
+.project-workitem-track{
+  background:rgba(27,100,70,.12)!important;
+  border:1px solid rgba(27,100,70,.22)!important;
+}
+.project-fill,
+.project-popup-step-fill,
+.pm-progress-mini-fill,
+.pm-flow-fill,
+.project-workitem-fill{
+  background:linear-gradient(90deg,var(--gr-d),var(--gr))!important;
+}
+.project-workitem-progress{margin-top:8px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;}
+.project-workitem-track{height:8px;border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.10);}
+.project-workitem-fill{height:100%;border-radius:999px;transition:width .28s ease;}
+.project-workitem-pct{font-size:10px;font-weight:900;color:var(--t2);min-width:34px;text-align:right;}
+.topbar{
+  background:rgba(255,255,255,.82)!important;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.ntab{border:1px solid transparent;border-radius:999px;font-weight:700;}
+.ntab.active{background:linear-gradient(135deg,var(--gr-l),var(--sf))!important;color:var(--gr-d)!important;border-color:rgba(27,100,70,.18)!important;box-shadow:var(--sh);}
+.ntab:hover{border-color:var(--bd);}
+.filter-bar,
+.project-panel-head,
+.upcoming-hdr,
+.settings-hdr,
+.lhdr,
+.mw-col-hdr,
+.pm-dash-panel-head{
+  background:linear-gradient(180deg,rgba(255,255,255,.72),var(--s2))!important;
+}
+html[data-theme="dark"]{
+  --modern-head-a:#071D14;
+  --modern-head-b:#126C46;
+  --modern-head-c:#22B873;
+}
+html[data-theme="dark"] .topbar{background:rgba(24,27,29,.78)!important;border-bottom-color:#314238!important;}
+html[data-theme="dark"] .ntab.active{background:linear-gradient(135deg,#153929,#20292B)!important;color:#BDF7D7!important;border-color:#2E6B4E!important;box-shadow:0 0 0 1px rgba(61,209,140,.12),0 8px 22px rgba(0,0,0,.28)!important;}
+html[data-theme="dark"] .filter-bar,
+html[data-theme="dark"] .project-panel-head,
+html[data-theme="dark"] .upcoming-hdr,
+html[data-theme="dark"] .settings-hdr,
+html[data-theme="dark"] .lhdr,
+html[data-theme="dark"] .mw-col-hdr,
+html[data-theme="dark"] .pm-dash-panel-head{
+  background:linear-gradient(180deg,#222B2A,#1B2022)!important;
+  border-color:#33413C!important;
+}
+html[data-theme="dark"] .task-popup-project .tp-head{
+  background:linear-gradient(135deg,#092116,#181B1D)!important;
+  border-bottom-color:#2B865C!important;
+}
+html[data-theme="dark"] .project-board-card,
+html[data-theme="dark"] .project-popup-left .project-detail-card,
+html[data-theme="dark"] .project-side-card.active{
+  background:linear-gradient(180deg,#181B1D,#12251C)!important;
+  border-color:#2F8A61!important;
+}
+html[data-theme="dark"] .project-icon,
+html[data-theme="dark"] .project-lock-note,
+html[data-theme="dark"] .project-tab-btn.active{
+  background:#123725!important;color:#BDF7D7!important;border-color:#2B865C!important;
+}
+html[data-theme="dark"] .project-card:hover{
+  border-color:#3DD18C!important;
+  box-shadow:0 0 0 1px rgba(61,209,140,.24),0 16px 40px rgba(0,0,0,.34)!important;
+}
+html[data-theme="dark"] .project-track,
+html[data-theme="dark"] .project-popup-step-track,
+html[data-theme="dark"] .pm-flow-track,
+html[data-theme="dark"] .pm-progress-mini,
+html[data-theme="dark"] .project-workitem-track{
+  background:linear-gradient(180deg,#1C2824,#111817)!important;
+  border-color:#335648!important;
+}
+html[data-theme="dark"] .project-fill,
+html[data-theme="dark"] .project-popup-step-fill,
+html[data-theme="dark"] .pm-progress-mini-fill,
+html[data-theme="dark"] .pm-flow-fill,
+html[data-theme="dark"] .project-workitem-fill{
+  background:linear-gradient(90deg,#29B975 0%,#79E6B4 100%)!important;
+  box-shadow:0 0 10px rgba(61,209,140,.18),inset 0 0 0 1px rgba(255,255,255,.12)!important;
+}
+html[data-theme="dark"] .project-workitem-pct{color:#BDF7D7;}
+
+
+/* Patch v13: light mode blue theme, dark mode remains green */
+html:not([data-theme="dark"]){
+  --gr:#2563EB;
+  --gr-l:#DBEAFE;
+  --gr-d:#1E3A8A;
+  --modern-head-a:#1E3A8A;
+  --modern-head-b:#2563EB;
+  --modern-head-c:#38BDF8;
+  --bd:#D6E1F5;
+  --bd2:#AFC4E8;
+  --s2:#EEF5FF;
+  --s3:#E0ECFF;
+}
+html:not([data-theme="dark"]) body{
+  background:radial-gradient(circle at top left,#EAF4FF 0,#F8FBFF 36%,#F8F7F4 100%);
+}
+html:not([data-theme="dark"]) .logo-badge,
+html:not([data-theme="dark"]) .btn-p{
+  background:linear-gradient(135deg,#1E40AF,#2563EB)!important;
+  color:#fff!important;
+}
+html:not([data-theme="dark"]) .btn-p:hover{background:#1D4ED8!important;}
+html:not([data-theme="dark"]) .project-hero,
+html:not([data-theme="dark"]) .project-manager-hero,
+html:not([data-theme="dark"]) .pm-dash-hero,
+html:not([data-theme="dark"]) .mywork-hero,
+html:not([data-theme="dark"]) .project-popup-progress-hero{
+  background:linear-gradient(135deg,#1E3A8A 0%,#2563EB 62%,#38BDF8 100%)!important;
+  box-shadow:0 18px 45px rgba(37,99,235,.20),0 8px 18px rgba(37,99,235,.12)!important;
+}
+html:not([data-theme="dark"]) .project-fill,
+html:not([data-theme="dark"]) .project-popup-step-fill,
+html:not([data-theme="dark"]) .pm-progress-mini-fill,
+html:not([data-theme="dark"]) .pm-flow-fill,
+html:not([data-theme="dark"]) .project-workitem-fill,
+html:not([data-theme="dark"]) .mw-type-fill,
+html:not([data-theme="dark"]) .mw-priority-fill{
+  background:linear-gradient(90deg,#1D4ED8 0%,#38BDF8 100%)!important;
+}
+html:not([data-theme="dark"]) .project-track,
+html:not([data-theme="dark"]) .project-popup-step-track,
+html:not([data-theme="dark"]) .pm-flow-track,
+html:not([data-theme="dark"]) .pm-progress-mini,
+html:not([data-theme="dark"]) .project-workitem-track{
+  background:#EAF2FF!important;
+  border-color:#BBD1F7!important;
+}
+html:not([data-theme="dark"]) .project-icon,
+html:not([data-theme="dark"]) .project-lock-note,
+html:not([data-theme="dark"]) .project-tab-btn.active{
+  background:#DBEAFE!important;
+  color:#1E3A8A!important;
+  border-color:#93C5FD!important;
+}
+html:not([data-theme="dark"]) .project-side-card.active,
+html:not([data-theme="dark"]) .project-board-card,
+html:not([data-theme="dark"]) .project-popup-left .project-detail-card{
+  background:linear-gradient(180deg,#FFFFFF,#EAF2FF)!important;
+  border-color:#60A5FA!important;
+}
+html:not([data-theme="dark"]) .project-side-card.active,
+html:not([data-theme="dark"]) .project-card:hover{
+  box-shadow:0 0 0 1px rgba(37,99,235,.22),0 16px 38px rgba(37,99,235,.12)!important;
+}
+html:not([data-theme="dark"]) .task-popup-project .tp-head{
+  background:linear-gradient(135deg,#DBEAFE,#FFFFFF)!important;
+  border-bottom-color:#60A5FA!important;
+}
+html:not([data-theme="dark"]) .project-type-badge,
+html:not([data-theme="dark"]) .project-board-card::before{
+  background:linear-gradient(135deg,#1E40AF,#2563EB)!important;
+}
+html:not([data-theme="dark"]) .ntab.active{
+  background:linear-gradient(135deg,#DBEAFE,#FFFFFF)!important;
+  color:#1E3A8A!important;
+  border-color:#BFDBFE!important;
+}
+html:not([data-theme="dark"]) .filter-bar,
+html:not([data-theme="dark"]) .project-panel-head,
+html:not([data-theme="dark"]) .upcoming-hdr,
+html:not([data-theme="dark"]) .settings-hdr,
+html:not([data-theme="dark"]) .lhdr,
+html:not([data-theme="dark"]) .mw-col-hdr,
+html:not([data-theme="dark"]) .pm-dash-panel-head{
+  background:linear-gradient(180deg,rgba(255,255,255,.86),#EEF5FF)!important;
+}
+html:not([data-theme="dark"]) .project-workitem-pct{color:#1E3A8A;}
+
+
+
+/* Patch v14: project manager permissions + assigned-only work item editing */
+.project-access-panel .project-panel-body{display:flex;flex-direction:column;gap:10px}
+.project-manager-member-row{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg)}
+.project-manager-member-row .info{flex:1;min-width:0}
+.project-manager-member-row .name{font-size:13px;font-weight:800;color:var(--tx)}
+.project-manager-member-row .sub{font-size:11px;color:var(--t3);margin-top:2px}
+.project-manager-add-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding-top:4px}
+.project-manager-add-row select{flex:1;min-width:180px;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--tx);font-size:13px;outline:none}
+.project-permission-note{font-size:12px;line-height:1.5;color:var(--t2);background:var(--gr-l);border:1px solid color-mix(in srgb,var(--gr) 30%,var(--bd));border-radius:var(--r);padding:9px 11px;margin-bottom:10px}
+.project-permission-note.locked{background:var(--s2);border-color:var(--bd);color:var(--t3)}
+.project-readonly-row{font-size:13px;color:var(--t2);line-height:1.55;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:10px 12px}
+.project-manage-task.readonly{opacity:.92}
+.project-manage-task.assigned-card{box-shadow:0 0 0 2px color-mix(in srgb,var(--gr) 18%,transparent),var(--sh)}
+.project-card-scope{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-top:6px}
+.project-manager-locked-cover{padding:14px;border:1px dashed var(--bd);border-radius:var(--rl);background:var(--bg);font-size:13px;color:var(--t2);line-height:1.6}
+html[data-theme="dark"] .project-manager-add-row select{background:var(--s2);color:var(--tx);border-color:var(--bd2)}
+
 </style>
 <script>
 (function(){
@@ -2767,16 +3072,17 @@ async function saveProjectTaskInline(id){
 
 function projectPopupWorkItemRow(k,projectId){
   const st=getStatus(k.status)||{};const state=projectWorkItemState(k);const team=projectTeamName(k.project_team_id);const owner=getUser(k.assignee)?.name||'Unassigned';
-  const due=k.due_date&&!st.hide_due?fmtDate(k.due_date):'No due';const id=escAttr(k.id);const desc=(k.description||'').trim();
+  const due=k.due_date&&!st.hide_due?fmtDate(k.due_date):'No due';const id=escAttr(k.id);const desc=(k.description||'').trim();const pct=Math.max(0,Math.min(100,Math.round(taskCompletionPct(k)||0)));
   return `<details class="project-popup-workitem-details" id="pwi-detail-${id}">
     <summary class="project-popup-workitem-summary">
       <span class="project-popup-workitem-caret">›</span>
       <div class="project-popup-workitem-main">
         <div class="project-popup-workitem-title">${esc(k.title)}</div>
         <div class="project-popup-workitem-desc-preview">${desc?esc(desc):'No description yet — expand to add follow-up detail.'}</div>
+        <div class="project-workitem-progress"><div class="project-workitem-track"><div class="project-workitem-fill" style="width:${pct}%"></div></div><div class="project-workitem-pct">${pct}%</div></div>
         <div class="project-popup-review-task-meta"><span class="project-workitem-label">Separate work item</span><span class="project-risk ${state.cls}">${state.label}</span><span class="project-pill">${esc(st.name||'No status')}</span><span class="project-pill">👥 ${esc(team)}</span><span class="project-pill">👤 ${esc(owner)}</span></div>
       </div>
-      <div class="project-popup-workitem-side"><span class="project-pill">W${taskWeight(k)}</span><span class="project-pill">📅 ${esc(due)}</span></div>
+      <div class="project-popup-workitem-side"><span class="project-pill">${pct}%</span><span class="project-pill">W${taskWeight(k)}</span><span class="project-pill">📅 ${esc(due)}</span></div>
     </summary>
     <div class="project-popup-workitem-edit">
       <div class="project-field wide"><label>Work item title</label><input id="pwi-title-${id}" value="${esc(k.title||'')}"></div>
@@ -3196,6 +3502,172 @@ function renderMemberWork(wrap){
   wrap.innerHTML=`<div class="mywork-wrap"><div class="mywork-hero"><div class="mywork-av">${esc(u.initials)}</div><div style="flex:1"><div class="mywork-name">Hey, ${esc(u.name.split(' ')[0])} 👋</div><div class="mywork-sub">${totalOpen} open assigned work · ${(overdue.length+overdueItems.length)>0?`<b style="color:#FFB3B3">${overdue.length+overdueItems.length} overdue</b>`:'all on track ✓'}</div><button class="mw-focus-btn" style="margin-top:10px;background:rgba(255,255,255,.92);color:#1A1916" onclick="exportTasksCsv()">⬇ Export my tasks</button></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${overdue.length+overdueItems.length}</div><div class="mstat-lbl">Overdue</div></div><div class="mstat"><div class="mstat-val">${dueToday.length}</div><div class="mstat-lbl">Due today</div></div><div class="mstat"><div class="mstat-val">${inprogCount}</div><div class="mstat-lbl">In progress</div></div></div></div>${totalOpen===0?`<div class="mw-clear-card" style="margin-bottom:14px"><div class="mw-clear-title">🎉 You’re clear for today</div><div class="mw-clear-sub">No assigned active work. Enjoy the quiet dashboard.</div></div>`:''}<div class="mw-command-grid">${focusHtml}<div class="mw-viz-card"><div class="mw-viz-title">⚡ Priority radar</div>${priorityHtml}<div class="mw-mini-grid"><div class="mw-mini"><div class="mw-mini-val">${openTasks.length}</div><div class="mw-mini-lbl">Tasks</div></div><div class="mw-mini"><div class="mw-mini-val">${openItems.length}</div><div class="mw-mini-lbl">Work items</div></div><div class="mw-mini"><div class="mw-mini-val">${openProjects.length}</div><div class="mw-mini-lbl">Projects</div></div></div></div></div><div class="mw-viz-grid"><div class="mw-viz-card"><div class="mw-viz-title">✨ Assigned work mix</div>${typeVizHtml}</div><div class="mw-viz-card"><div class="mw-viz-title">📊 Progress snapshot</div><div class="mw-ring-wrap"><div class="mw-ring" style="background:conic-gradient(var(--gr) ${completionPct}%,var(--s2) 0)"><div class="mw-ring-val">${completionPct}%</div></div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--tx);margin-bottom:7px">${doneUnitsLabel} completed equivalent · ${totalOpen} open assigned work</div><div class="mw-ring-copy">Averages normal tasks, assigned project work items, and owned project progress. Each item contributes at most 100%.</div><div class="mw-status-pills" style="margin-top:9px">${statusPillsHtml}</div></div></div></div></div><div class="mw-columns" style="margin-bottom:14px">${colsHtml}</div>${upcoming.length?`<div class="upcoming-card"><div class="upcoming-hdr"><span class="section-title">📅 Upcoming due dates</span><span class="section-badge">${upcoming.length}</span></div>${upcoming.slice(0,8).map(t=>{const st=getStatus(t.status);const df=(new Date(t.due_date)-td)/864e5;return`<div class="upcoming-row" onclick="openTaskPopup(${t.id})"><span class="upcoming-dot" style="background:${st.color}"></span><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--tx)">${esc(t.title)}</div><div style="font-size:11px;color:var(--t3);margin-top:2px">${esc(st.name)} · ${typeBadge(t.type)}</div></div><span style="font-size:11px;font-weight:600;color:${df<=3?'var(--am-d)':'var(--t3)'};white-space:nowrap">${df<=1?'Tomorrow':Math.round(df)+'d left'}</span></div>`;}).join('')}</div>`:''}</div>`;
 }
 
+
+
+
+// ══════════════════════════════════════════════
+// PATCH V14 — Project manager permissions + assigned-only work items
+// ══════════════════════════════════════════════
+let projectManagers=[];
+function projectManagersFor(projectId){return (projectManagers||[]).filter(m=>String(m.project_id)===String(projectId));}
+function isProjectManager(projectId,userId=currentUser?.id){return projectManagersFor(projectId).some(m=>String(m.user_id)===String(userId));}
+function projectCanManage(projectId,userId=currentUser?.id){
+  const p=getTask(projectId);if(!p||!userId)return false;
+  return currentUser?.role==='admin'||String(p.assignee)===String(userId)||isProjectManager(projectId,userId);
+}
+function canManageWorkItem(w,userId=currentUser?.id){return !!w&&(projectCanManage(w.project_id,userId)||String(w.assignee)===String(userId));}
+function canFullyManageWorkItem(w,userId=currentUser?.id){return !!w&&projectCanManage(w.project_id,userId);}
+function visibleProjectItems(projectId){
+  const all=projectChildTasks(projectId);
+  if(projectCanManage(projectId))return all;
+  return all.filter(w=>String(w.assignee)===String(currentUser?.id));
+}
+function projectVisibleList(){
+  const all=activeTasks().filter(isProjectTask);
+  if(currentUser?.role==='admin')return all;
+  return all.filter(p=>String(p.assignee)===String(currentUser?.id)||isProjectManager(p.id)||projectChildTasks(p.id).some(w=>String(w.assignee)===String(currentUser?.id)));
+}
+
+// Final loadAll override with project_managers table. Gracefully works before SQL is run.
+async function loadAll(){
+  try{
+    const [uR,sR,tyR,tR,cR,ptR,pwR,pmR]=await Promise.all([
+      sb.from('users').select('*').order('name'),
+      sb.from('statuses').select('*').order('sort_order'),
+      sb.from('task_types').select('*').order('sort_order'),
+      sb.from('tasks').select('*').order('created_at',{ascending:false}),
+      sb.from('comments').select('*,comment_files(*),comment_replies(*,reply_files(*))').order('created_at'),
+      sb.from('project_teams').select('*').order('sort_order'),
+      sb.from('project_work_items').select('*').order('project_step_order',{ascending:true}),
+      sb.from('project_managers').select('*').order('created_at',{ascending:true})
+    ]);
+    if(uR.error)throw uR.error;if(sR.error)throw sR.error;
+    users=uR.data||[];statuses=sR.data||[];taskTypes=tyR.error?[]:(tyR.data||[]);tasks=tR.error?[]:(tR.data||[]);
+    projectTeams=ptR.error?[]:(ptR.data||[]);projectWorkItems=pwR.error?[]:(pwR.data||[]);projectManagers=pmR.error?[]:(pmR.data||[]);
+    if(ptR.error)console.warn('project_teams unavailable',ptR.error);
+    if(pwR.error)console.warn('project_work_items unavailable. Run project_work_items_migration_v6.sql',pwR.error);
+    if(pmR.error)console.warn('project_managers unavailable. Run project_permissions_migration_v14.sql',pmR.error);
+    if(cR.error){const{data:cPlain,error:cErr}=await sb.from('comments').select('*').order('created_at');comments=cErr?[]:(cPlain||[]).map(c=>({...c,comment_files:[],comment_replies:[]}));}
+    else comments=cR.data||[];
+    return true;
+  }catch(e){console.error('❌ loadAll failed:',e);return false;}
+}
+function subscribeRealtime(){
+  realtimeChannel=sb.channel('tf-rt')
+    .on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_work_items'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_teams'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_managers'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'comments'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'statuses'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'users'},()=>reloadAndRefresh())
+    .on('postgres_changes',{event:'*',schema:'public',table:'task_types'},()=>reloadAndRefresh())
+    .subscribe(s=>{const el=document.getElementById('realtime-ind');if(el)el.classList.toggle('hidden',s!=='SUBSCRIBED');});
+}
+
+function renderProjectManager(project){
+  const pm=parseProjectMeta(project.description);const pct=projectProgress(project);const risk=projectRisk(project);const kids=projectChildTasks(project.id);const canManageProject=projectCanManage(project.id);const visibleKids=visibleProjectItems(project.id);
+  const scopeNote=canManageProject
+    ? `<div class="project-permission-note">✅ You can manage this project: update project details, teams, project managers, and every Project Work Item.</div>`
+    : `<div class="project-permission-note locked">🔒 You are viewing this project because you have assigned Project Work Items. You can update only your own assigned cards.</div>`;
+  const detailsPanel=canManageProject?`<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Project details</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="project-panel-body"><div class="project-edit-grid"><div class="project-field"><label>Project title</label><input id="pm-title-${project.id}" value="${esc(project.title)}"></div><div class="project-field"><label>Owner</label><select id="pm-assignee-${project.id}">${userOptions(project.assignee)}</select></div><div class="project-field"><label>Status</label><select id="pm-status-${project.id}">${statusOptions(project.status)}</select></div><div class="project-field"><label>Next step</label><input id="pm-next-${project.id}" value="${esc(pm.next||'')}" placeholder="e.g. Wait for QA SIT result"></div><div class="project-field"><label>Due date</label><input id="pm-due-${project.id}" type="date" value="${esc(project.due_date||'')}"></div><div class="project-field"><label>Project type</label><input value="🏗 Project - locked" disabled></div><div class="project-field" style="grid-column:1/-1"><label>Description</label><textarea id="pm-desc-${project.id}">${esc(stripProjectMeta(project.description)||'')}</textarea></div></div></div></div>`
+    : `<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Project overview</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="project-panel-body"><div class="project-readonly-row"><b>${esc(project.title)}</b><br>${esc(stripProjectMeta(project.description)||'No description')}<br><br><b>Owner:</b> ${esc(getUser(project.assignee)?.name||'Unassigned')} · <b>Next:</b> ${esc(pm.next||'No next step')}</div></div></div>`;
+  return `<div class="project-manager"><div class="project-manager-hero"><div><div class="project-manager-title">🏗 ${esc(project.title)}</div><div class="project-manager-sub">${canManageProject?'Project management mode':'Assigned work-item mode'} · ${kids.length} total work item${kids.length===1?'':'s'}${!canManageProject?` · ${visibleKids.length} assigned to you`:''}</div></div><div class="project-manager-actions">${canManageProject?`<button class="project-white-btn" onclick="saveProjectQuick(${project.id})">💾 Save project</button>`:''}<button class="project-outline-white-btn" onclick="openTaskPopup(${project.id})">View summary</button></div></div><div class="project-kpi-grid"><div class="project-kpi"><div class="project-kpi-val">${pct}%</div><div class="project-kpi-lbl">Calculated progress</div></div><div class="project-kpi"><div class="project-kpi-val">${kids.length}</div><div class="project-kpi-lbl">Total work items</div></div><div class="project-kpi"><div class="project-kpi-val">${canManageProject?projectTeamsFor(project.id).length:visibleKids.length}</div><div class="project-kpi-lbl">${canManageProject?'Teams':'Assigned to you'}</div></div><div class="project-kpi"><div class="project-kpi-val">${risk.count||0}</div><div class="project-kpi-lbl">Stuck / pending</div></div></div>${scopeNote}<div class="project-manager-grid">${detailsPanel}${canManageProject?renderProjectAccessManager(project):''}${canManageProject?renderProjectTeamManager(project):''}${canManageProject?renderProjectTaskCreator(project):''}<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Flow arranger</div><span class="section-badge">${canManageProject?'All work items':'Your assigned cards only'}</span></div><div class="project-panel-body">${renderProjectFlowManager(project)}</div></div></div></div>`;
+}
+
+function renderProjectAccessManager(project){
+  const mgrs=projectManagersFor(project.id);const owner=getUser(project.assignee);const selected=new Set([String(project.assignee),...mgrs.map(m=>String(m.user_id))]);
+  const addOpts=users.filter(u=>!selected.has(String(u.id))).map(u=>`<option value="${esc(u.id)}">${esc(u.name)}${u.email?` · ${esc(u.email)}`:''}</option>`).join('');
+  const rows=[`<div class="project-manager-member-row"><div>${avHtml(project.assignee,'sm')}</div><div class="info"><div class="name">${esc(owner?.name||'Project owner')}</div><div class="sub">Owner · full project management access</div></div><span class="project-workitem-label">Owner</span></div>`].concat(mgrs.map(m=>{const u=getUser(m.user_id);return `<div class="project-manager-member-row"><div>${avHtml(m.user_id,'sm')}</div><div class="info"><div class="name">${esc(u?.name||m.user_id)}</div><div class="sub">Project manager · can manage teams and all work items</div></div><button class="project-mini-danger" onclick="removeProjectManager('${escAttr(m.id)}')">Remove</button></div>`})).join('');
+  return `<div class="project-panel project-access-panel"><div class="project-panel-head"><div class="project-panel-title">🛡 Project managers</div><span class="section-badge">${mgrs.length+1}</span></div><div class="project-panel-body"><div class="project-helper-text">Add members here when they should help manage this project. They can create teams, assign work items to other members, and update every card in this project.</div>${rows}${addOpts?`<div class="project-manager-add-row"><select id="pm-manager-add-${project.id}">${addOpts}</select><button class="btn-p" onclick="addProjectManager(${project.id})">Add manager</button></div>`:`<div class="project-lock-note">All users already have project access or are the owner.</div>`}</div></div>`;
+}
+
+function renderProjectTeamManager(project){
+  const teams=projectTeamsFor(project.id);if(!projectCanManage(project.id))return '';
+  return `<div class="project-panel"><div class="project-panel-head"><div class="project-panel-title">👥 Teams in project</div><span class="section-badge">Drag to arrange</span></div><div class="project-panel-body"><div class="project-team-manager">${teams.length?teams.map(tm=>`<div class="project-team-row" draggable="true" ondragstart="onProjectTeamDragStart(event,'${escAttr(tm.id)}')" ondragover="onProjectTeamDragOver(event,this)" ondragleave="onProjectTeamDragLeave(this)" ondrop="onProjectTeamDrop(event,${project.id},'${escAttr(tm.id)}')" ondragend="onProjectTeamDragEnd(event)"><span class="project-flow-handle" title="Drag to arrange team order">⋮⋮</span><input id="pm-team-name-${tm.id}" value="${esc(tm.name)}"><div style="display:flex;gap:5px"><button class="project-small-btn" onclick="updateProjectTeamInline('${escAttr(tm.id)}')">Save</button><button class="project-mini-danger" onclick="deleteProjectTeam('${escAttr(tm.id)}')">Delete</button></div></div>`).join(''):'<div class="project-lock-note">No teams yet. Add DEV, QA, Infra, Business, Vendor, etc.</div>'}<div class="project-inline-form"><input id="pm-new-team-${project.id}" placeholder="New team name, e.g. DEV" onkeydown="if(event.key==='Enter')addProjectTeamInline(${project.id})"><button class="btn-p" style="font-size:12px;padding:7px 11px" onclick="addProjectTeamInline(${project.id})">Add team</button></div><div class="project-helper-text">Teams are used for assignment and filtering inside this project. Arrange team display order by drag and drop.</div></div></div></div>`;
+}
+
+function renderProjectTaskCreator(project){
+  if(!projectCanManage(project.id))return '';
+  return `<div class="project-panel project-full project-workitem-create-card"><div class="project-panel-head"><div class="project-panel-title">➕ Add project work item</div><span class="section-badge">Assign to any member</span></div><div class="project-panel-body"><div class="project-workitem-note">Project Work Items are separate from normal TaskFlow tasks. Assign them to members; each member can update only their own assigned card unless they are a project manager.</div><div class="project-workitem-form"><div class="project-field full"><label>Work item title *</label><input id="pm-task-title-${project.id}" placeholder="e.g. DEV - Update report logic / QA - Execute SIT / Business - Confirm UAT"></div><div class="project-field"><label>Team</label><select id="pm-task-team-${project.id}">${teamOptions(project.id,'')}</select></div><div class="project-field"><label>Assignee</label><select id="pm-task-assignee-${project.id}">${userOptions(currentUser?.id)}</select></div><div class="project-field"><label>Status</label><select id="pm-task-status-${project.id}">${statusOptions(statuses.find(s=>!s.is_done)?.id||statuses[0]?.id)}</select></div><div class="project-field"><label>Priority</label><select id="pm-task-priority-${project.id}" onchange="syncProjectTaskWeight(${project.id})"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div><div class="project-field"><label>Flow step</label><select id="pm-task-step-${project.id}">${projectStepOptions('Backlog')}</select></div><div class="project-field"><label>Weight</label><select id="pm-task-weight-${project.id}"><option value="1">1 - Small</option><option value="2" selected>2 - Normal</option><option value="3">3 - Important</option><option value="5">5 - Critical</option></select></div><div class="project-field"><label>Due date</label><input id="pm-task-due-${project.id}" type="date"></div><div class="project-field full"><label>Description / expected output</label><textarea id="pm-task-desc-${project.id}" placeholder="Add context, dependency, expected output, blocker, or follow-up note..."></textarea></div><div class="project-add-actions"><span class="project-helper-text">Assigned member can update only this card. Project managers can update all cards.</span><button class="btn-p" onclick="addProjectTaskInline(${project.id})">Add work item</button></div></div></div></div>`;
+}
+
+function renderProjectFlowManager(project){
+  let steps=projectSteps(project.id);
+  if(!projectCanManage(project.id)){
+    steps=steps.map(s=>({...s,items:s.items.filter(w=>String(w.assignee)===String(currentUser?.id))})).filter(s=>s.items.length);
+  }
+  if(!steps.length)return `<div class="project-empty">${projectCanManage(project.id)?'No project work items yet. Add a work item above to start building the flow.':'No Project Work Items are assigned to you in this project.'}</div>`;
+  return `<div class="project-flow-manager">${steps.map(step=>`<div class="project-step-manager"><div class="project-step-manager-head"><div class="project-step-manager-title">${esc(step.name)}</div><span class="section-badge">${step.items.length}</span></div><div class="project-step-drop" ${projectCanManage(project.id)?`ondragover="onProjectFlowDragOver(event,this)" ondragleave="onProjectFlowDragLeave(this)" ondrop="onProjectFlowDrop(event,${project.id},'${escAttr(step.name)}',null)"`:''}>${step.items.map(t=>renderProjectManageTask(t,project)).join('')}</div></div>`).join('')}</div><div class="project-helper-text">${projectCanManage(project.id)?'Drag the ⋮⋮ handle to move work items between steps or reorder them.':'You can update only your own assigned card details.'}</div>`;
+}
+
+function renderProjectManageTask(t,project){
+  const state=projectWorkItemState(t);const id=esc(t.id);const canFull=canFullyManageWorkItem(t);const canEdit=canManageWorkItem(t);const dragAttrs=canFull?`draggable="true" ondragstart="onProjectFlowDragStart(event,'${escAttr(t.id)}')" ondragend="onProjectFlowDragEnd(event)"`:'';
+  const dropAttrs=canFull?`ondragover="onProjectFlowDragOver(event,this)" ondrop="onProjectFlowDrop(event,${project.id},'${escAttr(t.project_step||'Backlog')}','${escAttr(t.id)}')"`:'';
+  if(!canEdit){return `<div class="project-manage-task readonly ${state.card}" data-project-task-id="${id}"><div class="project-manage-title-row"><div class="project-manage-title">${esc(t.title)}</div></div><div class="project-manage-meta"><span class="project-workitem-label">Read only</span><span class="project-risk ${state.cls}">${state.label}</span><span class="project-pill">${esc(projectTeamName(t.project_team_id))}</span><span class="project-pill">${esc(getUser(t.assignee)?.name||'Unassigned')}</span><span class="project-pill">W${taskWeight(t)}</span>${t.due_date?`<span class="project-pill">Due ${fmtDate(t.due_date)}</span>`:''}</div><div class="project-readonly-row">${esc(t.description||'No description')}</div></div>`;}
+  return `<div class="project-manage-task assigned-card ${state.card}" data-project-task-id="${id}" ${dropAttrs}><div class="project-manage-title-row">${canFull?`<span class="project-flow-handle" ${dragAttrs} title="Drag to arrange work item flow">⋮⋮</span>`:''}<div class="project-manage-title">${esc(t.title)}</div></div><div class="project-manage-meta"><span class="project-workitem-label">${canFull?'Managed work item':'Assigned to you'}</span><span class="project-risk ${state.cls}">${state.label}</span><span class="project-pill">${esc(projectTeamName(t.project_team_id))}</span><span class="project-pill">${esc(getUser(t.assignee)?.name||'Unassigned')}</span><span class="project-pill">W${taskWeight(t)}</span>${t.due_date?`<span class="project-pill">Due ${fmtDate(t.due_date)}</span>`:''}</div><div class="project-manage-edit project-manage-edit-easy"><input id="pm-flow-title-${id}" value="${esc(t.title)}" class="wide-edit" title="Title" ${canFull?'':'disabled'}><select id="pm-flow-status-${id}">${statusOptions(t.status)}</select><select id="pm-flow-team-${id}" ${canFull?'':'disabled'}>${teamOptions(project.id,t.project_team_id)}</select><select id="pm-flow-assignee-${id}" ${canFull?'':'disabled'}>${userOptions(t.assignee)}</select><select id="pm-flow-step-${id}" ${canFull?'':'disabled'}>${projectStepOptions(t.project_step||'Backlog')}</select><select id="pm-flow-weight-${id}" class="wide-edit" ${canFull?'':'disabled'}>${[1,2,3,5].map(w=>`<option value="${w}"${taskWeight(t)===w?' selected':''}>Weight ${w}</option>`).join('')}</select><textarea id="pm-flow-desc-${id}" class="wide-edit" placeholder="Description / follow-up note">${esc(t.description||'')}</textarea></div><div class="project-manage-actions"><button class="project-small-btn" onclick="saveProjectTaskInline('${escAttr(t.id)}')">Save ${canFull?'work item':'my update'}</button>${canFull?`<button class="project-mini-danger" onclick="deleteTaskFromProject('${escAttr(t.id)}')">Delete</button>`:''}</div></div>`;
+}
+
+async function addProjectManager(projectId){
+  if(!projectCanManage(projectId)){showNotif('🔒','Only the project owner, project managers, or admin can add project managers.');return;}
+  const userId=document.getElementById(`pm-manager-add-${projectId}`)?.value;if(!userId){showNotif('⚠️','Choose a member to add.');return;}
+  const {error}=await sb.from('project_managers').insert({project_id:projectId,user_id:userId,created_by:currentUser?.id||null});
+  if(error){showNotif('⚠️',`Add manager failed: ${esc(error.message)}. Run project_permissions_migration_v14.sql.`);return;}
+  showNotif('🛡','Project manager added.');await reloadAndRefresh();selectedProjectId=projectId;renderProjects();
+}
+async function removeProjectManager(id){
+  const row=(projectManagers||[]).find(m=>String(m.id)===String(id));if(!row)return;
+  if(!projectCanManage(row.project_id)){showNotif('🔒','Only project managers can remove project managers.');return;}
+  const {error}=await sb.from('project_managers').delete().eq('id',id);
+  if(error){showNotif('⚠️',`Remove manager failed: ${esc(error.message)}`);return;}
+  showNotif('🛡','Project manager removed.');await reloadAndRefresh();selectedProjectId=row.project_id;renderProjects();
+}
+
+async function saveProjectTaskInline(id){
+  const t=getProjectWorkItem(id);if(!t)return;
+  const canFull=canFullyManageWorkItem(t);if(!canManageWorkItem(t)){showNotif('🔒','You can update only Project Work Items assigned to you.');return;}
+  const status=document.getElementById(`pm-flow-status-${id}`)?.value||t.status;const newSt=getStatus(status);let upd={status,description:document.getElementById(`pm-flow-desc-${id}`)?.value.trim()||null,updated_at:mkTs()};
+  if(canFull){
+    const newStep=document.getElementById(`pm-flow-step-${id}`)?.value||'Backlog';let stepOrder=Number(t.project_step_order)||10;
+    if(String(newStep)!==String(t.project_step||'Backlog')){const maxOrder=projectChildTasks(t.project_id).filter(x=>String(x.project_step||'Backlog')===String(newStep)&&String(x.id)!==String(id)).reduce((a,x)=>Math.max(a,Number(x.project_step_order)||0),0);stepOrder=maxOrder+10;}
+    upd={...upd,title:document.getElementById(`pm-flow-title-${id}`)?.value.trim()||t.title,project_team_id:document.getElementById(`pm-flow-team-${id}`)?.value||null,assignee:document.getElementById(`pm-flow-assignee-${id}`)?.value,project_step:newStep,project_step_order:stepOrder,progress_weight:Number(document.getElementById(`pm-flow-weight-${id}`)?.value||taskWeight(t))};
+  }
+  if(t.status!==status&&newSt?.is_done&&!t.completed_at)upd.completed_at=mkTs();
+  const {error}=await sb.from('project_work_items').update(upd).eq('id',id);if(error){showNotif('⚠️',`Save failed: ${esc(error.message)}`);return;}
+  showNotif('💾','Project work item updated.');await reloadAndRefresh();selectedProjectId=t.project_id;renderProjects();
+}
+async function deleteTaskFromProject(id){
+  const t=getProjectWorkItem(id);if(!t)return;if(!canFullyManageWorkItem(t)){showNotif('🔒','Only project managers can delete Project Work Items.');return;}
+  if(!confirm(`Delete project work item "${t.title}"?`))return;const {error}=await sb.from('project_work_items').delete().eq('id',id);if(error){showNotif('⚠️',`Delete failed: ${esc(error.message)}`);return;}showNotif('🗑','Project work item deleted.');await reloadAndRefresh();selectedProjectId=t.project_id;renderProjects();
+}
+async function addProjectTaskInline(projectId){
+  if(!projectCanManage(projectId)){showNotif('🔒','Only project managers can add Project Work Items.');return;}
+  const title=document.getElementById(`pm-task-title-${projectId}`)?.value.trim();if(!title){showNotif('⚠️','Work item title is required.');return;}
+  const status=document.getElementById(`pm-task-status-${projectId}`)?.value;const st=getStatus(status);const priority=document.getElementById(`pm-task-priority-${projectId}`)?.value||'medium';const weight=Number(document.getElementById(`pm-task-weight-${projectId}`)?.value||({low:1,medium:2,high:3}[priority]||2));const step=document.getElementById(`pm-task-step-${projectId}`)?.value||'Backlog';const maxOrder=projectChildTasks(projectId).filter(t=>String(t.project_step||'Backlog')===String(step)).reduce((a,t)=>Math.max(a,Number(t.project_step_order)||0),0);
+  const row={project_id:projectId,title,description:document.getElementById(`pm-task-desc-${projectId}`)?.value.trim()||null,priority,assignee:document.getElementById(`pm-task-assignee-${projectId}`)?.value,status,due_date:document.getElementById(`pm-task-due-${projectId}`)?.value||null,completed_at:st?.is_done?mkTs():null,project_team_id:document.getElementById(`pm-task-team-${projectId}`)?.value||null,project_step:step,project_step_order:maxOrder+10,progress_weight:weight,archived:false};
+  const {error}=await sb.from('project_work_items').insert(row);if(error){showNotif('⚠️',`Add work item failed: ${esc(error.message)}`);return;}showNotif('✅','Project Work Item added.');await reloadAndRefresh();selectedProjectId=projectId;renderProjects();
+}
+async function saveProjectQuick(projectId){if(!projectCanManage(projectId)){showNotif('🔒','Only project managers can update project details.');return;}const project=getTask(projectId);if(!project)return;const title=document.getElementById(`pm-title-${projectId}`)?.value.trim();if(!title){showNotif('⚠️','Project title is required.');return;}const status=document.getElementById(`pm-status-${projectId}`)?.value;const oldStatus=project.status;const newSt=getStatus(status);const desc=composeProjectDescription(document.getElementById(`pm-desc-${projectId}`)?.value.trim()||'',{team:'',progress:projectProgress(project),next:document.getElementById(`pm-next-${projectId}`)?.value.trim()||''});const upd={title,description:desc,assignee:document.getElementById(`pm-assignee-${projectId}`)?.value,status,due_date:document.getElementById(`pm-due-${projectId}`)?.value||null,updated_at:mkTs()};if(oldStatus!==status&&newSt?.is_done&&!project.completed_at)upd.completed_at=mkTs();const {error}=await sb.from('tasks').update(upd).eq('id',projectId);if(error){showNotif('⚠️',`Project save failed: ${esc(error.message)}`);return;}showNotif('💾','Project updated.');await reloadAndRefresh();selectedProjectId=projectId;renderProjects();}
+async function onProjectFlowDrop(ev,projectId,targetStep,beforeTaskId=null){
+  ev.preventDefault();ev.stopPropagation();document.querySelectorAll('.project-step-drop.drag-over').forEach(x=>x.classList.remove('drag-over'));
+  if(!projectCanManage(projectId)){showNotif('🔒','Only project managers can arrange the project flow.');return;}
+  const taskId=draggedProjectTaskId||ev.dataTransfer.getData('text/plain');draggedProjectTaskId=null;if(!taskId)return;
+  const moving=getProjectWorkItem(taskId);if(!moving||String(moving.project_id)!==String(projectId)||String(taskId)===String(beforeTaskId||''))return;
+  const step=String(targetStep||moving.project_step||'Backlog');let list=projectChildTasks(projectId).filter(t=>String(t.project_step||'Backlog')===step&&String(t.id)!==String(taskId)).sort((a,b)=>(Number(a.project_step_order)||0)-(Number(b.project_step_order)||0)||new Date(a.created_at||0)-new Date(b.created_at||0));
+  const idx=beforeTaskId?Math.max(0,list.findIndex(t=>String(t.id)===String(beforeTaskId))):list.length;list.splice(idx,0,moving);
+  const results=await Promise.all(list.map((t,i)=>sb.from('project_work_items').update({project_step:step,project_step_order:(i+1)*10,updated_at:mkTs()}).eq('id',t.id)));
+  const err=results.find(r=>r.error)?.error;if(err){showNotif('⚠️',`Move failed: ${esc(err.message)}`);return;}await reloadAndRefresh();selectedProjectId=projectId;renderProjects();showNotif('↕️','Flow updated.');
+}
+
+function projectPopupWorkItemRow(k,projectId){
+  const st=getStatus(k.status)||{};const state=projectWorkItemState(k);const team=projectTeamName(k.project_team_id);const owner=getUser(k.assignee)?.name||'Unassigned';const due=k.due_date&&!st.hide_due?fmtDate(k.due_date):'No due';const id=escAttr(k.id);const desc=(k.description||'').trim();const pct=Math.max(0,Math.min(100,Math.round(taskCompletionPct(k)||0)));const canFull=canFullyManageWorkItem(k);const canEdit=canManageWorkItem(k);
+  return `<details class="project-popup-workitem-details" id="pwi-detail-${id}"><summary class="project-popup-workitem-summary"><span class="project-popup-workitem-caret">›</span><div class="project-popup-workitem-main"><div class="project-popup-workitem-title">${esc(k.title)}</div><div class="project-popup-workitem-desc-preview">${desc?esc(desc):'No description yet — expand to add follow-up detail.'}</div><div class="project-workitem-progress"><div class="project-workitem-track"><div class="project-workitem-fill" style="width:${pct}%"></div></div><div class="project-workitem-pct">${pct}%</div></div><div class="project-popup-review-task-meta"><span class="project-workitem-label">${canEdit?'Editable':'Read only'}</span><span class="project-risk ${state.cls}">${state.label}</span><span class="project-pill">${esc(st.name||'No status')}</span><span class="project-pill">👥 ${esc(team)}</span><span class="project-pill">👤 ${esc(owner)}</span></div></div></summary><div class="project-popup-workitem-edit">${canEdit?`<div class="project-field"><label>Title</label><input id="pwi-title-${id}" value="${esc(k.title)}" ${canFull?'':'disabled'}></div><div class="project-field"><label>Status</label><select id="pwi-status-${id}">${statusOptions(k.status)}</select></div><div class="project-field"><label>Team</label><select id="pwi-team-${id}" ${canFull?'':'disabled'}>${teamOptions(projectId,k.project_team_id)}</select></div><div class="project-field"><label>Assignee</label><select id="pwi-assignee-${id}" ${canFull?'':'disabled'}>${userOptions(k.assignee)}</select></div><div class="project-field"><label>Weight</label><select id="pwi-weight-${id}" ${canFull?'':'disabled'}>${[1,2,3,5].map(w=>`<option value="${w}"${taskWeight(k)===w?' selected':''}>Weight ${w}</option>`).join('')}</select></div><div class="project-field"><label>Due date</label><input id="pwi-due-${id}" type="date" value="${esc(k.due_date||'')}" ${canFull?'':'disabled'}></div><div class="project-field" style="grid-column:1/-1"><label>Description / follow-up note</label><textarea id="pwi-desc-${id}">${esc(k.description||'')}</textarea></div><div style="grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end"><button class="btn-p" onclick="savePopupWorkItem('${id}')">Save ${canFull?'work item':'my update'}</button></div>`:`<div class="project-readonly-row" style="grid-column:1/-1">${esc(k.description||'No description')}</div>`}</div></details>`;
+}
+async function savePopupWorkItem(id){
+  const k=getProjectWorkItem(id);if(!k)return;if(!canManageWorkItem(k)){showNotif('🔒','You can update only Project Work Items assigned to you.');return;}const canFull=canFullyManageWorkItem(k);const status=document.getElementById(`pwi-status-${id}`)?.value||k.status;let upd={status,description:document.getElementById(`pwi-desc-${id}`)?.value.trim()||null,updated_at:mkTs()};if(canFull){upd={...upd,title:document.getElementById(`pwi-title-${id}`)?.value.trim()||k.title,project_team_id:document.getElementById(`pwi-team-${id}`)?.value||null,assignee:document.getElementById(`pwi-assignee-${id}`)?.value,due_date:document.getElementById(`pwi-due-${id}`)?.value||null,progress_weight:Number(document.getElementById(`pwi-weight-${id}`)?.value||taskWeight(k))};}if(k.status!==status&&getStatus(status)?.is_done&&!k.completed_at)upd.completed_at=mkTs();const{error}=await sb.from('project_work_items').update(upd).eq('id',id);if(error){showNotif('⚠️',`Save failed: ${esc(error.message)}`);return;}showNotif('💾','Project Work Item updated.');await reloadAndRefresh();renderTaskPopup(k.project_id);
+}
+
+Object.assign(window,{addProjectManager,removeProjectManager,projectCanManage,canManageWorkItem,canFullyManageWorkItem});
 
 Object.assign(window,{openDetail,closeDetail,openMobile,closeMobileDetail,openTaskModal,openUserModal,editDesc,saveDesc,getTask,toggleReply,postReply,deleteComment,deleteReply,sortList,toggleDrop,toggleFVal,clearFilter,clearFilters,dropSearch,addStatus,deleteStatus,editStatusRow,saveStatusRow,onStatusDragStart,onStatusDragOver,onStatusDragLeave,onStatusDrop,toggleStatusFlag,addType,deleteType,editTypeRow,saveTypeRow,archiveTask,unarchiveTask,instantArchive,purgeArchive,saveTask,saveUser,deleteUser,logoutUser,showLogoutMenu,renderAll,switchTab,postComment,pinKey,openTaskPopup,closeTaskPopup,handlePopupBg,openIconPicker,pickIcon,renderTaskPopup,fmtTimeHtml,openTaskPopupEdit,saveTaskPopupEdit,openChangePinModal,saveChangedPin,renderProjects,openProjectModal,saveProjectRecord,toggleProjectFields,togglePopupProjectFields,openProjectChildTaskModal,deleteTaskFromProject,unlinkTaskFromProject,updateProjectTaskQuick,addProjectTeam,renameProjectTeam,deleteProjectTeam,moveTaskStep,selectProject,saveProjectQuick,addProjectTeamInline,updateProjectTeamInline,addProjectTaskInline,saveProjectTaskInline,savePopupWorkItem,syncProjectTaskWeight,onProjectFlowDragStart,onProjectFlowDragEnd,onProjectFlowDragOver,onProjectFlowDragLeave,onProjectFlowDrop,projectPopupWorkItemRow,savePopupWorkItem});
 
