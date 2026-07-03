@@ -225,7 +225,7 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
 .stat-sub{font-size:11px;color:var(--t3);margin-top:4px}
 .prog-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;box-shadow:var(--sh)}
 
-/* My Work — improved layout */
+/* Task Summary — improved layout */
 .mywork-wrap{padding:14px;max-width:1180px;margin:0 auto}
 .mywork-hero{background:linear-gradient(135deg,var(--gr-d),var(--gr));border-radius:var(--rl);padding:20px 22px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;color:#fff}
 .mywork-av{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
@@ -235,7 +235,7 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
 .mstat{text-align:center;padding:10px 14px;background:rgba(255,255,255,.15);border-radius:var(--r);backdrop-filter:blur(4px)}
 .mstat-val{font-size:22px;font-weight:700;color:#fff;line-height:1}
 .mstat-lbl{font-size:9px;color:rgba(255,255,255,.7);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
-/* Kanban columns inside My Work */
+/* Kanban columns inside Task Summary */
 .mw-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:16px}
 .mw-col{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;box-shadow:var(--sh)}
 .mw-col-hdr{padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px;background:var(--s2)}
@@ -258,7 +258,7 @@ textarea.desc-edit:focus{border-color:var(--gr);box-shadow:0 0 0 2.5px var(--gr-
 .upcoming-row:last-child{border-bottom:none}
 .upcoming-row:hover{background:var(--s2)}
 .upcoming-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-/* My Work visualization */
+/* Task Summary visualization */
 .mw-viz-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-bottom:14px}
 .mw-viz-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:14px;box-shadow:var(--sh)}
 .mw-viz-title{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
@@ -830,7 +830,7 @@ html[data-theme="dark"] .project-popup-workitem-summary{background:var(--s2)}
 
 
 
-/* Patch v8: cleaner project create modal, drag-sort teams, work item spacing, My Work owner progress */
+/* Patch v8: cleaner project create modal, drag-sort teams, work item spacing, Task Summary owner progress */
 #task-modal .modal.project-create-mode{max-width:760px;width:min(760px,calc(100vw - 28px));}
 #task-modal .modal.project-create-mode #project-fields{display:none!important;}
 #task-modal .modal.project-create-mode #f-desc{min-height:150px;font-size:14px;line-height:1.6;}
@@ -1785,7 +1785,7 @@ html[data-theme="dark"] .theme-select{
         </div>
       </div>
     </div>
-    <!-- My Work -->
+    <!-- Task Summary -->
     <div class="tab-pane" id="pane-mywork"><div style="flex:1;overflow:auto"><div id="mywork-content"></div></div></div>
     <!-- Projects -->
     <div class="tab-pane" id="pane-project"><div style="flex:1;overflow:auto"><div id="project-content"></div></div></div>
@@ -1887,16 +1887,16 @@ html[data-theme="dark"] .theme-select{
 <div class="overlay hidden" id="project-modal">
   <div class="modal project-create-modal">
     <div class="project-modal-title">🏗 Create Project</div>
-    <div class="project-modal-sub">Create a locked Project record. Project work items are managed separately inside the Project Manager, not mixed with normal TaskFlow tasks.</div>
+    <div class="project-modal-sub">Create a locked Project record for CR discussion / initiative tracking. Work items are created later and assigned to related members separately.</div>
     <div class="project-create-grid">
       <div class="field full"><label>Project name *</label><input id="p-title" placeholder="e.g. CR-2026-001 Separate Lens Cost"></div>
       <div class="field full"><label>Description / objective</label><textarea id="p-desc" placeholder="Summarize scope, business impact, target release, risk, and expected outcome..."></textarea></div>
-      <div class="field"><label>Owner</label><select id="p-owner"></select></div>
+      <div class="field"><label>Project Lead / PM</label><select id="p-owner"></select></div>
       <div class="field"><label>Status</label><select id="p-status"></select></div>
       <div class="field"><label>Priority</label><select id="p-priority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select></div>
       <div class="field"><label>Due date</label><input type="date" id="p-due"></div>
     </div>
-    <div class="project-lock-note">🔒 Project is a special locked type. You cannot convert normal tasks into Projects or Projects into normal tasks.</div>
+    <div class="project-lock-note">🔒 Project Lead manages the project record. Work item assignees manage only their assigned cards unless added as Project Manager.</div>
     <div class="mactions"><button class="btn-s" onclick="closeModal('project-modal')">Cancel</button><button class="btn-p" onclick="saveProjectRecord()">Create Project</button></div>
   </div>
 </div>
@@ -2450,12 +2450,12 @@ function buildNav(){
   if(!currentUser)return;
   const isAdmin=currentUser.role==='admin';
   const tabs=isAdmin?[
-    {id:'board',label:'Board',icon:'⬛'},{id:'mywork',label:'Owners',icon:'👥'},
-    {id:'project',label:'Projects',icon:'🏗'},{id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'},
+    {id:'board',label:'Board',icon:'⬛'},{id:'mywork',label:'Task Summary',icon:'👥'},
+    {id:'project',label:'Projects Management',icon:'🏗'},{id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'},
     {id:'archive',label:'Archive',icon:'📦'},{id:'users',label:'Users',icon:'👤'},
     {id:'settings',label:'Settings',icon:'🏷'},
   ]:[
-    {id:'mywork',label:'My Work',icon:'✓'},{id:'project',label:'Projects',icon:'🏗'},
+    {id:'mywork',label:'Task Summary',icon:'✓'},{id:'project',label:'Projects Management',icon:'🏗'},
     {id:'board',label:'Board',icon:'⬛'},{id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'},
     {id:'archive',label:'Archive',icon:'📦'},
   ];
@@ -3582,7 +3582,7 @@ function renderProjects(){
   const selected=visible.find(p=>String(p.id)===String(selectedProjectId));
   const avg=visible.length?Math.round(visible.reduce((a,t)=>a+projectProgress(t),0)/visible.length):0;
   const stuck=visible.filter(t=>projectRisk(t).cls==='risk-stuck').length;
-  wrap.innerHTML=`<div class="project-wrap"><div class="project-hero"><div style="font-size:32px">🏗</div><div><div class="project-title">Project Manager</div><div class="project-sub">Single-page control for project teams, work items, flow order, stuck work, and weighted progress.</div></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${visible.length}</div><div class="mstat-lbl">Projects</div></div><div class="mstat"><div class="mstat-val">${avg}%</div><div class="mstat-lbl">Avg progress</div></div><div class="mstat"><div class="mstat-val">${stuck}</div><div class="mstat-lbl">Stuck</div></div></div><div class="project-actions">${can('createTask')?`<button class="project-btn" onclick="openProjectModal()">+ New Project</button>`:''}</div></div>${visible.length?`<div class="project-single-layout"><div class="project-sidebar">${visible.map(renderProjectCard).join('')}</div>${selected?renderProjectManager(selected):'<div class="project-selected-empty">Select a project to manage.</div>'}</div>`:`<div class="project-empty"><div style="font-size:34px;margin-bottom:8px">🌱</div><b>No active projects yet.</b><div style="font-size:13px;margin-top:6px">Create a locked Project record for each CR that needs cross-team follow-up.</div></div>`}</div>`;
+  wrap.innerHTML=`<div class="project-wrap"><div class="project-hero"><div style="font-size:32px">🏗</div><div><div class="project-title">Projects Management</div><div class="project-sub">Single-page control for project teams, work items, flow order, stuck work, and weighted progress.</div></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${visible.length}</div><div class="mstat-lbl">Projects</div></div><div class="mstat"><div class="mstat-val">${avg}%</div><div class="mstat-lbl">Avg progress</div></div><div class="mstat"><div class="mstat-val">${stuck}</div><div class="mstat-lbl">Stuck</div></div></div><div class="project-actions">${can('createTask')?`<button class="project-btn" onclick="openProjectModal()">+ New Project</button>`:''}</div></div>${visible.length?`<div class="project-single-layout"><div class="project-sidebar">${visible.map(renderProjectCard).join('')}</div>${selected?renderProjectManager(selected):'<div class="project-selected-empty">Select a project to manage.</div>'}</div>`:`<div class="project-empty"><div style="font-size:34px;margin-bottom:8px">🌱</div><b>No active projects yet.</b><div style="font-size:13px;margin-top:6px">Create a locked Project record for each CR that needs cross-team follow-up.</div></div>`}</div>`;
 }
 function renderProjectCard(t){const pm=parseProjectMeta(t.description);const pct=projectProgress(t);const kids=projectChildTasks(t.id);const risk=projectRisk(t);const active=String(t.id)===String(selectedProjectId);return `<div class="project-side-card ${active?'active':''}" onclick="selectProject(${t.id})"><div class="project-side-title"><span>🏗</span><span>${esc(t.title)}</span></div><div class="project-progress"><div class="project-progress-head"><span>${kids.length} work item${kids.length===1?'':'s'}</span><span>${pct}%</span></div><div class="project-track"><div class="project-fill" style="width:${pct}%"></div></div></div><div class="project-side-meta"><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span><span class="project-pill">👥 ${projectTeamsFor(t.id).length}</span><span class="project-pill">🧭 ${projectSteps(t.id).length}</span></div><div class="project-lock-note" style="margin-top:8px;background:transparent;border:none;padding:0;color:var(--t3)">${esc(pm.next||'No next step')}</div></div>`;}
 function renderProjectManager(project){const pm=parseProjectMeta(project.description);const pct=projectProgress(project);const risk=projectRisk(project);const kids=projectChildTasks(project.id);return `<div class="project-manager"><div class="project-manager-hero"><div><div class="project-manager-title">🏗 ${esc(project.title)}</div><div class="project-manager-sub">Locked Project record · ${kids.length} linked work item${kids.length===1?'':'s'} · weighted progress is calculated from work item status and weight.</div></div><div class="project-manager-actions"><button class="project-white-btn" onclick="saveProjectQuick(${project.id})">💾 Save project</button><button class="project-outline-white-btn" onclick="openTaskPopup(${project.id})">View summary</button></div></div><div class="project-kpi-grid"><div class="project-kpi"><div class="project-kpi-val">${pct}%</div><div class="project-kpi-lbl">Calculated progress</div></div><div class="project-kpi"><div class="project-kpi-val">${kids.length}</div><div class="project-kpi-lbl">Project work items</div></div><div class="project-kpi"><div class="project-kpi-val">${projectTeamsFor(project.id).length}</div><div class="project-kpi-lbl">Teams</div></div><div class="project-kpi"><div class="project-kpi-val">${risk.count||0}</div><div class="project-kpi-lbl">Stuck / pending</div></div></div><div class="project-manager-grid"><div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Project details</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="project-panel-body"><div class="project-edit-grid"><div class="project-field"><label>Project title</label><input id="pm-title-${project.id}" value="${esc(project.title)}"></div><div class="project-field"><label>Owner</label><select id="pm-assignee-${project.id}">${userOptions(project.assignee)}</select></div><div class="project-field"><label>Status</label><select id="pm-status-${project.id}">${statusOptions(project.status)}</select></div><div class="project-field"><label>Next step</label><input id="pm-next-${project.id}" value="${esc(pm.next||'')}" placeholder="e.g. Wait for QA SIT result"></div><div class="project-field"><label>Due date</label><input id="pm-due-${project.id}" type="date" value="${esc(project.due_date||'')}"></div><div class="project-field"><label>Project type</label><input value="🏗 Project - locked" disabled></div><div class="project-field" style="grid-column:1/-1"><label>Description</label><textarea id="pm-desc-${project.id}">${esc(stripProjectMeta(project.description)||'')}</textarea></div></div></div></div>${renderProjectTeamManager(project)}${renderProjectTaskCreator(project)}<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Flow arranger</div><span class="section-badge">Multiple work items per step</span></div><div class="project-panel-body">${renderProjectFlowManager(project)}</div></div></div></div>`;}
@@ -3937,7 +3937,7 @@ function renderDash(){
   const flowRows=[...stepMap.entries()].sort((a,b)=>b[1]-a[1]).map(([name,cnt])=>`<div class="pm-flow-row"><div class="pm-flow-name">${esc(name)}</div><div class="pm-flow-track"><div class="pm-flow-fill" style="width:${Math.round(cnt/maxStep*100)}%"></div></div><div class="pm-flow-count">${cnt}</div></div>`).join('')||'<div class="section-empty">No project flow data yet.</div>';
   const statusBars=statuses.map(st=>{const cnt=openTasks.filter(t=>t.status===st.id).length;const pct=openTasks.length?Math.round(cnt/openTasks.length*100):0;return `<div style="display:flex;align-items:center;gap:11px;margin-bottom:11px"><span style="font-size:12px;color:var(--t2);width:110px;flex-shrink:0;font-weight:700">${esc(st.name)}</span><div style="flex:1;height:8px;background:var(--s2);border-radius:999px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${st.color};border-radius:999px"></div></div><span style="font-size:12px;color:var(--t3);width:28px;text-align:right;font-weight:800">${cnt}</span></div>`;}).join('');
   const dash=document.querySelector('#pane-dash .dash-wrap');
-  if(dash){dash.innerHTML=`<div class="pm-dash-wrap"><div class="pm-dash-hero"><div><div class="pm-dash-title">PM Control Tower</div><div class="pm-dash-sub">Combined view of normal tasks, project portfolio health, and project work-item follow-ups.</div></div><button class="project-white-btn" onclick="switchTab('project')">Open Project Manager</button></div><div class="pm-dash-grid"><div class="pm-dash-card"><div class="pm-dash-kpi">${projects.length}</div><div class="pm-dash-label">Active projects</div><div class="pm-dash-note">${riskProjects.length} project(s) at risk</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${portfolioPct}%</div><div class="pm-dash-label">Portfolio progress</div><div class="pm-dash-note">Weighted from ${allItems.length} project work items</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openTasks.length}</div><div class="pm-dash-label">Open normal tasks</div><div class="pm-dash-note">${overdueTasks.length} overdue</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openItems}</div><div class="pm-dash-label">Open work items</div><div class="pm-dash-note">${overdueItems.length} overdue · ${pendingItems.length} pending/stuck</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Follow-up queue</div><span class="section-badge">Top ${follow.length}</span></div><div class="pm-dash-panel-body">${followRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project portfolio</div><span class="section-badge">Lowest progress first</span></div><div class="pm-dash-panel-body">${projectRows}</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project flow load</div><span class="section-badge">Work items by step</span></div><div class="pm-dash-panel-body">${flowRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Normal task status</div><span class="section-badge">TaskFlow tasks only</span></div><div class="pm-dash-panel-body">${statusBars}</div></div></div></div>`;return;}
+  if(dash){dash.innerHTML=`<div class="pm-dash-wrap"><div class="pm-dash-hero"><div><div class="pm-dash-title">PM Control Tower</div><div class="pm-dash-sub">Combined view of normal tasks, project portfolio health, and project work-item follow-ups.</div></div><button class="project-white-btn" onclick="switchTab('project')">Open Projects Management</button></div><div class="pm-dash-grid"><div class="pm-dash-card"><div class="pm-dash-kpi">${projects.length}</div><div class="pm-dash-label">Active projects</div><div class="pm-dash-note">${riskProjects.length} project(s) at risk</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${portfolioPct}%</div><div class="pm-dash-label">Portfolio progress</div><div class="pm-dash-note">Weighted from ${allItems.length} project work items</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openTasks.length}</div><div class="pm-dash-label">Open normal tasks</div><div class="pm-dash-note">${overdueTasks.length} overdue</div></div><div class="pm-dash-card"><div class="pm-dash-kpi">${openItems}</div><div class="pm-dash-label">Open work items</div><div class="pm-dash-note">${overdueItems.length} overdue · ${pendingItems.length} pending/stuck</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Follow-up queue</div><span class="section-badge">Top ${follow.length}</span></div><div class="pm-dash-panel-body">${followRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project portfolio</div><span class="section-badge">Lowest progress first</span></div><div class="pm-dash-panel-body">${projectRows}</div></div></div><div class="pm-dash-main"><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Project flow load</div><span class="section-badge">Work items by step</span></div><div class="pm-dash-panel-body">${flowRows}</div></div><div class="pm-dash-panel"><div class="pm-dash-panel-head"><div class="pm-dash-panel-title">Normal task status</div><span class="section-badge">TaskFlow tasks only</span></div><div class="pm-dash-panel-body">${statusBars}</div></div></div></div>`;return;}
 }
 
 /* Patch v8 behavior overrides */
@@ -4266,6 +4266,222 @@ if(document.readyState==='loading'){
 }
 </script>
 
+
+
+
+<!-- PATCH V19 — Split Project Manager vs Project Tracker roles -->
+<style>
+/* Patch v19: make project role separation clearer */
+.project-mode-note{padding:12px 14px;border-radius:var(--rl);border:1px solid var(--bd);background:var(--sf);box-shadow:var(--sh);margin-bottom:12px;color:var(--t2);font-size:13px;line-height:1.55}
+.project-mode-note.manager{background:linear-gradient(135deg,var(--gr-l),var(--sf));border-color:color-mix(in srgb,var(--gr) 28%,var(--bd))}
+.project-mode-note.tracker{background:linear-gradient(135deg,var(--am-l),var(--sf));border-color:color-mix(in srgb,var(--am) 28%,var(--bd))}
+.project-role-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.project-role-pill{font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:4px 8px;border:1px solid var(--bd);background:var(--bg);color:var(--t2)}
+.project-role-pill.primary{background:var(--gr-l);color:var(--gr-d);border-color:var(--gr)}
+.project-role-pill.warn{background:var(--am-l);color:var(--am-d);border-color:var(--am)}
+.project-section-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.project-section-tab{font-size:12px;font-weight:900;border:1px solid var(--bd);border-radius:999px;padding:7px 11px;background:var(--sf);color:var(--t2)}
+.project-section-tab.on{background:var(--gr);border-color:var(--gr);color:#fff}
+.project-manager-hero.tracker-mode{background:linear-gradient(135deg,var(--am-d),var(--am))!important}
+.project-tracker-card .project-panel-head{background:linear-gradient(135deg,var(--am-l),var(--sf))}
+html[data-theme="dark"] .project-mode-note.manager{background:linear-gradient(135deg,rgba(61,209,140,.14),var(--sf));border-color:rgba(61,209,140,.28)}
+html[data-theme="dark"] .project-mode-note.tracker{background:linear-gradient(135deg,rgba(255,180,84,.13),var(--sf));border-color:rgba(255,180,84,.28)}
+html[data-theme="dark"] .project-section-tab{background:var(--sf);color:var(--tx);border-color:var(--bd2)}
+html[data-theme="dark"] .project-role-pill{background:var(--s2);color:var(--tx);border-color:var(--bd2)}
+</style>
+<script>
+// Patch v19: Project Manager is only for admin / Project Lead / added managers / creator-added-as-manager.
+// Assigned members get Project Tracker mode and can update only their own Project Work Items.
+function projectRoleInfo(project){
+  const isAdmin=currentUser?.role==='admin';
+  const isLead=String(project?.assignee||'')===String(currentUser?.id||'');
+  const isMgr=isProjectManager(project?.id,currentUser?.id);
+  const ownCount=projectChildTasks(project?.id).filter(w=>String(w.assignee)===String(currentUser?.id||'')).length;
+  return {isAdmin,isLead,isMgr,ownCount,canManage:!!(isAdmin||isLead||isMgr),canTrack:ownCount>0};
+}
+function renderProjectCard(t){
+  const st=getStatus(t.status)||{};const lead=getUser(t.assignee)||{};const pct=projectProgress(t);const due=t.due_date&&!st.hide_due?fmtDate(t.due_date):'No due date';
+  const items=projectChildTasks(t.id);const open=items.filter(w=>!getStatus(w.status)?.is_done).length;const mgrs=projectManagersFor(t.id).length;
+  return `<div class="project-card" onclick="selectProject(${escAttr(t.id)})"><div class="project-card-top"><div class="project-icon">🏗</div><div style="min-width:0;flex:1"><div class="project-name">${esc(t.title)}</div><div class="project-meta">${projectStatusBadge(t)}<span class="project-pill">Lead: ${esc(lead.name||'Unassigned')}</span><span class="project-pill">📅 ${esc(due)}</span></div></div></div><div class="project-progress"><div class="project-progress-head"><span>Project progress</span><span>${pct}%</span></div><div class="project-track"><div class="project-fill" style="width:${pct}%"></div></div></div><div class="project-meta"><span class="project-pill">🧩 ${items.length} work item${items.length===1?'':'s'}</span><span class="project-pill">⏳ ${open} open</span><span class="project-pill">🛡 ${mgrs+1} manager${mgrs?'s':''}</span></div><div class="project-next"><b>Separation:</b> Project Lead monitors; assigned members update their own work-item cards.</div></div>`;
+}
+function renderProjectManager(project){
+  const pm=parseProjectMeta(project.description);const pct=projectProgress(project);const risk=projectRisk(project);const kids=projectChildTasks(project.id);const visibleKids=visibleProjectItems(project.id);const role=projectRoleInfo(project);const canManageProject=role.canManage;
+  const heroClass=canManageProject?'':' tracker-mode';
+  const modeTitle=canManageProject?'Project Manager':'Project Tracker';
+  const modeSub=canManageProject
+    ? 'Manage project record, teams, project managers, assignment, flow, and all work items.'
+    : 'Assigned member view. Update your own work-item cards only.';
+  const rolePills=`<div class="project-role-pills"><span class="project-role-pill ${role.isAdmin?'primary':''}">${role.isAdmin?'Admin':'Not admin'}</span><span class="project-role-pill ${role.isLead?'primary':''}">${role.isLead?'Project Lead':'Not lead'}</span><span class="project-role-pill ${role.isMgr?'primary':''}">${role.isMgr?'Added manager':'Not manager'}</span>${role.ownCount?`<span class="project-role-pill warn">${role.ownCount} assigned to you</span>`:''}</div>`;
+  const scopeNote=canManageProject
+    ? `<div class="project-mode-note manager"><b>Project Manager mode</b><br>You can manage this project as Admin, Project Lead, Creator/added manager. Work item assignees remain separate from project ownership.${rolePills}</div>`
+    : `<div class="project-mode-note tracker"><b>Project Tracker mode</b><br>You are here because a Project Work Item is assigned to you. You can update only your card status and follow-up/description. Assignment, team, weight, and flow are controlled by Project Managers.${rolePills}</div>`;
+  const detailsPanel=canManageProject?`<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">Project record / notes</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="project-panel-body"><div class="project-edit-grid"><div class="project-field"><label>Project title</label><input id="pm-title-${project.id}" value="${esc(project.title)}"></div><div class="project-field"><label>Project Lead / PM</label><select id="pm-assignee-${project.id}">${userOptions(project.assignee)}</select></div><div class="project-field"><label>Status</label><select id="pm-status-${project.id}">${statusOptions(project.status)}</select></div><div class="project-field"><label>Next step</label><input id="pm-next-${project.id}" value="${esc(pm.next||'')}" placeholder="e.g. Wait for QA SIT result"></div><div class="project-field"><label>Due date</label><input id="pm-due-${project.id}" type="date" value="${esc(project.due_date||'')}"></div><div class="project-field"><label>Project type</label><input value="🏗 Project - locked" disabled></div><div class="project-field" style="grid-column:1/-1"><label>Project notes / discussion record</label><textarea id="pm-desc-${project.id}">${esc(stripProjectMeta(project.description)||'')}</textarea></div></div></div></div>`
+    : `<div class="project-panel project-full project-tracker-card"><div class="project-panel-head"><div class="project-panel-title">Project context</div><span class="project-risk ${risk.cls}">${risk.label}${risk.count?' '+risk.count:''}</span></div><div class="project-panel-body"><div class="project-readonly-row"><b>${esc(project.title)}</b><br>${esc(stripProjectMeta(project.description)||'No project notes yet.')}<br><br><b>Project Lead / PM:</b> ${esc(getUser(project.assignee)?.name||'Unassigned')}<br><b>Next project step:</b> ${esc(pm.next||'No next step recorded')}</div></div></div>`;
+  return `<div class="project-manager"><div class="project-manager-hero${heroClass}"><div><div class="project-manager-title">${canManageProject?'🛡':'🎯'} ${modeTitle}: ${esc(project.title)}</div><div class="project-manager-sub">${modeSub} · ${kids.length} total work item${kids.length===1?'':'s'}${!canManageProject?` · ${visibleKids.length} assigned to you`:''}</div></div><div class="project-manager-actions">${canManageProject?`<button class="project-white-btn" onclick="saveProjectQuick(${project.id})">💾 Save project</button>`:''}<button class="project-outline-white-btn" onclick="openTaskPopup(${project.id})">View summary</button></div></div><div class="project-kpi-grid"><div class="project-kpi"><div class="project-kpi-val">${pct}%</div><div class="project-kpi-lbl">Project progress</div></div><div class="project-kpi"><div class="project-kpi-val">${kids.length}</div><div class="project-kpi-lbl">Total work items</div></div><div class="project-kpi"><div class="project-kpi-val">${canManageProject?projectTeamsFor(project.id).length:visibleKids.length}</div><div class="project-kpi-lbl">${canManageProject?'Teams':'My assigned cards'}</div></div><div class="project-kpi"><div class="project-kpi-val">${risk.count||0}</div><div class="project-kpi-lbl">Stuck / pending</div></div></div>${scopeNote}<div class="project-manager-grid">${detailsPanel}${canManageProject?renderProjectAccessManager(project):''}${canManageProject?renderProjectTeamManager(project):''}${canManageProject?renderProjectTaskCreator(project):''}<div class="project-panel project-full"><div class="project-panel-head"><div class="project-panel-title">${canManageProject?'Flow arranger':'My work-item tracker'}</div><span class="section-badge">${canManageProject?'All work items':'Assigned to me only'}</span></div><div class="project-panel-body">${renderProjectFlowManager(project)}</div></div></div></div>`;
+}
+async function saveProjectRecord(){
+  const title=document.getElementById('p-title')?.value.trim();
+  if(!title){showNotif('⚠️','Project name is required.');return;}
+  const p=await ensureProjectType();
+  if(!p){showNotif('⚠️','Project type is not ready.');return;}
+  const statusId=document.getElementById('p-status')?.value||statuses[0]?.id;
+  const st=getStatus(statusId);
+  const projectLead=document.getElementById('p-owner')?.value||currentUser?.id;
+  const payload={
+    title,
+    description:document.getElementById('p-desc')?.value.trim()||'',
+    type:p.id,
+    priority:document.getElementById('p-priority')?.value||'medium',
+    assignee:projectLead,
+    status:statusId,
+    due_date:document.getElementById('p-due')?.value||null,
+    archived:false,
+    completed_at:st?.is_done?mkTs():null
+  };
+  const {data,error}=await sb.from('tasks').insert(payload).select().single();
+  if(error){console.error('Create project failed:',error);showNotif('⚠️',`Create project failed: ${esc(error.message||error)}`);return;}
+  // Make the creator a project manager automatically when project lead differs.
+  if(data?.id && currentUser?.id && String(currentUser.id)!==String(projectLead)){
+    const {error:mErr}=await sb.from('project_managers').insert({project_id:data.id,user_id:currentUser.id,created_by:currentUser.id});
+    if(mErr)console.warn('Creator project manager insert failed. Run project_permissions_migration_v14.sql if needed.',mErr);
+  }
+  closeModal('project-modal');
+  showNotif('🏗',`Project "${esc(title)}" created. Creator can manage it; assigned members track their own work items.`);
+  await reloadAndRefresh();
+  selectedProjectId=data?.id||selectedProjectId;
+  switchTab('project');
+  renderProjects();
+}
+</script>
+
+
+
+<!-- PATCH V20 — Separate Project Manager tab from assigned Project Work tab -->
+<style>
+.projectwork-wrap{padding:14px;max-width:1260px;margin:0 auto}
+.projectwork-hero{border-radius:var(--rl);padding:20px 22px;margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;color:#fff;background:linear-gradient(135deg,var(--accent-hero-a,var(--gr-d)),var(--accent-hero-b,var(--gr)));box-shadow:var(--sh-md);position:relative;overflow:hidden}
+.projectwork-hero::after{content:'';position:absolute;right:-45px;top:-58px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.12)}
+.projectwork-title{font-size:21px;font-weight:900;letter-spacing:-.45px;position:relative;z-index:1}
+.projectwork-sub{font-size:13px;color:rgba(255,255,255,.78);margin-top:4px;max-width:720px;line-height:1.5;position:relative;z-index:1}
+.projectwork-stats{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap;position:relative;z-index:1}
+.projectwork-stat{min-width:88px;text-align:center;padding:9px 12px;border-radius:var(--r);background:rgba(255,255,255,.15);backdrop-filter:blur(5px)}
+.projectwork-stat .v{font-size:20px;font-weight:900;line-height:1;color:#fff}.projectwork-stat .l{font-size:9px;text-transform:uppercase;font-weight:900;letter-spacing:.08em;color:rgba(255,255,255,.72);margin-top:4px}
+.projectwork-layout{display:grid;grid-template-columns:340px 1fr;gap:14px;align-items:start}.projectwork-list{display:flex;flex-direction:column;gap:10px}.projectwork-project-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:13px 14px;box-shadow:var(--sh);cursor:pointer;transition:all .15s}.projectwork-project-card:hover{transform:translateY(-1px);box-shadow:var(--sh-md);border-color:var(--bd2)}.projectwork-project-card.active{border-color:var(--accent,var(--gr));box-shadow:0 0 0 3px var(--accent-soft,var(--gr-l)),var(--sh-md)}
+.projectwork-project-title{font-size:14px;font-weight:900;color:var(--tx);line-height:1.35}.projectwork-project-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.projectwork-pill{font-size:10px;font-weight:800;border:1px solid var(--bd);border-radius:999px;background:var(--bg);color:var(--t2);padding:3px 7px;white-space:nowrap}.projectwork-track{height:8px;background:var(--s2);border:1px solid var(--bd);border-radius:999px;overflow:hidden;margin-top:9px}.projectwork-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent,var(--gr)),var(--accent-2,var(--gr-d)))}
+.projectwork-main{display:flex;flex-direction:column;gap:12px}.projectwork-context{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}.projectwork-context-head{padding:16px 18px;background:linear-gradient(135deg,var(--accent-soft,var(--gr-l)),var(--sf));border-bottom:1px solid var(--bd);display:flex;gap:12px;align-items:flex-start;justify-content:space-between}.projectwork-context-title{font-size:18px;font-weight:900;color:var(--tx);letter-spacing:-.35px}.projectwork-context-sub{font-size:12px;color:var(--t2);margin-top:4px;line-height:1.55}.projectwork-context-body{padding:14px 18px;display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.projectwork-note{font-size:13px;line-height:1.7;color:var(--tx);white-space:pre-wrap;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:12px}.projectwork-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.projectwork-kpi{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:11px}.projectwork-kpi .v{font-size:22px;font-weight:900;color:var(--tx);line-height:1}.projectwork-kpi .l{font-size:10px;color:var(--t3);font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin-top:4px}
+.projectwork-section-head{display:flex;align-items:center;gap:8px;margin:4px 0 2px}.projectwork-section-title{font-size:12px;color:var(--t2);font-weight:900;text-transform:uppercase;letter-spacing:.08em}.projectwork-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}.projectwork-card.stuck{border-color:var(--rd);box-shadow:0 0 0 2px var(--rd-l),var(--sh)}.projectwork-card.pending{border-color:var(--am);box-shadow:0 0 0 2px var(--am-l),var(--sh)}.projectwork-card-head{padding:13px 14px;display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid var(--bd);background:var(--sf)}.projectwork-card-title{font-size:14px;font-weight:900;color:var(--tx);line-height:1.35}.projectwork-card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.projectwork-progress-line{height:7px;border-radius:999px;background:var(--s2);overflow:hidden;border:1px solid var(--bd);margin-top:9px}.projectwork-progress-line span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent,var(--gr)),var(--accent-2,var(--gr-d)))}.projectwork-card-body{padding:13px 14px;display:grid;grid-template-columns:190px 1fr auto;gap:12px;align-items:end}.projectwork-card-body label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--t3);display:block;margin-bottom:5px}.projectwork-card-body select,.projectwork-card-body textarea{width:100%;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:var(--r);padding:9px 10px;font-size:13px;outline:none}.projectwork-card-body textarea{min-height:86px;resize:vertical;line-height:1.55}.projectwork-empty{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:34px 20px;text-align:center;color:var(--t2);box-shadow:var(--sh)}.projectwork-empty .icon{font-size:38px;margin-bottom:8px}.projectwork-muted{font-size:12px;color:var(--t3);line-height:1.55;margin-top:6px}.projectwork-open-summary{white-space:nowrap}
+html[data-theme="dark"] .projectwork-context-head{background:linear-gradient(135deg,rgba(255,255,255,.06),var(--sf))}html[data-theme="dark"] .projectwork-note,html[data-theme="dark"] .projectwork-kpi,html[data-theme="dark"] .projectwork-card-body select,html[data-theme="dark"] .projectwork-card-body textarea{background:#101416;border-color:var(--bd2)}
+@media(max-width:900px){.projectwork-layout{grid-template-columns:1fr}.projectwork-context-body{grid-template-columns:1fr}.projectwork-card-body{grid-template-columns:1fr}.projectwork-stats{margin-left:0}.projectwork-open-summary{width:100%;justify-content:center}}
+</style>
+<script>
+// V20: separate tabs.
+// Projects = management workspace for Admin / Project Lead / added Project Managers / creators added as managers.
+// Project Work Card = clean tracker for members assigned to project work items.
+function ensureProjectWorkPane(){
+  if(document.getElementById('pane-projectwork'))return;
+  const pane=document.createElement('div');
+  pane.className='tab-pane';
+  pane.id='pane-projectwork';
+  pane.innerHTML='<div style="flex:1;overflow:auto"><div id="projectwork-content"></div></div>';
+  const content=document.querySelector('.content-area');
+  const listPane=document.getElementById('pane-list');
+  if(content)content.insertBefore(pane,listPane||null);
+}
+function myProjectWorkItems(){return (projectWorkItems||[]).filter(w=>!w.archived&&String(w.assignee||'')===String(currentUser?.id||''));}
+function projectManagerVisibleList(){
+  const all=activeTasks().filter(isProjectTask);
+  if(currentUser?.role==='admin')return all;
+  return all.filter(p=>String(p.assignee||'')===String(currentUser?.id||'')||isProjectManager(p.id,currentUser?.id));
+}
+function groupedMyProjectWork(){
+  const map=new Map();
+  myProjectWorkItems().forEach(w=>{const p=getTask(w.project_id);if(!p)return;if(!map.has(String(p.id)))map.set(String(p.id),{project:p,items:[]});map.get(String(p.id)).items.push(w);});
+  return [...map.values()].sort((a,b)=>new Date(b.items.map(x=>x.updated_at||x.created_at||0).sort().pop()||0)-new Date(a.items.map(x=>x.updated_at||x.created_at||0).sort().pop()||0));
+}
+const __v20BuildNav=buildNav;
+buildNav=function(){
+  applyTheme(localStorage.getItem('tf-theme')||document.documentElement.dataset.theme||'light');
+  ensureProjectWorkPane();
+  if(!currentUser)return;
+  const isAdmin=currentUser.role==='admin';
+  const hasManagerProjects=projectManagerVisibleList().length>0;
+  const hasMyProjectWork=myProjectWorkItems().length>0;
+  const canCreate=can('createTask');
+  const projectTab={id:'project',label:'Projects Management',icon:'🏗'};
+  const projectWorkTab={id:'projectwork',label:'Project Work Card',icon:'🎯'};
+  const tabs=[];
+  if(isAdmin){
+    tabs.push({id:'board',label:'Board',icon:'⬛'});
+    tabs.push({id:'mywork',label:'Task Summary',icon:'✓'});
+    if(hasMyProjectWork)tabs.push(projectWorkTab);
+    tabs.push({id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'});
+    tabs.push(projectTab); // kept before Archive so project management sits between Board and Archive
+    tabs.push({id:'archive',label:'Archive',icon:'📦'},{id:'users',label:'Users',icon:'👤'},{id:'settings',label:'Settings',icon:'🏷'});
+  }else{
+    tabs.push({id:'mywork',label:'Task Summary',icon:'✓'});
+    if(hasMyProjectWork)tabs.push(projectWorkTab);
+    tabs.push({id:'board',label:'Board',icon:'⬛'},{id:'list',label:'List',icon:'≡'},{id:'dash',label:'Dashboard',icon:'◉'});
+    if(hasManagerProjects||canCreate)tabs.push(projectTab); // kept before Archive
+    tabs.push({id:'archive',label:'Archive',icon:'📦'});
+  }
+  if(!tabs.some(t=>t.id===currentTab))currentTab=tabs[0]?.id||'mywork';
+  document.getElementById('desktop-nav').innerHTML=tabs.map(t=>`<button class="ntab${currentTab===t.id?' active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('');
+  document.getElementById('bottom-nav').innerHTML=`<div class="bnav-inner">${tabs.slice(0,5).map(t=>`<button class="bnav-btn${currentTab===t.id?' active':''}" onclick="switchTab('${t.id}')"><div class="bnav-icon">${t.icon}</div><div class="bnav-label">${t.label}</div></button>`).join('')}</div>`;
+  document.getElementById('new-task-btn').classList.toggle('hidden',!can('createTask'));
+};
+const __v20RenderCurrentTab=renderCurrentTab;
+renderCurrentTab=function(){
+  ensureProjectWorkPane();
+  if(currentTab==='projectwork')renderProjectWorkTab();
+  else __v20RenderCurrentTab();
+};
+const __v20RenderProjects=renderProjects;
+renderProjects=function(){
+  const wrap=document.getElementById('project-content');if(!wrap)return;
+  const projects=projectManagerVisibleList();
+  const allManage=projects;
+  if(!selectedProjectId||!allManage.some(p=>String(p.id)===String(selectedProjectId)))selectedProjectId=allManage[0]?.id||null;
+  const selected=allManage.find(p=>String(p.id)===String(selectedProjectId));
+  const avg=allManage.length?Math.round(allManage.reduce((a,p)=>a+projectProgress(p),0)/allManage.length):0;
+  const stuck=allManage.reduce((a,p)=>a+(projectRisk(p).count?1:0),0);
+  wrap.innerHTML=`<div class="project-wrap"><div class="project-hero"><div style="font-size:32px">🏗</div><div><div class="project-title">Projects Management</div><div class="project-sub">Management workspace for Project Lead / PM, creator-added managers, added Project Managers, and Admin. Assigned members use Project Work Card.</div></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${allManage.length}</div><div class="mstat-lbl">Managed</div></div><div class="mstat"><div class="mstat-val">${avg}%</div><div class="mstat-lbl">Avg progress</div></div><div class="mstat"><div class="mstat-val">${stuck}</div><div class="mstat-lbl">At risk</div></div></div><div class="project-actions">${can('createTask')?`<button class="project-btn" onclick="openProjectModal()">+ New Project</button>`:''}</div></div>${allManage.length?`<div class="project-single-layout"><div class="project-sidebar">${allManage.map(renderProjectCard).join('')}</div>${selected?renderProjectManager(selected):'<div class="project-selected-empty">Select a project to manage.</div>'}</div>`:`<div class="project-empty"><div style="font-size:34px;margin-bottom:8px">🛡</div><b>No projects to manage.</b><div style="font-size:13px;margin-top:6px">Projects appear here only when you are Admin, Project Lead / PM, or added as Project Manager. Assigned work items are shown in Project Work Card.</div>${can('createTask')?`<button class="btn-p" style="margin-top:14px" onclick="openProjectModal()">+ New Project</button>`:''}</div>`}</div>`;
+};
+function renderProjectWorkTab(){
+  const wrap=document.getElementById('projectwork-content');if(!wrap)return;
+  const groups=groupedMyProjectWork();
+  const items=myProjectWorkItems();
+  const done=items.filter(w=>getStatus(w.status)?.is_done).length;
+  const overdue=items.filter(w=>w.due_date&&new Date(w.due_date)<today0()&&!getStatus(w.status)?.is_done).length;
+  const pending=items.filter(w=>/block|stuck|hold|pending|wait|review|uat/i.test(getStatus(w.status)?.name||'')&&!getStatus(w.status)?.is_done).length;
+  if(!groups.length){wrap.innerHTML=`<div class="projectwork-wrap"><div class="projectwork-hero"><div style="font-size:34px">🎯</div><div><div class="projectwork-title">Project Work Card</div><div class="projectwork-sub">Assigned project work cards will appear here separately from normal TaskFlow tasks.</div></div></div><div class="projectwork-empty"><div class="icon">🌱</div><b>No assigned project work items.</b><div class="projectwork-muted">When a Project Lead / PM assigns a work item to you, it will show here as a clear card with project context and an easy update area.</div></div></div>`;return;}
+  const firstProject=groups[0].project;
+  const selectedId=window.__selectedProjectWorkProjectId&&groups.some(g=>String(g.project.id)===String(window.__selectedProjectWorkProjectId))?window.__selectedProjectWorkProjectId:firstProject.id;
+  const selected=groups.find(g=>String(g.project.id)===String(selectedId))||groups[0];
+  window.__selectedProjectWorkProjectId=selected.project.id;
+  wrap.innerHTML=`<div class="projectwork-wrap"><div class="projectwork-hero"><div style="font-size:34px">🎯</div><div><div class="projectwork-title">Project Work Card</div><div class="projectwork-sub">Clean card view for project work items assigned to you. Project details are shown for context; you update only your own work-item cards.</div></div><div class="projectwork-stats"><div class="projectwork-stat"><div class="v">${items.length}</div><div class="l">Assigned</div></div><div class="projectwork-stat"><div class="v">${done}</div><div class="l">Done</div></div><div class="projectwork-stat"><div class="v">${overdue}</div><div class="l">Overdue</div></div><div class="projectwork-stat"><div class="v">${pending}</div><div class="l">Follow up</div></div></div></div><div class="projectwork-layout"><div class="projectwork-list">${groups.map(g=>renderProjectWorkProjectCard(g,selected.project.id)).join('')}</div><div class="projectwork-main">${renderProjectWorkContext(selected.project,selected.items)}<div class="projectwork-section-head"><div class="projectwork-section-title">My assigned work items in this project</div><span class="section-badge">${selected.items.length}</span></div>${selected.items.sort((a,b)=>(Number(a.project_step_order)||0)-(Number(b.project_step_order)||0)||new Date(b.updated_at||b.created_at||0)-new Date(a.updated_at||a.created_at||0)).map(renderMyProjectWorkCard).join('')}</div></div></div>`;
+}
+function renderProjectWorkProjectCard(g,selectedProjectId){
+  const p=g.project;const pct=projectProgress(p);const lead=getUser(p.assignee);const open=g.items.filter(w=>!getStatus(w.status)?.is_done).length;
+  return `<div class="projectwork-project-card${String(p.id)===String(selectedProjectId)?' active':''}" onclick="window.__selectedProjectWorkProjectId='${escAttr(p.id)}';renderProjectWorkTab()"><div class="projectwork-project-title">${esc(p.title)}</div><div class="projectwork-project-meta"><span class="projectwork-pill">Lead: ${esc(lead?.name||'Unassigned')}</span><span class="projectwork-pill">${g.items.length} assigned</span><span class="projectwork-pill">${open} open</span></div><div class="projectwork-track"><div class="projectwork-fill" style="width:${pct}%"></div></div></div>`;
+}
+function renderProjectWorkContext(p,items){
+  const pm=parseProjectMeta(p.description);const pct=projectProgress(p);const lead=getUser(p.assignee);const risk=projectRisk(p);const notes=stripProjectMeta(p.description)||'No project details recorded yet.';const total=projectChildTasks(p.id).length;
+  return `<div class="projectwork-context"><div class="projectwork-context-head"><div><div class="projectwork-context-title">${esc(p.title)}</div><div class="projectwork-context-sub">Project Lead / PM: <b>${esc(lead?.name||'Unassigned')}</b> · ${projectStatusBadge(p)} · ${risk.label}${risk.count?' '+risk.count:''}</div></div><button class="btn-s projectwork-open-summary" onclick="openTaskPopup(${escAttr(p.id)})">View project summary</button></div><div class="projectwork-context-body"><div><div class="section-title" style="margin-bottom:7px">Project details / discussion notes</div><div class="projectwork-note">${esc(notes)}</div></div><div class="projectwork-kpis"><div class="projectwork-kpi"><div class="v">${pct}%</div><div class="l">Project progress</div></div><div class="projectwork-kpi"><div class="v">${items.length}</div><div class="l">Assigned to me</div></div><div class="projectwork-kpi"><div class="v">${total}</div><div class="l">Total work items</div></div><div class="projectwork-kpi"><div class="v">${esc(pm.next||'—')}</div><div class="l">Next step</div></div></div></div></div>`;
+}
+function renderMyProjectWorkCard(w){
+  const st=getStatus(w.status)||{};const state=projectWorkItemState(w);const team=projectTeams.find(t=>String(t.id)===String(w.project_team_id));const pct=taskCompletionPct(w);const due=w.due_date?fmtDate(w.due_date):'No due date';
+  return `<div class="projectwork-card ${state.card}"><div class="projectwork-card-head"><div style="flex:1;min-width:0"><div class="projectwork-card-title">${esc(w.title)}</div><div class="projectwork-card-meta"><span class="projectwork-pill">${esc(st.name||'No status')}</span><span class="projectwork-pill">${esc(w.project_step||'Backlog')}</span><span class="projectwork-pill">Team: ${esc(team?.name||'Unassigned')}</span><span class="projectwork-pill">Due: ${esc(due)}</span><span class="projectwork-pill">Weight ${taskWeight(w)}</span></div><div class="projectwork-progress-line"><span style="width:${pct}%"></span></div></div><span class="project-risk ${state.cls}">${state.label}</span></div><div class="projectwork-card-body"><div><label>Status</label><select id="my-pwi-status-${w.id}">${statusOptions(w.status)}</select></div><div><label>Description / follow-up update</label><textarea id="my-pwi-desc-${w.id}" placeholder="Update your progress, blocker, next action, or result...">${esc(w.description||'')}</textarea></div><button class="btn-p" onclick="saveMyProjectWorkItem('${escAttr(w.id)}')">Save update</button></div></div>`;
+}
+async function saveMyProjectWorkItem(id){
+  const w=getProjectWorkItem(id);if(!w||String(w.assignee||'')!==String(currentUser?.id||'')){showNotif('⚠️','You can update only project work items assigned to you.');return;}
+  const payload={status:document.getElementById(`my-pwi-status-${id}`)?.value||w.status,description:document.getElementById(`my-pwi-desc-${id}`)?.value||'',updated_at:mkTs()};
+  const {error}=await sb.from('project_work_items').update(payload).eq('id',id);
+  if(error){console.error('Save my project work failed:',error);showNotif('⚠️',`Save failed: ${error.message||error}`);return;}
+  showNotif('💾','Project work item updated.');
+  await reloadAndRefresh();
+  switchTab('projectwork');
+}
+</script>
 
 </body>
 </html>
