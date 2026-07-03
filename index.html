@@ -1189,15 +1189,538 @@ html:not([data-theme="dark"]) .project-workitem-pct{color:#1E3A8A;}
 .project-manager-locked-cover{padding:14px;border:1px dashed var(--bd);border-radius:var(--rl);background:var(--bg);font-size:13px;color:var(--t2);line-height:1.6}
 html[data-theme="dark"] .project-manager-add-row select{background:var(--s2);color:var(--tx);border-color:var(--bd2)}
 
+
+
+/* Patch v15: theme palette dropdown + safer CSV export confirmation */
+.theme-select{
+  height:34px;min-width:142px;padding:0 34px 0 12px;border:1px solid var(--bd);
+  border-radius:999px;background:var(--sf);color:var(--t2);font-size:12px;font-weight:800;
+  outline:none;box-shadow:var(--sh);cursor:pointer;
+}
+.theme-select:focus{border-color:var(--gr);box-shadow:0 0 0 3px var(--gr-l)}
+.export-confirm-modal{max-width:420px}.export-confirm-copy{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:12px}
+.export-confirm-preview{padding:12px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);font-size:12px;color:var(--t2);line-height:1.6}
+.export-confirm-preview b{color:var(--tx)}
+@media(max-width:600px){.theme-select{min-width:104px;width:104px;font-size:0}.theme-select option{font-size:12px}.theme-select{color:transparent}.theme-select:focus{color:var(--t2)}}
+
+/* Palette variable mapping. Light uses white surface, dark uses black surface. */
+html[data-theme="light"][data-palette="blue"]{
+  --bg:#F6F9FF;--sf:#FFFFFF;--s2:#EEF5FF;--s3:#DBEAFE;--bd:#D7E5FA;--bd2:#ABC8F5;
+  --tx:#172033;--t2:#536174;--t3:#8A98AA;--gr:#2563EB;--gr-l:#DBEAFE;--gr-d:#1E3A8A;
+  --pu:#4F46E5;--pu-l:#E0E7FF;--pu-d:#312E81;--modern-head-a:#1E3A8A;--modern-head-b:#2563EB;--modern-head-c:#60A5FA;
+  --project-track:#DBEAFE;--project-track-border:#BFDBFE;--project-fill-a:#1D4ED8;--project-fill-b:#38BDF8;--project-fill-solid:#2563EB;
+}
+html[data-theme="light"][data-palette="red"]{
+  --bg:#FFF8F8;--sf:#FFFFFF;--s2:#FFF1F2;--s3:#FFE4E6;--bd:#FFE0E3;--bd2:#FDA4AF;
+  --tx:#23171A;--t2:#6F5056;--t3:#A88A91;--gr:#E11D48;--gr-l:#FFE4E6;--gr-d:#881337;
+  --pu:#BE123C;--pu-l:#FFE4E6;--pu-d:#881337;--modern-head-a:#881337;--modern-head-b:#E11D48;--modern-head-c:#FB7185;
+  --project-track:#FFE4E6;--project-track-border:#FDA4AF;--project-fill-a:#BE123C;--project-fill-b:#FB7185;--project-fill-solid:#E11D48;
+}
+html[data-theme="light"][data-palette="orange"]{
+  --bg:#FFF9F2;--sf:#FFFFFF;--s2:#FFF3E0;--s3:#FFE4BD;--bd:#FFE1B5;--bd2:#FDBA74;
+  --tx:#241A10;--t2:#6C5540;--t3:#9F896F;--gr:#EA580C;--gr-l:#FFEDD5;--gr-d:#7C2D12;
+  --pu:#C2410C;--pu-l:#FFEDD5;--pu-d:#7C2D12;--modern-head-a:#7C2D12;--modern-head-b:#EA580C;--modern-head-c:#FDBA74;
+  --project-track:#FFEDD5;--project-track-border:#FDBA74;--project-fill-a:#C2410C;--project-fill-b:#F59E0B;--project-fill-solid:#EA580C;
+}
+html[data-theme="light"][data-palette="purple"]{
+  --bg:#FBF8FF;--sf:#FFFFFF;--s2:#F3E8FF;--s3:#E9D5FF;--bd:#E9D5FF;--bd2:#C4B5FD;
+  --tx:#21182F;--t2:#5F4D73;--t3:#9483A8;--gr:#7C3AED;--gr-l:#F3E8FF;--gr-d:#4C1D95;
+  --pu:#7C3AED;--pu-l:#F3E8FF;--pu-d:#4C1D95;--modern-head-a:#4C1D95;--modern-head-b:#7C3AED;--modern-head-c:#A78BFA;
+  --project-track:#F3E8FF;--project-track-border:#C4B5FD;--project-fill-a:#6D28D9;--project-fill-b:#A78BFA;--project-fill-solid:#7C3AED;
+}
+html[data-theme="dark"][data-palette="green"]{
+  --gr:#3DD18C;--gr-l:#163B2A;--gr-d:#A8F3CB;--pu:#3DD18C;--pu-l:#163B2A;--pu-d:#A8F3CB;
+  --modern-head-a:#071D14;--modern-head-b:#126C46;--modern-head-c:#22B873;
+  --project-track:#1C2824;--project-track-border:#335648;--project-fill-a:#29B975;--project-fill-b:#79E6B4;--project-fill-solid:#3DD18C;
+}
+html[data-theme="dark"][data-palette="purple"]{
+  --gr:#A78BFA;--gr-l:#271B45;--gr-d:#E9D5FF;--pu:#A78BFA;--pu-l:#271B45;--pu-d:#E9D5FF;
+  --modern-head-a:#160B2B;--modern-head-b:#5B21B6;--modern-head-c:#A78BFA;
+  --project-track:#241A36;--project-track-border:#4C3A6B;--project-fill-a:#8B5CF6;--project-fill-b:#D8B4FE;--project-fill-solid:#A78BFA;
+}
+html[data-theme="dark"][data-palette="orange"]{
+  --gr:#FB923C;--gr-l:#3C2412;--gr-d:#FED7AA;--pu:#FB923C;--pu-l:#3C2412;--pu-d:#FED7AA;
+  --modern-head-a:#241104;--modern-head-b:#9A3412;--modern-head-c:#FB923C;
+  --project-track:#302217;--project-track-border:#5B3A22;--project-fill-a:#F97316;--project-fill-b:#FDBA74;--project-fill-solid:#FB923C;
+}
+html[data-theme="dark"][data-palette="yellow"]{
+  --gr:#FACC15;--gr-l:#3A310B;--gr-d:#FEF3C7;--pu:#FACC15;--pu-l:#3A310B;--pu-d:#FEF3C7;
+  --modern-head-a:#1E1A05;--modern-head-b:#854D0E;--modern-head-c:#FACC15;
+  --project-track:#302B17;--project-track-border:#5B5122;--project-fill-a:#EAB308;--project-fill-b:#FDE68A;--project-fill-solid:#FACC15;
+}
+html[data-theme="dark"][data-palette="yellow"] .btn-p,
+html[data-theme="dark"][data-palette="yellow"] .project-btn,
+html[data-theme="dark"][data-palette="yellow"] .mw-focus-btn{color:#171307!important}
+html[data-theme="dark"][data-palette="yellow"] .ntab.active{color:#FEF3C7!important;border-color:#806C18!important;background:linear-gradient(135deg,#342C08,#202018)!important}
+
+/* Palette-aware hero/header/progress overrides */
+.project-hero,.project-manager-hero,.pm-dash-hero,.project-popup-progress-hero,.mywork-hero{
+  background:linear-gradient(135deg,var(--modern-head-a) 0%,var(--modern-head-b) 68%,var(--modern-head-c) 100%)!important;
+}
+.ntab.active{background:linear-gradient(135deg,var(--gr-l),var(--sf))!important;color:var(--gr-d)!important;border-color:color-mix(in srgb,var(--gr) 26%,var(--bd))!important}
+.project-fill,.project-popup-step-fill,.pm-progress-mini-fill,.pm-flow-fill,.project-workitem-fill,.mw-type-fill,.mw-priority-fill{background:linear-gradient(90deg,var(--project-fill-a),var(--project-fill-b))!important}
+.project-track,.project-popup-step-track,.pm-flow-track,.pm-progress-mini,.project-workitem-track,.mw-type-track,.mw-priority-track{background:var(--project-track)!important;border-color:var(--project-track-border)!important}
+
+
+
+/* Patch v16: full-palette theme override
+   Each choice now changes the whole app accent, not only a few project bars.
+   Light = White / Color. Dark = Black / Color. */
+html[data-theme="light"]{
+  --theme-panel-soft:color-mix(in srgb,var(--gr-l) 54%,#FFFFFF);
+  --theme-panel-strong:color-mix(in srgb,var(--gr) 14%,#FFFFFF);
+  --theme-border-soft:color-mix(in srgb,var(--gr) 24%,var(--bd));
+  --theme-shadow:0 18px 45px color-mix(in srgb,var(--gr) 18%,transparent),0 8px 18px color-mix(in srgb,var(--gr) 9%,transparent);
+}
+html[data-theme="dark"]{
+  --theme-panel-soft:color-mix(in srgb,var(--gr-l) 44%,#111314);
+  --theme-panel-strong:color-mix(in srgb,var(--gr) 14%,#111314);
+  --theme-border-soft:color-mix(in srgb,var(--gr) 35%,var(--bd));
+  --theme-shadow:0 18px 45px rgba(0,0,0,.38),0 0 0 1px color-mix(in srgb,var(--gr) 12%,transparent);
+}
+html[data-theme="light"] body{
+  background:radial-gradient(circle at top left,color-mix(in srgb,var(--gr-l) 78%,#FFFFFF) 0,var(--bg) 40%,#FFFFFF 100%)!important;
+}
+html[data-theme="dark"] body{
+  background:radial-gradient(circle at top left,color-mix(in srgb,var(--gr-l) 42%,#111314) 0,#111314 38%,#0E1011 100%)!important;
+}
+html[data-theme="light"] .theme-select{
+  background:linear-gradient(135deg,#FFFFFF,var(--theme-panel-soft))!important;
+  border-color:var(--theme-border-soft)!important;
+  color:var(--gr-d)!important;
+}
+html[data-theme="dark"] .theme-select{
+  background:linear-gradient(135deg,#161A1D,var(--theme-panel-soft))!important;
+  border-color:var(--theme-border-soft)!important;
+  color:var(--gr-d)!important;
+}
+.logo-badge,
+html[data-theme="light"] .btn-p,
+html[data-theme="light"] .project-btn,
+html[data-theme="light"] .project-white-btn,
+html[data-theme="light"] .mw-focus-btn{
+  background:linear-gradient(135deg,var(--modern-head-a),var(--modern-head-b))!important;
+  color:#fff!important;
+  border-color:transparent!important;
+}
+html[data-theme="dark"] .logo-badge,
+html[data-theme="dark"] .btn-p,
+html[data-theme="dark"] .project-btn,
+html[data-theme="dark"] .project-white-btn,
+html[data-theme="dark"] .mw-focus-btn{
+  background:linear-gradient(135deg,var(--modern-head-b),var(--modern-head-c))!important;
+  color:#07100C!important;
+  border-color:transparent!important;
+}
+html[data-theme="dark"][data-palette="purple"] .btn-p,
+html[data-theme="dark"][data-palette="purple"] .project-btn,
+html[data-theme="dark"][data-palette="purple"] .project-white-btn,
+html[data-theme="dark"][data-palette="purple"] .mw-focus-btn,
+html[data-theme="dark"][data-palette="orange"] .btn-p,
+html[data-theme="dark"][data-palette="orange"] .project-btn,
+html[data-theme="dark"][data-palette="orange"] .project-white-btn,
+html[data-theme="dark"][data-palette="orange"] .mw-focus-btn{
+  color:#111314!important;
+}
+html[data-theme="light"] .btn-p:hover,
+html[data-theme="light"] .project-btn:hover,
+html[data-theme="light"] .project-white-btn:hover,
+html[data-theme="light"] .mw-focus-btn:hover{
+  filter:saturate(1.05) brightness(.96)!important;
+}
+html[data-theme="light"] .topbar{
+  background:color-mix(in srgb,#FFFFFF 84%,var(--gr-l))!important;
+  border-bottom-color:var(--theme-border-soft)!important;
+}
+html[data-theme="dark"] .topbar{
+  background:color-mix(in srgb,#111314 78%,var(--gr-l))!important;
+  border-bottom-color:var(--theme-border-soft)!important;
+}
+.project-hero,.project-manager-hero,.pm-dash-hero,.project-popup-progress-hero,.mywork-hero{
+  background:linear-gradient(135deg,var(--modern-head-a) 0%,var(--modern-head-b) 66%,var(--modern-head-c) 100%)!important;
+  box-shadow:var(--theme-shadow)!important;
+}
+html[data-theme="light"] .filter-bar,
+html[data-theme="light"] .project-panel-head,
+html[data-theme="light"] .upcoming-hdr,
+html[data-theme="light"] .settings-hdr,
+html[data-theme="light"] .lhdr,
+html[data-theme="light"] .mw-col-hdr,
+html[data-theme="light"] .pm-dash-panel-head,
+html[data-theme="light"] .mw-col-hdr,
+html[data-theme="light"] .project-step-head{
+  background:linear-gradient(180deg,#FFFFFF,var(--theme-panel-soft))!important;
+  border-color:var(--theme-border-soft)!important;
+}
+html[data-theme="dark"] .filter-bar,
+html[data-theme="dark"] .project-panel-head,
+html[data-theme="dark"] .upcoming-hdr,
+html[data-theme="dark"] .settings-hdr,
+html[data-theme="dark"] .lhdr,
+html[data-theme="dark"] .mw-col-hdr,
+html[data-theme="dark"] .pm-dash-panel-head,
+html[data-theme="dark"] .project-step-head{
+  background:linear-gradient(180deg,var(--theme-panel-soft),#171B1D)!important;
+  border-color:var(--theme-border-soft)!important;
+}
+html[data-theme="light"] .ntab.active,
+html[data-theme="light"] .project-tab-btn.active,
+html[data-theme="light"] .project-icon,
+html[data-theme="light"] .project-lock-note,
+html[data-theme="light"] .project-permission-note,
+html[data-theme="light"] .mw-workitem-chip,
+html[data-theme="light"] .project-workitem-note{
+  background:var(--theme-panel-soft)!important;
+  color:var(--gr-d)!important;
+  border-color:var(--theme-border-soft)!important;
+}
+html[data-theme="dark"] .ntab.active,
+html[data-theme="dark"] .project-tab-btn.active,
+html[data-theme="dark"] .project-icon,
+html[data-theme="dark"] .project-lock-note,
+html[data-theme="dark"] .project-permission-note,
+html[data-theme="dark"] .mw-workitem-chip,
+html[data-theme="dark"] .project-workitem-note{
+  background:var(--theme-panel-soft)!important;
+  color:var(--gr-d)!important;
+  border-color:var(--theme-border-soft)!important;
+}
+html[data-theme="light"] .project-side-card.active,
+html[data-theme="light"] .project-board-card,
+html[data-theme="light"] .project-popup-left .project-detail-card,
+html[data-theme="light"] .project-card:hover,
+html[data-theme="light"] .project-panel,
+html[data-theme="light"] .project-step-manager{
+  background:linear-gradient(180deg,#FFFFFF,var(--theme-panel-soft))!important;
+  border-color:var(--theme-border-soft)!important;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--gr) 14%,transparent),var(--sh)!important;
+}
+html[data-theme="dark"] .project-side-card.active,
+html[data-theme="dark"] .project-board-card,
+html[data-theme="dark"] .project-popup-left .project-detail-card,
+html[data-theme="dark"] .project-card:hover,
+html[data-theme="dark"] .project-panel,
+html[data-theme="dark"] .project-step-manager{
+  background:linear-gradient(180deg,#181B1D,var(--theme-panel-soft))!important;
+  border-color:var(--theme-border-soft)!important;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--gr) 18%,transparent),var(--sh-md)!important;
+}
+.task-popup-project .tp-head{
+  background:linear-gradient(135deg,var(--theme-panel-soft),var(--sf))!important;
+  border-bottom-color:var(--theme-border-soft)!important;
+}
+.project-type-badge,.project-board-card::before{
+  background:linear-gradient(135deg,var(--modern-head-a),var(--modern-head-b))!important;
+}
+.project-track,.project-popup-step-track,.pm-flow-track,.pm-progress-mini,.project-workitem-track,.mw-type-track,.mw-priority-track{
+  background:var(--project-track)!important;
+  border-color:var(--project-track-border)!important;
+}
+.project-fill,.project-popup-step-fill,.pm-progress-mini-fill,.pm-flow-fill,.project-workitem-fill,.mw-type-fill,.mw-priority-fill{
+  background:linear-gradient(90deg,var(--project-fill-a),var(--project-fill-b))!important;
+}
+html[data-theme="light"] .export-btn,
+html[data-theme="light"] .btn-sm,
+html[data-theme="light"] .btn-s,
+html[data-theme="light"] .project-small-btn,
+html[data-theme="light"] .project-outline-white-btn{
+  background:#FFFFFF!important;
+  color:var(--gr-d)!important;
+  border-color:var(--theme-border-soft)!important;
+}
+html[data-theme="dark"] .export-btn,
+html[data-theme="dark"] .btn-sm,
+html[data-theme="dark"] .btn-s,
+html[data-theme="dark"] .project-small-btn,
+html[data-theme="dark"] .project-outline-white-btn{
+  background:#171B1D!important;
+  color:var(--gr-d)!important;
+  border-color:var(--theme-border-soft)!important;
+}
+
+
+/* Patch v17: authoritative full-theme palette fix
+   This final layer removes leftover hard-coded blue/green by routing all major UI accents through palette variables. */
+html[data-theme="light"][data-palette="blue"]{
+  --accent:#2563EB;--accent-2:#38BDF8;--accent-strong:#1E3A8A;--accent-soft:#DBEAFE;--accent-softer:#F1F7FF;--accent-border:#93C5FD;--accent-track:#EAF2FF;--accent-track-border:#BBD1F7;
+  --bg:#F6F9FF;--sf:#FFFFFF;--s2:#EEF5FF;--s3:#DBEAFE;--bd:#D7E5FA;--bd2:#ABC8F5;--tx:#172033;--t2:#536174;--t3:#8A98AA;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#1E3A8A;--modern-head-b:#2563EB;--modern-head-c:#60A5FA;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#1D4ED8;--project-fill-b:#38BDF8;--project-fill-solid:#2563EB;
+}
+html[data-theme="light"][data-palette="red"]{
+  --accent:#E11D48;--accent-2:#FB7185;--accent-strong:#881337;--accent-soft:#FFE4E6;--accent-softer:#FFF7F8;--accent-border:#FDA4AF;--accent-track:#FFF1F2;--accent-track-border:#FDA4AF;
+  --bg:#FFF8F8;--sf:#FFFFFF;--s2:#FFF1F2;--s3:#FFE4E6;--bd:#FFE0E3;--bd2:#FDA4AF;--tx:#23171A;--t2:#6F5056;--t3:#A88A91;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#881337;--modern-head-b:#E11D48;--modern-head-c:#FB7185;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#BE123C;--project-fill-b:#FB7185;--project-fill-solid:#E11D48;
+}
+html[data-theme="light"][data-palette="orange"]{
+  --accent:#EA580C;--accent-2:#F59E0B;--accent-strong:#7C2D12;--accent-soft:#FFEDD5;--accent-softer:#FFF8EF;--accent-border:#FDBA74;--accent-track:#FFF3E0;--accent-track-border:#FDBA74;
+  --bg:#FFF9F2;--sf:#FFFFFF;--s2:#FFF3E0;--s3:#FFE4BD;--bd:#FFE1B5;--bd2:#FDBA74;--tx:#241A10;--t2:#6C5540;--t3:#9F896F;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#7C2D12;--modern-head-b:#EA580C;--modern-head-c:#FDBA74;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#C2410C;--project-fill-b:#F59E0B;--project-fill-solid:#EA580C;
+}
+html[data-theme="light"][data-palette="purple"]{
+  --accent:#7C3AED;--accent-2:#A78BFA;--accent-strong:#4C1D95;--accent-soft:#F3E8FF;--accent-softer:#FBF8FF;--accent-border:#C4B5FD;--accent-track:#F3E8FF;--accent-track-border:#C4B5FD;
+  --bg:#FBF8FF;--sf:#FFFFFF;--s2:#F3E8FF;--s3:#E9D5FF;--bd:#E9D5FF;--bd2:#C4B5FD;--tx:#21182F;--t2:#5F4D73;--t3:#9483A8;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#4C1D95;--modern-head-b:#7C3AED;--modern-head-c:#A78BFA;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#6D28D9;--project-fill-b:#A78BFA;--project-fill-solid:#7C3AED;
+}
+html[data-theme="dark"][data-palette="green"]{
+  --accent:#3DD18C;--accent-2:#79E6B4;--accent-strong:#A8F3CB;--accent-soft:#163B2A;--accent-softer:#111B17;--accent-border:#335648;--accent-track:#1C2824;--accent-track-border:#335648;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#071D14;--modern-head-b:#126C46;--modern-head-c:#22B873;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#29B975;--project-fill-b:#79E6B4;--project-fill-solid:#3DD18C;
+}
+html[data-theme="dark"][data-palette="purple"]{
+  --accent:#A78BFA;--accent-2:#D8B4FE;--accent-strong:#E9D5FF;--accent-soft:#271B45;--accent-softer:#171221;--accent-border:#4C3A6B;--accent-track:#241A36;--accent-track-border:#4C3A6B;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#160B2B;--modern-head-b:#5B21B6;--modern-head-c:#A78BFA;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#8B5CF6;--project-fill-b:#D8B4FE;--project-fill-solid:#A78BFA;
+}
+html[data-theme="dark"][data-palette="orange"]{
+  --accent:#FB923C;--accent-2:#FDBA74;--accent-strong:#FED7AA;--accent-soft:#3C2412;--accent-softer:#211812;--accent-border:#5B3A22;--accent-track:#302217;--accent-track-border:#5B3A22;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#241104;--modern-head-b:#9A3412;--modern-head-c:#FB923C;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#F97316;--project-fill-b:#FDBA74;--project-fill-solid:#FB923C;
+}
+html[data-theme="dark"][data-palette="yellow"]{
+  --accent:#FACC15;--accent-2:#FDE68A;--accent-strong:#FEF3C7;--accent-soft:#3A310B;--accent-softer:#201C10;--accent-border:#5B5122;--accent-track:#302B17;--accent-track-border:#5B5122;
+  --gr:var(--accent);--gr-l:var(--accent-soft);--gr-d:var(--accent-strong);--pu:var(--accent);--pu-l:var(--accent-soft);--pu-d:var(--accent-strong);
+  --modern-head-a:#1E1A05;--modern-head-b:#854D0E;--modern-head-c:#FACC15;
+  --project-track:var(--accent-track);--project-track-border:var(--accent-track-border);--project-fill-a:#EAB308;--project-fill-b:#FDE68A;--project-fill-solid:#FACC15;
+}
+html[data-theme="light"] body{background:radial-gradient(circle at top left,var(--accent-soft) 0,var(--bg) 38%,#FFFFFF 100%)!important;}
+html[data-theme="dark"] body{background:radial-gradient(circle at top left,var(--accent-softer) 0,#111314 40%,#0E1011 100%)!important;}
+html[data-theme="light"] .topbar{background:linear-gradient(180deg,#FFFFFF,var(--accent-softer))!important;border-bottom-color:var(--accent-border)!important;}
+html[data-theme="dark"] .topbar{background:linear-gradient(180deg,#181B1D,var(--accent-softer))!important;border-bottom-color:var(--accent-border)!important;}
+html[data-theme] .project-hero,
+html[data-theme] .project-manager-hero,
+html[data-theme] .pm-dash-hero,
+html[data-theme] .project-popup-progress-hero,
+html[data-theme] .mywork-hero{
+  background:linear-gradient(135deg,var(--modern-head-a) 0%,var(--modern-head-b) 66%,var(--modern-head-c) 100%)!important;
+  box-shadow:0 18px 45px color-mix(in srgb,var(--accent) 22%,transparent),0 8px 18px color-mix(in srgb,var(--accent) 10%,transparent)!important;
+}
+html[data-theme] .logo-badge,
+html[data-theme] .btn-p,
+html[data-theme] .project-btn,
+html[data-theme] .project-white-btn,
+html[data-theme] .mw-focus-btn,
+html[data-theme] .reply-send,
+html[data-theme] .pin-key.pin-ok{
+  background:linear-gradient(135deg,var(--modern-head-a),var(--modern-head-b))!important;
+  color:#FFFFFF!important;border-color:transparent!important;text-shadow:none!important;
+}
+html[data-theme="dark"] .logo-badge,
+html[data-theme="dark"] .btn-p,
+html[data-theme="dark"] .project-btn,
+html[data-theme="dark"] .project-white-btn,
+html[data-theme="dark"] .mw-focus-btn,
+html[data-theme="dark"] .reply-send,
+html[data-theme="dark"] .pin-key.pin-ok{color:#101214!important;}
+html[data-theme="dark"][data-palette="purple"] .logo-badge,
+html[data-theme="dark"][data-palette="purple"] .btn-p,
+html[data-theme="dark"][data-palette="purple"] .project-btn,
+html[data-theme="dark"][data-palette="purple"] .project-white-btn,
+html[data-theme="dark"][data-palette="purple"] .mw-focus-btn{color:#121018!important;}
+html[data-theme="dark"][data-palette="yellow"] .logo-badge,
+html[data-theme="dark"][data-palette="yellow"] .btn-p,
+html[data-theme="dark"][data-palette="yellow"] .project-btn,
+html[data-theme="dark"][data-palette="yellow"] .project-white-btn,
+html[data-theme="dark"][data-palette="yellow"] .mw-focus-btn{color:#171307!important;}
+html[data-theme] .ntab.active,
+html[data-theme] .project-tab-btn.active,
+html[data-theme] .project-icon,
+html[data-theme] .project-lock-note,
+html[data-theme] .project-permission-note,
+html[data-theme] .mw-workitem-chip,
+html[data-theme] .project-workitem-note,
+html[data-theme] .session-chip,
+html[data-theme] .db-ok,
+html[data-theme] .role-member,
+html[data-theme] .stchip-on,
+html[data-theme] .fp.active,
+html[data-theme] .fdrop-item.on,
+html[data-theme] .due-ok,
+html[data-theme] .risk-ok{
+  background:var(--accent-soft)!important;color:var(--accent-strong)!important;border-color:var(--accent-border)!important;
+}
+html[data-theme] .filter-bar,
+html[data-theme] .project-panel-head,
+html[data-theme] .upcoming-hdr,
+html[data-theme] .settings-hdr,
+html[data-theme] .lhdr,
+html[data-theme] .mw-col-hdr,
+html[data-theme] .pm-dash-panel-head,
+html[data-theme] .project-step-head{
+  background:linear-gradient(180deg,var(--sf),var(--accent-softer))!important;border-color:var(--accent-border)!important;
+}
+html[data-theme] .project-side-card.active,
+html[data-theme] .project-board-card,
+html[data-theme] .project-popup-left .project-detail-card,
+html[data-theme] .project-card:hover,
+html[data-theme] .project-panel,
+html[data-theme] .project-step-manager{
+  background:linear-gradient(180deg,var(--sf),var(--accent-softer))!important;border-color:var(--accent-border)!important;
+}
+html[data-theme] .task-popup-project .tp-head{background:linear-gradient(135deg,var(--accent-soft),var(--sf))!important;border-bottom-color:var(--accent-border)!important;}
+html[data-theme] .project-type-badge,
+html[data-theme] .project-board-card::before{background:linear-gradient(135deg,var(--modern-head-a),var(--modern-head-b))!important;color:#fff!important;}
+html[data-theme] .project-track,
+html[data-theme] .project-popup-step-track,
+html[data-theme] .pm-flow-track,
+html[data-theme] .pm-progress-mini,
+html[data-theme] .project-workitem-track,
+html[data-theme] .mw-type-track,
+html[data-theme] .mw-priority-track{
+  background:var(--project-track)!important;border:1px solid var(--project-track-border)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.12)!important;
+}
+html[data-theme] .project-fill,
+html[data-theme] .project-popup-step-fill,
+html[data-theme] .pm-progress-mini-fill,
+html[data-theme] .pm-flow-fill,
+html[data-theme] .project-workitem-fill,
+html[data-theme] .mw-type-fill,
+html[data-theme] .mw-priority-fill,
+html[data-theme] .fp-cnt,
+html[data-theme] .fchk.on,
+html[data-theme] .pin-dot.filled,
+html[data-theme] .realtime-dot,
+html[data-theme] .spinner{
+  background:linear-gradient(90deg,var(--project-fill-a),var(--project-fill-b))!important;border-color:var(--project-fill-solid)!important;
+}
+html[data-theme] .field input:focus,
+html[data-theme] .field select:focus,
+html[data-theme] .field textarea:focus,
+html[data-theme] textarea.desc-edit:focus,
+html[data-theme] .nc-input:focus,
+html[data-theme] .reply-input:focus,
+html[data-theme] .srch-input:focus,
+html[data-theme] .fdrop-search:focus,
+html[data-theme] .theme-select:focus{border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--accent-soft)!important;}
+html[data-theme] .export-btn,
+html[data-theme] .btn-sm,
+html[data-theme] .btn-s,
+html[data-theme] .project-small-btn,
+html[data-theme] .project-outline-white-btn,
+html[data-theme] .theme-select{
+  background:linear-gradient(180deg,var(--sf),var(--accent-softer))!important;color:var(--accent-strong)!important;border-color:var(--accent-border)!important;
+}
+
+
+
+/* Patch v18: dark-mode dropdown/readability fix */
+html[data-theme="dark"] select,
+html[data-theme="dark"] .theme-select,
+html[data-theme="dark"] .field select,
+html[data-theme="dark"] .project-task-select,
+html[data-theme="dark"] .project-inline-form select,
+html[data-theme="dark"] .project-field select,
+html[data-theme="dark"] .project-manage-edit select,
+html[data-theme="dark"] .project-manager-add-row select,
+html[data-theme="dark"] .workitem-edit-select,
+html[data-theme="dark"] .pm-select{
+  background:linear-gradient(180deg,#1B2024,#121618)!important;
+  color:#F6F1E8!important;
+  border-color:color-mix(in srgb,var(--accent) 42%,#3D454D)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(0,0,0,.18)!important;
+}
+html[data-theme="dark"] select:hover,
+html[data-theme="dark"] .theme-select:hover,
+html[data-theme="dark"] .field select:hover,
+html[data-theme="dark"] .project-task-select:hover,
+html[data-theme="dark"] .project-inline-form select:hover,
+html[data-theme="dark"] .project-field select:hover,
+html[data-theme="dark"] .project-manage-edit select:hover,
+html[data-theme="dark"] .project-manager-add-row select:hover{
+  background:linear-gradient(180deg,#22282D,#171B1F)!important;
+  border-color:var(--accent)!important;
+  color:#FFFFFF!important;
+}
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] .theme-select:focus,
+html[data-theme="dark"] .field select:focus,
+html[data-theme="dark"] .project-task-select:focus,
+html[data-theme="dark"] .project-inline-form select:focus,
+html[data-theme="dark"] .project-field select:focus,
+html[data-theme="dark"] .project-manage-edit select:focus,
+html[data-theme="dark"] .project-manager-add-row select:focus{
+  background:#171C20!important;
+  color:#FFFFFF!important;
+  border-color:var(--accent)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 28%,transparent),inset 0 1px 0 rgba(255,255,255,.05)!important;
+}
+html[data-theme="dark"] select option,
+html[data-theme="dark"] .theme-select option{
+  background:#15191C!important;
+  color:#F6F1E8!important;
+}
+html[data-theme="dark"] select optgroup,
+html[data-theme="dark"] .theme-select optgroup{
+  background:#0F1214!important;
+  color:var(--accent-strong)!important;
+  font-weight:900!important;
+}
+html[data-theme="dark"] .fdrop{
+  background:linear-gradient(180deg,#1B2024,#121618)!important;
+  border-color:color-mix(in srgb,var(--accent) 45%,#3D454D)!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.62),0 0 0 1px color-mix(in srgb,var(--accent) 18%,transparent)!important;
+}
+html[data-theme="dark"] .fdrop-search-wrap,
+html[data-theme="dark"] .fdrop-footer{
+  background:#121618!important;
+  border-color:#2D353B!important;
+}
+html[data-theme="dark"] .fdrop-search{
+  background:#0F1315!important;
+  color:#F6F1E8!important;
+  border-color:#3D454D!important;
+}
+html[data-theme="dark"] .fdrop-item{
+  color:#F6F1E8!important;
+  border-bottom:1px solid rgba(255,255,255,.035)!important;
+}
+html[data-theme="dark"] .fdrop-item:hover{
+  background:color-mix(in srgb,var(--accent-soft) 74%,#171C20)!important;
+  color:#FFFFFF!important;
+}
+html[data-theme="dark"] .fdrop-item.on{
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent-soft) 82%,#171C20),#171C20)!important;
+  color:var(--accent-strong)!important;
+  font-weight:800!important;
+}
+html[data-theme="dark"] .fchk{
+  background:#0F1315!important;
+  border-color:#4A535B!important;
+}
+html[data-theme="dark"] .fchk.on{
+  background:linear-gradient(135deg,var(--project-fill-a),var(--project-fill-b))!important;
+  color:#111314!important;
+  border-color:var(--project-fill-solid)!important;
+}
+html[data-theme="dark"] .theme-select{
+  color:#F6F1E8!important;
+  text-shadow:none!important;
+}
+
 </style>
 <script>
 (function(){
-  const saved=localStorage.getItem('tf-theme');
+  const savedChoice=localStorage.getItem('tf-theme-choice');
+  const legacy=localStorage.getItem('tf-theme');
   const preferDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme=saved||(preferDark?'dark':'light');
-  document.documentElement.dataset.theme=theme;
+  const choice=savedChoice||(legacy==='dark'?'dark-green':(legacy==='light'?'light-blue':(preferDark?'dark-green':'light-blue')));
+  const parts=choice.split('-');
+  const mode=parts[0]==='dark'?'dark':'light';
+  const palette=parts.slice(1).join('-')||(mode==='dark'?'green':'blue');
+  document.documentElement.dataset.theme=mode;
+  document.documentElement.dataset.palette=palette;
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta)meta.setAttribute('content',theme==='dark'?'#111314':'#F8F7F4');
+  if(meta)meta.setAttribute('content',mode==='dark'?'#111314':(palette==='red'?'#FFF8F8':palette==='orange'?'#FFF9F2':palette==='purple'?'#FBF8FF':'#F6F9FF'));
 })();
 </script>
 </head>
@@ -1219,8 +1742,21 @@ html[data-theme="dark"] .project-manager-add-row select{background:var(--s2);col
     <div class="logo"><div class="logo-badge">T</div><span>TaskFlow</span></div>
     <nav class="desktop-nav" id="desktop-nav"></nav>
     <div class="topbar-right">
-      <button class="export-btn" id="export-csv-btn" onclick="exportTasksCsv()" title="Export tasks to CSV">⬇ <span>CSV</span></button>
-      <button class="theme-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">🌙 <span>Dark</span></button>
+      <select class="theme-select" id="theme-select" onchange="applyThemeChoice(this.value)" title="Choose theme palette">
+        <optgroup label="☀ Light themes — White + color">
+          <option value="light-blue">☀ White / Blue</option>
+          <option value="light-red">☀ White / Red</option>
+          <option value="light-orange">☀ White / Orange</option>
+          <option value="light-purple">☀ White / Purple</option>
+        </optgroup>
+        <optgroup label="🌙 Dark themes — Black + color">
+          <option value="dark-green">🌙 Black / Green</option>
+          <option value="dark-purple">🌙 Black / Purple</option>
+          <option value="dark-orange">🌙 Black / Orange</option>
+          <option value="dark-yellow">🌙 Black / Yellow</option>
+        </optgroup>
+      </select>
+      <button class="export-btn" id="export-csv-btn" onclick="openExportConfirm('auto')" title="Export tasks to CSV">⬇ <span>Export</span></button>
       <div id="realtime-ind" class="hidden" style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--t3)">Live<span class="realtime-dot"></span></div>
       <div id="topbar-av" class="av-btn" onclick="showLogoutMenu()" title="Account"></div>
       <button class="btn-p hidden" id="new-task-btn" onclick="openTaskModal()">+ Task</button>
@@ -1262,7 +1798,7 @@ html[data-theme="dark"] .project-manager-add-row select{background:var(--s2);col
         <div class="fpw" id="fpw-priority"><button class="fp" id="fp-priority-btn" onclick="toggleDrop('priority',event)">Priority <span id="fp-priority-cnt" class="hidden fp-cnt"></span> ▾</button></div>
         <div class="fpw" id="fpw-assignee"><button class="fp" id="fp-assignee-btn" onclick="toggleDrop('assignee',event)">Assignee <span id="fp-assignee-cnt" class="hidden fp-cnt"></span> ▾</button></div>
         <button class="btn-sm" onclick="clearFilters()">Clear all</button>
-        <button class="btn-sm" onclick="exportTasksCsv('filtered')">⬇ Export filtered</button>
+        <button class="btn-sm" onclick="openExportConfirm('filtered')">⬇ Export filtered</button>
       </div>
       <!-- FIX: dropdown container rendered here in body via JS, positioned fixed -->
       <div style="flex:1;overflow:auto"><div class="list-wrap"><div id="list-body"></div></div></div>
@@ -1277,6 +1813,19 @@ html[data-theme="dark"] .project-manager-add-row select{background:var(--s2);col
     <div class="tab-pane" id="pane-settings"><div style="flex:1;overflow:auto"><div class="settings-wrap" id="settings-wrap"></div></div></div>
   </div>
   <div class="bottom-nav" id="bottom-nav"></div>
+</div>
+
+<!-- Export confirmation modal -->
+<div class="overlay hidden" id="export-modal">
+  <div class="modal export-confirm-modal">
+    <h3>Export CSV?</h3>
+    <div class="export-confirm-copy" id="export-confirm-copy">This will download a CSV file.</div>
+    <div class="export-confirm-preview" id="export-confirm-preview"></div>
+    <div class="mactions">
+      <button class="btn-s" onclick="closeModal('export-modal')">Cancel</button>
+      <button class="btn-p" id="export-confirm-btn" onclick="confirmExportCsv()">Export CSV</button>
+    </div>
+  </div>
 </div>
 
 <!-- Mobile sheet -->
@@ -1526,14 +2075,23 @@ function dueBadge(d,st){
 function taskComments(tid){return comments.filter(c=>c.task_id===tid);}
 function ccCount(tid){return comments.filter(c=>c.task_id===tid&&!c.is_system).length;}
 
-function applyTheme(theme){
-  const finalTheme=theme==='dark'?'dark':'light';
-  document.documentElement.dataset.theme=finalTheme;
-  localStorage.setItem('tf-theme',finalTheme);
+function applyThemeChoice(choice){
+  const safe=['light-blue','light-red','light-orange','light-purple','dark-green','dark-purple','dark-orange','dark-yellow'].includes(choice)?choice:'light-blue';
+  const parts=safe.split('-');
+  const mode=parts[0]==='dark'?'dark':'light';
+  const palette=parts.slice(1).join('-')||(mode==='dark'?'green':'blue');
+  document.documentElement.dataset.theme=mode;
+  document.documentElement.dataset.palette=palette;
+  localStorage.setItem('tf-theme-choice',safe);
+  localStorage.setItem('tf-theme',mode);
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta)meta.setAttribute('content',finalTheme==='dark'?'#111314':'#F8F7F4');
-  const btn=document.getElementById('theme-toggle');
-  if(btn)btn.innerHTML=finalTheme==='dark'?'☀️ <span>Light</span>':'🌙 <span>Dark</span>';
+  if(meta)meta.setAttribute('content',mode==='dark'?'#111314':(palette==='red'?'#FFF8F8':palette==='orange'?'#FFF9F2':palette==='purple'?'#FBF8FF':'#F6F9FF'));
+  const sel=document.getElementById('theme-select');
+  if(sel)sel.value=safe;
+}
+function applyTheme(theme){
+  const curPalette=document.documentElement.dataset.palette||(theme==='dark'?'green':'blue');
+  applyThemeChoice((theme==='dark'?'dark':'light')+'-'+curPalette);
 }
 function toggleTheme(){
   const cur=document.documentElement.dataset.theme==='dark'?'dark':'light';
@@ -1564,6 +2122,28 @@ function filteredListTasks(){
     return true;
   });
 }
+let pendingCsvExportScope='auto';
+function exportRowsForScope(scope='auto'){
+  let rows=[];let label='tasks';
+  if(scope==='filtered'){rows=filteredListTasks();label='filtered_tasks';}
+  else if(currentUser&&currentUser.role!=='admin'){rows=tasks.filter(t=>t.assignee===currentUser.id);label='my_tasks';}
+  else{rows=tasks.slice();label='all_tasks';}
+  return {rows,label};
+}
+function openExportConfirm(scope='auto'){
+  pendingCsvExportScope=scope||'auto';
+  const {rows,label}=exportRowsForScope(pendingCsvExportScope);
+  const friendly=label==='filtered_tasks'?'filtered task list':label==='my_tasks'?'your assigned tasks':'all tasks';
+  const copy=document.getElementById('export-confirm-copy');
+  const prev=document.getElementById('export-confirm-preview');
+  if(copy)copy.innerHTML=`Download <b>${esc(friendly)}</b> as a CSV file?`;
+  if(prev)prev.innerHTML=`<b>${rows.length}</b> row${rows.length===1?'':'s'} will be exported.<br>File type: CSV · Scope: ${esc(friendly)}`;
+  openModal('export-modal');
+}
+function confirmExportCsv(){
+  closeModal('export-modal');
+  exportTasksCsv(pendingCsvExportScope);
+}
 function exportTasksCsv(scope='auto'){
   let rows=[];let label='tasks';
   if(scope==='filtered'){rows=filteredListTasks();label='filtered_tasks';}
@@ -1578,6 +2158,13 @@ function exportTasksCsv(scope='auto'){
   document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
   showNotif('⬇️',`Exported ${rows.length} task${rows.length===1?'':'s'} to CSV.`);
 }
+
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const choice=localStorage.getItem('tf-theme-choice')||((document.documentElement.dataset.theme==='dark'?'dark':'light')+'-'+(document.documentElement.dataset.palette||(document.documentElement.dataset.theme==='dark'?'green':'blue')));
+  const sel=document.getElementById('theme-select');
+  if(sel)sel.value=choice;
+});
 
 // ══════════════════════════════════════════════
 // NOTIFICATIONS
@@ -2587,7 +3174,7 @@ function renderMemberWork(wrap){
       <div style="flex:1">
         <div class="mywork-name">Hey, ${esc(u.name.split(' ')[0])} 👋</div>
         <div class="mywork-sub">${totalOpen} open task${totalOpen!==1?'s':''} · ${overdue.length>0?`<b style="color:#FFB3B3">${overdue.length} overdue</b>`:'all on track ✓'}</div>
-        <button class="mw-focus-btn" style="margin-top:10px;background:rgba(255,255,255,.92);color:#1A1916" onclick="exportTasksCsv()">⬇ Export my tasks</button>
+        <button class="mw-focus-btn" style="margin-top:10px;background:rgba(255,255,255,.92);color:#1A1916" onclick="openExportConfirm('auto')">⬇ Export my tasks</button>
       </div>
       <div class="mywork-stats">
         <div class="mstat"><div class="mstat-val">${overdue.length}</div><div class="mstat-lbl">Overdue</div></div>
@@ -3499,7 +4086,7 @@ function renderMemberWork(wrap){
   const typeVizHtml=typeRows.length?typeRows.map(({tp,count})=>`<div class="mw-type-row"><div class="mw-type-name" title="${esc(tp.name)}">${esc(tp.icon)} ${esc(tp.name)}</div><div class="mw-type-track"><div class="mw-type-fill" style="width:${Math.round(count/maxTypeCount*100)}%;background:${tp.color}"></div></div><div class="mw-type-count">${count}</div></div>`).join(''):`<div class="section-empty" style="padding:8px 0">No open assigned work.</div>`;
   const statusPillsHtml=activeSts.map(st=>{const cnt=openTasks.filter(t=>t.status===st.id).length+openItems.filter(w=>w.status===st.id).length;return`<span class="mw-status-pill"><span style="width:8px;height:8px;border-radius:50%;background:${st.color};display:inline-block"></span>${esc(st.name)} ${cnt}</span>`;}).join('');
   const upcoming=openTasks.filter(t=>{if(!t.due_date||overdue.includes(t)||dueToday.includes(t))return false;const d=new Date(t.due_date);d.setHours(0,0,0,0);return(d-td)/864e5<=14;}).sort((a,b)=>new Date(a.due_date)-new Date(b.due_date));
-  wrap.innerHTML=`<div class="mywork-wrap"><div class="mywork-hero"><div class="mywork-av">${esc(u.initials)}</div><div style="flex:1"><div class="mywork-name">Hey, ${esc(u.name.split(' ')[0])} 👋</div><div class="mywork-sub">${totalOpen} open assigned work · ${(overdue.length+overdueItems.length)>0?`<b style="color:#FFB3B3">${overdue.length+overdueItems.length} overdue</b>`:'all on track ✓'}</div><button class="mw-focus-btn" style="margin-top:10px;background:rgba(255,255,255,.92);color:#1A1916" onclick="exportTasksCsv()">⬇ Export my tasks</button></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${overdue.length+overdueItems.length}</div><div class="mstat-lbl">Overdue</div></div><div class="mstat"><div class="mstat-val">${dueToday.length}</div><div class="mstat-lbl">Due today</div></div><div class="mstat"><div class="mstat-val">${inprogCount}</div><div class="mstat-lbl">In progress</div></div></div></div>${totalOpen===0?`<div class="mw-clear-card" style="margin-bottom:14px"><div class="mw-clear-title">🎉 You’re clear for today</div><div class="mw-clear-sub">No assigned active work. Enjoy the quiet dashboard.</div></div>`:''}<div class="mw-command-grid">${focusHtml}<div class="mw-viz-card"><div class="mw-viz-title">⚡ Priority radar</div>${priorityHtml}<div class="mw-mini-grid"><div class="mw-mini"><div class="mw-mini-val">${openTasks.length}</div><div class="mw-mini-lbl">Tasks</div></div><div class="mw-mini"><div class="mw-mini-val">${openItems.length}</div><div class="mw-mini-lbl">Work items</div></div><div class="mw-mini"><div class="mw-mini-val">${openProjects.length}</div><div class="mw-mini-lbl">Projects</div></div></div></div></div><div class="mw-viz-grid"><div class="mw-viz-card"><div class="mw-viz-title">✨ Assigned work mix</div>${typeVizHtml}</div><div class="mw-viz-card"><div class="mw-viz-title">📊 Progress snapshot</div><div class="mw-ring-wrap"><div class="mw-ring" style="background:conic-gradient(var(--gr) ${completionPct}%,var(--s2) 0)"><div class="mw-ring-val">${completionPct}%</div></div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--tx);margin-bottom:7px">${doneUnitsLabel} completed equivalent · ${totalOpen} open assigned work</div><div class="mw-ring-copy">Averages normal tasks, assigned project work items, and owned project progress. Each item contributes at most 100%.</div><div class="mw-status-pills" style="margin-top:9px">${statusPillsHtml}</div></div></div></div></div><div class="mw-columns" style="margin-bottom:14px">${colsHtml}</div>${upcoming.length?`<div class="upcoming-card"><div class="upcoming-hdr"><span class="section-title">📅 Upcoming due dates</span><span class="section-badge">${upcoming.length}</span></div>${upcoming.slice(0,8).map(t=>{const st=getStatus(t.status);const df=(new Date(t.due_date)-td)/864e5;return`<div class="upcoming-row" onclick="openTaskPopup(${t.id})"><span class="upcoming-dot" style="background:${st.color}"></span><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--tx)">${esc(t.title)}</div><div style="font-size:11px;color:var(--t3);margin-top:2px">${esc(st.name)} · ${typeBadge(t.type)}</div></div><span style="font-size:11px;font-weight:600;color:${df<=3?'var(--am-d)':'var(--t3)'};white-space:nowrap">${df<=1?'Tomorrow':Math.round(df)+'d left'}</span></div>`;}).join('')}</div>`:''}</div>`;
+  wrap.innerHTML=`<div class="mywork-wrap"><div class="mywork-hero"><div class="mywork-av">${esc(u.initials)}</div><div style="flex:1"><div class="mywork-name">Hey, ${esc(u.name.split(' ')[0])} 👋</div><div class="mywork-sub">${totalOpen} open assigned work · ${(overdue.length+overdueItems.length)>0?`<b style="color:#FFB3B3">${overdue.length+overdueItems.length} overdue</b>`:'all on track ✓'}</div><button class="mw-focus-btn" style="margin-top:10px;background:rgba(255,255,255,.92);color:#1A1916" onclick="openExportConfirm('auto')">⬇ Export my tasks</button></div><div class="mywork-stats"><div class="mstat"><div class="mstat-val">${overdue.length+overdueItems.length}</div><div class="mstat-lbl">Overdue</div></div><div class="mstat"><div class="mstat-val">${dueToday.length}</div><div class="mstat-lbl">Due today</div></div><div class="mstat"><div class="mstat-val">${inprogCount}</div><div class="mstat-lbl">In progress</div></div></div></div>${totalOpen===0?`<div class="mw-clear-card" style="margin-bottom:14px"><div class="mw-clear-title">🎉 You’re clear for today</div><div class="mw-clear-sub">No assigned active work. Enjoy the quiet dashboard.</div></div>`:''}<div class="mw-command-grid">${focusHtml}<div class="mw-viz-card"><div class="mw-viz-title">⚡ Priority radar</div>${priorityHtml}<div class="mw-mini-grid"><div class="mw-mini"><div class="mw-mini-val">${openTasks.length}</div><div class="mw-mini-lbl">Tasks</div></div><div class="mw-mini"><div class="mw-mini-val">${openItems.length}</div><div class="mw-mini-lbl">Work items</div></div><div class="mw-mini"><div class="mw-mini-val">${openProjects.length}</div><div class="mw-mini-lbl">Projects</div></div></div></div></div><div class="mw-viz-grid"><div class="mw-viz-card"><div class="mw-viz-title">✨ Assigned work mix</div>${typeVizHtml}</div><div class="mw-viz-card"><div class="mw-viz-title">📊 Progress snapshot</div><div class="mw-ring-wrap"><div class="mw-ring" style="background:conic-gradient(var(--gr) ${completionPct}%,var(--s2) 0)"><div class="mw-ring-val">${completionPct}%</div></div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--tx);margin-bottom:7px">${doneUnitsLabel} completed equivalent · ${totalOpen} open assigned work</div><div class="mw-ring-copy">Averages normal tasks, assigned project work items, and owned project progress. Each item contributes at most 100%.</div><div class="mw-status-pills" style="margin-top:9px">${statusPillsHtml}</div></div></div></div></div><div class="mw-columns" style="margin-bottom:14px">${colsHtml}</div>${upcoming.length?`<div class="upcoming-card"><div class="upcoming-hdr"><span class="section-title">📅 Upcoming due dates</span><span class="section-badge">${upcoming.length}</span></div>${upcoming.slice(0,8).map(t=>{const st=getStatus(t.status);const df=(new Date(t.due_date)-td)/864e5;return`<div class="upcoming-row" onclick="openTaskPopup(${t.id})"><span class="upcoming-dot" style="background:${st.color}"></span><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--tx)">${esc(t.title)}</div><div style="font-size:11px;color:var(--t3);margin-top:2px">${esc(st.name)} · ${typeBadge(t.type)}</div></div><span style="font-size:11px;font-weight:600;color:${df<=3?'var(--am-d)':'var(--t3)'};white-space:nowrap">${df<=1?'Tomorrow':Math.round(df)+'d left'}</span></div>`;}).join('')}</div>`:''}</div>`;
 }
 
 
