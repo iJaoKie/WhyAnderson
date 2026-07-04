@@ -4483,5 +4483,171 @@ async function saveMyProjectWorkItem(id){
 }
 </script>
 
+
+
+<!-- PATCH V24 — Apply mockup visual refinements back to Supabase version -->
+<style>
+/* Selected project highlight: clearly visible and palette-aware */
+.project-card.project-selected,
+.project-side-card.active,
+.projectwork-project-card.active{
+  position:relative!important;
+  border-color:var(--accent,var(--gr))!important;
+  background:linear-gradient(180deg,var(--sf),var(--accent-soft,var(--gr-l)))!important;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent,var(--gr)) 20%,transparent),0 14px 34px color-mix(in srgb,var(--accent,var(--gr)) 16%,transparent),var(--sh-md)!important;
+  transform:translateY(-1px);
+}
+.project-card.project-selected::before,
+.project-side-card.active::before,
+.projectwork-project-card.active::before{
+  content:'Selected';
+  position:absolute;top:10px;right:10px;z-index:2;
+  font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 7px;border-radius:999px;
+  color:var(--accent-strong,var(--gr-d));
+  background:color-mix(in srgb,var(--accent-soft,var(--gr-l)) 70%,var(--sf));
+  border:1px solid color-mix(in srgb,var(--accent,var(--gr)) 35%,var(--bd));
+}
+.project-card.project-selected .project-icon,
+.project-side-card.active .project-side-title span:first-child,
+.projectwork-project-card.active .projectwork-project-title::before{
+  filter:drop-shadow(0 0 8px color-mix(in srgb,var(--accent,var(--gr)) 38%,transparent));
+}
+.project-card.project-selected .project-name,
+.project-side-card.active .project-side-title,
+.projectwork-project-card.active .projectwork-project-title{
+  color:var(--accent-strong,var(--gr-d))!important;
+}
+html[data-theme="dark"] .project-card.project-selected,
+html[data-theme="dark"] .project-side-card.active,
+html[data-theme="dark"] .projectwork-project-card.active{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--accent-soft) 58%,var(--sf)),var(--sf))!important;
+  border-color:var(--accent)!important;
+}
+html[data-theme="dark"] .project-card.project-selected::before,
+html[data-theme="dark"] .project-side-card.active::before,
+html[data-theme="dark"] .projectwork-project-card.active::before{
+  background:color-mix(in srgb,var(--accent-soft) 82%,#101418)!important;
+  color:var(--accent-strong)!important;
+  border-color:color-mix(in srgb,var(--accent) 42%,var(--bd2))!important;
+}
+
+/* Palette-aware hover states for buttons/cards/interactive controls */
+html[data-theme]{
+  --hover-soft:color-mix(in srgb,var(--accent-soft,var(--gr-l)) 68%,var(--sf));
+  --hover-mid:color-mix(in srgb,var(--accent,var(--gr)) 13%,var(--sf));
+  --hover-border:color-mix(in srgb,var(--accent,var(--gr)) 38%,var(--bd));
+  --hover-shadow:0 0 0 3px color-mix(in srgb,var(--accent,var(--gr)) 13%,transparent),var(--sh-md);
+}
+html[data-theme="dark"]{
+  --hover-soft:color-mix(in srgb,var(--accent-soft) 64%,var(--sf));
+  --hover-mid:color-mix(in srgb,var(--accent) 20%,var(--sf));
+  --hover-border:color-mix(in srgb,var(--accent) 52%,var(--bd2));
+  --hover-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent),var(--sh-md);
+}
+html[data-theme] .btn-p:hover,
+html[data-theme] .project-btn:hover,
+html[data-theme] .project-white-btn:hover,
+html[data-theme] .mw-focus-btn:hover,
+html[data-theme] .pin-key.pin-ok:hover,
+html[data-theme] .reply-send:hover{
+  background:linear-gradient(135deg,var(--accent-strong,var(--gr-d)),var(--accent,var(--gr)))!important;
+  border-color:var(--accent-strong,var(--gr-d))!important;
+  color:#fff!important;
+  box-shadow:0 10px 26px color-mix(in srgb,var(--accent,var(--gr)) 28%,transparent)!important;
+  transform:translateY(-1px);
+}
+html[data-theme="dark"][data-palette="yellow"] .btn-p:hover,
+html[data-theme="dark"][data-palette="yellow"] .project-btn:hover,
+html[data-theme="dark"][data-palette="yellow"] .project-white-btn:hover,
+html[data-theme="dark"][data-palette="yellow"] .mw-focus-btn:hover,
+html[data-theme="dark"][data-palette="yellow"] .pin-key.pin-ok:hover{color:#171307!important;}
+html[data-theme="dark"][data-palette="orange"] .btn-p:hover,
+html[data-theme="dark"][data-palette="orange"] .project-btn:hover,
+html[data-theme="dark"][data-palette="orange"] .project-white-btn:hover,
+html[data-theme="dark"][data-palette="orange"] .mw-focus-btn:hover{color:#120D06!important;}
+html[data-theme="dark"][data-palette="purple"] .btn-p:hover,
+html[data-theme="dark"][data-palette="purple"] .project-btn:hover,
+html[data-theme="dark"][data-palette="purple"] .project-white-btn:hover,
+html[data-theme="dark"][data-palette="purple"] .mw-focus-btn:hover{color:#141018!important;}
+
+html[data-theme] .btn-sm:hover,
+html[data-theme] .btn-s:hover,
+html[data-theme] .export-btn:hover,
+html[data-theme] .theme-btn:hover,
+html[data-theme] .project-small-btn:hover,
+html[data-theme] .project-outline-white-btn:hover,
+html[data-theme] .add-btn:hover,
+html[data-theme] .nc-attach:hover,
+html[data-theme] .icon-picker-btn:hover,
+html[data-theme] .pin-key:hover,
+html[data-theme] .project-section-tab:hover{
+  background:linear-gradient(180deg,var(--hover-soft),var(--hover-mid))!important;
+  color:var(--accent-strong,var(--gr-d))!important;
+  border-color:var(--hover-border)!important;
+  box-shadow:var(--hover-shadow)!important;
+}
+html[data-theme] .ntab:hover,
+html[data-theme] .fp:hover,
+html[data-theme] .lhdr-cell:hover,
+html[data-theme] .cmmt-act:hover{
+  background:var(--hover-soft)!important;
+  color:var(--accent-strong,var(--gr-d))!important;
+  border-color:var(--hover-border)!important;
+}
+html[data-theme] .bnav-btn:hover{color:var(--accent-strong,var(--gr-d))!important;background:var(--hover-soft)!important;}
+html[data-theme] .card:hover,
+html[data-theme] .mw-task:hover,
+html[data-theme] .upcoming-row:hover,
+html[data-theme] .owner-task:hover,
+html[data-theme] .user-card:hover,
+html[data-theme] .project-flow-task:hover,
+html[data-theme] .project-task-table tr:hover td,
+html[data-theme] .project-popup-review-task:hover,
+html[data-theme] .projectwork-project-card:hover,
+html[data-theme] .lrow:not(.lhdr):hover{
+  background:var(--hover-soft)!important;
+  border-color:var(--hover-border)!important;
+  box-shadow:var(--hover-shadow)!important;
+}
+html[data-theme] .project-card:hover,
+html[data-theme] .project-side-card:hover{
+  border-color:var(--hover-border)!important;
+  background:linear-gradient(180deg,var(--sf),var(--hover-soft))!important;
+  box-shadow:var(--hover-shadow)!important;
+}
+html[data-theme] .fdrop-item:hover{background:var(--hover-soft)!important;color:var(--accent-strong,var(--gr-d))!important;}
+html[data-theme] .fdrop-item.on{background:linear-gradient(135deg,var(--accent-soft,var(--gr-l)),var(--hover-mid))!important;color:var(--accent-strong,var(--gr-d))!important;border-color:var(--hover-border)!important;}
+html[data-theme] .btn-d:hover,
+html[data-theme] .arch-btn:hover,
+html[data-theme] .cmmt-act-del:hover,
+html[data-theme] .project-mini-danger:hover{
+  background:linear-gradient(180deg,var(--rd-l),color-mix(in srgb,var(--rd) 14%,var(--sf)))!important;
+  color:var(--rd-d)!important;
+  border-color:color-mix(in srgb,var(--rd) 35%,var(--bd))!important;
+}
+html[data-theme] .project-card.project-selected:hover,
+html[data-theme] .project-side-card.active:hover,
+html[data-theme] .projectwork-project-card.active:hover{
+  background:linear-gradient(180deg,var(--sf),var(--accent-soft,var(--gr-l)))!important;
+  border-color:var(--accent,var(--gr))!important;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent,var(--gr)) 22%,transparent),0 16px 34px color-mix(in srgb,var(--accent,var(--gr)) 14%,transparent),var(--sh-md)!important;
+}
+</style>
+<script>
+// Patch v24: selected project highlight in Projects Management for Supabase version.
+function renderProjectCard(t){
+  const st=getStatus(t.status)||{};
+  const lead=getUser(t.assignee)||{};
+  const pct=projectProgress(t);
+  const due=t.due_date&&!st.hide_due?fmtDate(t.due_date):'No due date';
+  const items=projectChildTasks(t.id);
+  const open=items.filter(w=>!getStatus(w.status)?.is_done).length;
+  const mgrs=projectManagersFor(t.id).length;
+  const selected=String(selectedProjectId)===String(t.id);
+  return `<div class="project-card ${selected?'project-selected':''}" onclick="selectProject(${escAttr(t.id)})"><div class="project-card-top"><div class="project-icon">🏗</div><div style="min-width:0;flex:1"><div class="project-name">${esc(t.title)}</div><div class="project-meta">${projectStatusBadge(t)}<span class="project-pill">Lead: ${esc(lead.name||'Unassigned')}</span><span class="project-pill">📅 ${esc(due)}</span></div></div></div><div class="project-progress"><div class="project-progress-head"><span>Project progress</span><span>${pct}%</span></div><div class="project-track"><div class="project-fill" style="width:${pct}%"></div></div></div><div class="project-meta"><span class="project-pill">🧩 ${items.length} work item${items.length===1?'':'s'}</span><span class="project-pill">⏳ ${open} open</span><span class="project-pill">🛡 ${mgrs+1} manager${mgrs?'s':''}</span></div><div class="project-next"><b>Separation:</b> Project Lead monitors; assigned members update their own work-item cards.</div></div>`;
+}
+</script>
+
 </body>
 </html>
