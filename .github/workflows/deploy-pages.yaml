@@ -11,31 +11,35 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
       - name: Prepare site
         run: |
           mkdir -p dist
           cp index.html dist/index.html
+          touch dist/.nojekyll
+          echo "Checking dist folder:"
           ls -la dist
+          echo "Checking index.html size:"
+          wc -c dist/index.html
 
-      - name: Upload artifact
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
